@@ -19,5 +19,8 @@
   "homepage": "https://github.com/JomarHAN/amazon-2021#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.21.0"
   }
 }
