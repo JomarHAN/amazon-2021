@@ -7,6 +7,8 @@ const data = {
             rating: 4,
             numReviews: 10,
             price: 100,
+            countInStock: 10,
+            description: "Best Sell",
         },
         {
             _id: 2,
@@ -15,6 +17,8 @@ const data = {
             rating: 3.5,
             numReviews: 20,
             price: 80,
+            countInStock: 10,
+            description: "Best Sell",
         },
         {
             _id: 3,
@@ -23,6 +27,8 @@ const data = {
             rating: 5,
             numReviews: 160,
             price: 65,
+            countInStock: 10,
+            description: "Very Good",
         },
         {
             _id: 4,
@@ -31,13 +37,15 @@ const data = {
             rating: 4,
             numReviews: 10,
             price: 70,
+            countInStock: 10,
+            description: "Best Sell",
         },
         {
             _id: 5,
             image: '/images/p5.jpg',
             name: "Nike Black Pants",
             rating: 5,
-            numReviews: 10,
+            numReviews: 0,
             price: 120,
         },
         {
@@ -47,6 +55,8 @@ const data = {
             rating: 4.5,
             numReviews: 40,
             price: 110,
+            countInStock: 10,
+            description: "Best Sell",
         },
     ]
 }
