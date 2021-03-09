@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Rating from "../components/Rating";
 import data from "../data";
@@ -6,9 +6,13 @@ import data from "../data";
 function ProductScreen(props) {
   const productId = props.match.params.id;
   const product = data.products.find((x) => x._id === Number(productId));
+  const [qty, setQty] = useState(1);
   if (!product) {
     return <div>Product Not Found</div>;
   }
+  const addToCartHandler = () => {
+    props.history.push(`/cart/${productId}?qty=${qty}`);
+  };
   return (
     <div>
       <Link to="/">Back to result</Link>
@@ -49,14 +53,36 @@ function ProductScreen(props) {
                   </div>
                 </div>
               </li>
-              <li>
-                <button
-                  className="primary block"
-                  disabled={product.countInStock <= 0}
-                >
-                  Add to cart
-                </button>
-              </li>
+              {product.countInStock > 0 && (
+                <>
+                  <li>
+                    <div className="row">
+                      <div>Qty</div>
+                      <div>
+                        <select
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {[...Array(product.countInStock).keys()].map((x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <button
+                      className="primary block"
+                      type="button"
+                      onClick={addToCartHandler}
+                    >
+                      Add to cart
+                    </button>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
