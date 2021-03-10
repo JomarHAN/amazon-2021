@@ -113,6 +113,14 @@ a.brand{
   display: flex;
   justify-content: center;
 }
+.bagde{
+  background-color: #f02020;
+  color: #ffffff;
+  padding: 0.2rem 0.7rem;
+  margin-left: 0.3rem;
+  border-radius: 50%;
+  font-size: 1.4rem;
+}
 /* Image */
 img{
   border-radius: 0.5rem;
