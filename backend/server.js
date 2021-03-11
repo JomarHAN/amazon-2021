@@ -1,12 +1,14 @@
 import express from 'express'
 import data from './data.js'
 import mongoose from 'mongoose'
-import dotenv from 'dotenv'
 import userRouter from './routers/userRouters.js'
-dotenv.config()
+import configSecret from './config.js'
 
 const app = express()
-mongoose.connect(process.env.MONGO_URL, {
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+mongoose.connect(configSecret.mongo_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
