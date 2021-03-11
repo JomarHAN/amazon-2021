@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cartAddItem } from "../actions/cartActions";
+import { cartAddItem, cartDeleteItem } from "../actions/cartActions";
 import MessageBox from "../components/MessageBox";
 import { Link } from "react-router-dom";
 
@@ -18,7 +18,9 @@ function CartScreen(props) {
     }
   }, [dispatch, productId, qty]);
 
-  const handlerRemoveItem = (productId) => {};
+  const handlerRemoveItem = (productId) => {
+    dispatch(cartDeleteItem(productId));
+  };
 
   const handleCheckout = () => {};
 
