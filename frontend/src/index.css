@@ -110,8 +110,9 @@ a.brand{
 }
 .col-2{
   flex: 2 1 50rem;
-  display: flex;
-  justify-content: center;
+}
+.min-30{
+  min-width: 30rem;
 }
 .bagde{
   background-color: #f02020;
@@ -125,12 +126,16 @@ a.brand{
 img{
   border-radius: 0.5rem;
 }
+img.small{
+  max-width: 5rem;
+  width: 100%;
+}
 img.medium{
   max-width: 29rem;
   width: 100%;
 }
 img.large{
-  width: 50%;
+  width: 70%;
 }
 /* Card */
 .card{
