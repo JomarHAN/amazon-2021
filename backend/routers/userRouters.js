@@ -13,7 +13,7 @@ userRouter.get('/seed', expressAsyncHandler(async (req, res) => {
 }))
 
 userRouter.post('/signin', expressAsyncHandler(async (req, res) => {
-    const user = await User.findOne({ email: req.body.email })
+    const user = await User.findOne({ email: req.body.email.toLowerCase() })
     if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
             const userSignin = {
@@ -28,6 +28,27 @@ userRouter.post('/signin', expressAsyncHandler(async (req, res) => {
         }
     } else {
         res.status(404).send({ message: "Invalid Email Or Password" })
+    }
+}))
+
+userRouter.post('/register', expressAsyncHandler(async (req, res) => {
+    const userExist = await User.findOne({ email: req.body.email.toLowerCase() })
+    if (!userExist) {
+        const user = new User({
+            name: req.body.name,
+            email: req.body.email.toLowerCase(),
+            password: bcrypt.hashSync(req.body.password, 8)
+        })
+        const newUser = await user.save()
+        res.send({
+            _id: newUser._id,
+            name: newUser.name,
+            email: newUser.email,
+            isAdmin: newUser.isAdmin,
+            token: generateToken(newUser)
+        })
+    } else {
+        return res.status(409).send({ message: "Email is already registered. Try Another Email!" })
     }
 }))
 
