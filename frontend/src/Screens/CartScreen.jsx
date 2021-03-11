@@ -22,7 +22,9 @@ function CartScreen(props) {
     dispatch(cartDeleteItem(productId));
   };
 
-  const handleCheckout = () => {};
+  const handleCheckout = () => {
+    props.history.push("/signin?redirect=shipping");
+  };
 
   return (
     <div className="row top">
