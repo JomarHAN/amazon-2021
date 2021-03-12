@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { createOrder } from "../actions/orderActions";
 import CheckoutStep from "../components/CheckoutStep";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import { ORDER_CREATE_RESET } from "../constanst/orderConstants";
 
 function PlaceOrderScreen(props) {
   const cart = useSelector((state) => state.cart);
@@ -18,7 +22,20 @@ function PlaceOrderScreen(props) {
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
   const dispatch = useDispatch();
-  const placeOrderHandler = () => {};
+  const placeOrderHandler = () => {
+    dispatch(createOrder({ ...cart }));
+  };
+
+  const { loading, error, success, order } = useSelector(
+    (state) => state.orderCreate
+  );
+
+  useEffect(() => {
+    if (success) {
+      dispatch({ type: ORDER_CREATE_RESET });
+      props.history.push(`/order/${order._id}`);
+    }
+  }, [dispatch, props, order, success]);
 
   return (
     <div>
@@ -107,6 +124,8 @@ function PlaceOrderScreen(props) {
                   Place Order
                 </button>
               </li>
+              {loading && <LoadingBox />}
+              {error && <MessageBox variant="danger">{error}</MessageBox>}
             </ul>
           </div>
         </div>
