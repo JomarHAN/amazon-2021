@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getOrderDetails } from "../actions/orderActions";
+import { getOrderDetails, payOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
+import { ORDER_PAY_RESET } from "../constanst/orderConstants";
 
 function OrderScreen(props) {
   const orderId = props.match.params.id;
   const [sdkReady, setSdkReady] = useState(false);
   const { loading, error, order } = useSelector((state) => state.orderDetails);
+  const {
+    loading: loadingPay,
+    error: errorPay,
+    success: successPay,
+  } = useSelector((state) => state.orderPay);
   const dispatch = useDispatch();
   useEffect(() => {
     const addPaypalElement = async () => {
@@ -24,7 +30,8 @@ function OrderScreen(props) {
       };
       document.body.appendChild(script);
     };
-    if (!order) {
+    if (!order || successPay || (order && order._id !== orderId)) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
     } else {
       if (!order.isPaid) {
@@ -35,8 +42,10 @@ function OrderScreen(props) {
         }
       }
     }
-  }, [dispatch, orderId, order]);
-  const successPaymentHandler = () => {};
+  }, [dispatch, orderId, order, successPay]);
+  const successPaymentHandler = (result) => {
+    dispatch(payOrder(order, result));
+  };
   return loading ? (
     <LoadingBox />
   ) : error ? (
@@ -74,7 +83,9 @@ function OrderScreen(props) {
                   <strong>Method: </strong>
                   {order.paymentMethod}
                 </p>
-                {order.isPaid ? (
+                {loading ? (
+                  <LoadingBox />
+                ) : order.isPaid ? (
                   <MessageBox variant="success">
                     Paid at {order.paidAt}
                   </MessageBox>
@@ -156,6 +167,10 @@ function OrderScreen(props) {
                       <p>
                         Password: <strong> {`oGL/t1Y<`} </strong>
                       </p>
+                      {errorPay && (
+                        <MessageBox variant="danger">{errorPay}</MessageBox>
+                      )}
+                      {loadingPay && <LoadingBox />}
                       <PayPalButton
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}
