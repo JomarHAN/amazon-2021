@@ -85,16 +85,18 @@ function CartScreen(props) {
                 {cartItems.reduce((a, c) => a + c.qty * c.price, 0).toFixed(2)}
               </h2>
             </li>
-            <li>
-              <button
-                type="button"
-                className="primary block"
-                disabled={cartItems.length === 0}
-                onClick={handleCheckout}
-              >
-                Proceed to Checkout
-              </button>
-            </li>
+            {cartItems.length > 0 && (
+              <li>
+                <button
+                  type="button"
+                  className="primary block"
+                  disabled={cartItems.length === 0}
+                  onClick={handleCheckout}
+                >
+                  Proceed to Checkout
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>
