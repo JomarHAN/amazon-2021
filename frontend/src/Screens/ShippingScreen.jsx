@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CheckoutStep from "../components/CheckoutStep";
 import { saveShippingAddress } from "../actions/cartActions";
 
@@ -9,6 +9,10 @@ function ShippingScreen(props) {
   const [city, setCity] = useState("");
   const [usState, setUsState] = useState("");
   const [zipcode, setZipcode] = useState("");
+  const { cartItems } = useSelector((state) => state.cart);
+  if (cartItems.length === 0) {
+    props.history.push("/cart");
+  }
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
