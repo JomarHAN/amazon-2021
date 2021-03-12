@@ -20,6 +20,9 @@ mongoose.connect(configSecret.mongo_url, {
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)
 app.use('/api/orders', orderRouter)
+app.get('/api/config/paypal', (req, res) => {
+    res.send(configSecret.paypal_client_id || 'sb')
+})
 
 app.get('/', (req, res) => {
     res.send('Server is ready')

@@ -1,17 +1,42 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getOrderDetails } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import Axios from "axios";
+import { PayPalButton } from "react-paypal-button-v2";
 
 function OrderScreen(props) {
   const orderId = props.match.params.id;
+  const [sdkReady, setSdkReady] = useState(false);
   const { loading, error, order } = useSelector((state) => state.orderDetails);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getOrderDetails(orderId));
-  }, [dispatch, orderId]);
+    const addPaypalElement = async () => {
+      const { data } = await Axios.get("/api/config/paypal");
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
+      script.async = true;
+      script.onload = () => {
+        setSdkReady(true);
+      };
+      document.body.appendChild(script);
+    };
+    if (!order) {
+      dispatch(getOrderDetails(orderId));
+    } else {
+      if (!order.isPaid) {
+        if (!window.paypal) {
+          addPaypalElement();
+        } else {
+          setSdkReady(true);
+        }
+      }
+    }
+  }, [dispatch, orderId, order]);
+  const successPaymentHandler = () => {};
   return loading ? (
     <LoadingBox />
   ) : error ? (
@@ -117,6 +142,28 @@ function OrderScreen(props) {
                   </div>
                 </div>
               </li>
+              {!order.isPaid && (
+                <li>
+                  {!sdkReady ? (
+                    <LoadingBox />
+                  ) : (
+                    <>
+                      <h3>Sample Information</h3>
+                      <p>
+                        Email:{" "}
+                        <strong>sb-qhok45092019@personal.example.com</strong>
+                      </p>
+                      <p>
+                        Password: <strong> {`oGL/t1Y<`} </strong>
+                      </p>
+                      <PayPalButton
+                        amount={order.totalPrice}
+                        onSuccess={successPaymentHandler}
+                      />
+                    </>
+                  )}
+                </li>
+              )}
             </ul>
           </div>
         </div>
