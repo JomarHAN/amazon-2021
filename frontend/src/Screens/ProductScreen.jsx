@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getProductDetail } from "../actions/productActions";
 import Rating from "../components/Rating";
 import data from "../data";
 
 function ProductScreen(props) {
   const productId = props.match.params.id;
-  const product = data.products.find((x) => x._id === Number(productId));
   const [qty, setQty] = useState(1);
+  const { product } = useSelector((state) => state.productDetail);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProductDetail(productId));
+  }, [dispatch, productId]);
   if (!product) {
     return <div>Product Not Found</div>;
   }

@@ -8,6 +8,9 @@ function PlaceOrderScreen(props) {
   if (!cart.paymentMethod) {
     props.history.push("/payment");
   }
+  if (!cart.shippingAddress) {
+    props.history.push("/shipping");
+  }
   cart.itemsPrice = cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0);
 
   cart.shippingPrice = cart.itemsPrice > 100 ? 0 : 10;
@@ -28,10 +31,11 @@ function PlaceOrderScreen(props) {
                 <h2>Shipping</h2>
                 <p>
                   <strong>Name: </strong>
-                  {cart.shippingAddress.fullName} <br />
+                  {cart.shippingAddress?.fullName} <br />
                   <strong>Address: </strong>
-                  {cart.shippingAddress.address},{cart.shippingAddress.city},{" "}
-                  {cart.shippingAddress.usState}, {cart.shippingAddress.zipcode}
+                  {cart.shippingAddress?.address},{cart.shippingAddress?.city},{" "}
+                  {cart.shippingAddress?.usState},{" "}
+                  {cart.shippingAddress?.zipcode}
                 </p>
               </div>
             </li>
