@@ -3,7 +3,7 @@ import expressAsyncHandler from 'express-async-handler';
 import data from '../data.js';
 import User from '../models/userModel.js';
 import bcrypt from 'bcrypt'
-import { generateToken } from '../utils.js';
+import { generateToken, isAuth } from '../utils.js';
 
 const userRouter = express.Router()
 
@@ -17,6 +17,7 @@ userRouter.post('/signin', expressAsyncHandler(async (req, res) => {
     if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
             const userSignin = {
+                _id: user._id,
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
@@ -49,6 +50,15 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
         })
     } else {
         return res.status(409).send({ message: "Email is already registered. Try Another Email!" })
+    }
+}))
+
+userRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+    if (user) {
+        res.send(user)
+    } else {
+        res.status(404).send({ message: "User's Profile not Found" })
     }
 }))
 
