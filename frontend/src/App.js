@@ -11,6 +11,7 @@ import ShippingScreen from "./Screens/ShippingScreen";
 import PaymentMethod from "./Screens/PaymentMethod";
 import PlaceOrderScreen from "./Screens/PlaceOrderScreen";
 import OrderScreen from "./Screens/OrderScreen";
+import OrderHistoryScreen from "./Screens/OrderHistoryScreen";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -42,6 +43,9 @@ function App() {
                 </Link>
                 <ul className="dropdown-content">
                   <li>
+                    <Link to="/orderhistory">Order History</Link>
+                  </li>
+                  <li>
                     <Link to="#signout" onClick={handleSignout}>
                       Sign Out
                     </Link>
@@ -62,6 +66,7 @@ function App() {
           <Route path="/payment" component={PaymentMethod} />
           <Route path="/placeorder" component={PlaceOrderScreen} />
           <Route path="/order/:id" component={OrderScreen} />
+          <Route path="/orderhistory" component={OrderHistoryScreen} />
           <Route path="/" component={HomeScreen} exact />
         </main>
         <footer className="row center">All right reserved</footer>
