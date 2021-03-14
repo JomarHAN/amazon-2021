@@ -10,6 +10,9 @@ import {
     USER_PROFILE_FAIL,
     USER_PROFILE_REQUEST,
     USER_PROFILE_SUCCESS,
+    USER_UPDATE_FAIL,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_SUCCESS,
 } from "../constanst/userConstants"
 
 export const signin = (user) => async (dispatch) => {
@@ -68,4 +71,29 @@ export const getUserProfile = (userId) => async (dispatch, getState) => {
             : error.message
         dispatch({ type: USER_PROFILE_FAIL, payload: message })
     }
+}
+
+export const handleUserUpdate = (name, email, password, confirmPassword) => async (dispatch, getState) => {
+    dispatch({ type: USER_UPDATE_REQUEST })
+    if (password !== confirmPassword) {
+        dispatch({ type: USER_UPDATE_FAIL, payload: "Password and Confirm Password are not match" })
+    } else {
+        const { userSignin: { userInfo } } = getState()
+        try {
+            const { data } = await Axios.put('/api/users/profile', { name, email, password }, {
+                headers: {
+                    Authorization: `Bearer ${userInfo.token}`
+                }
+            })
+            dispatch({ type: USER_UPDATE_SUCCESS, payload: data })
+            dispatch({ type: USER_SIGNIN_SUCCESS, payload: data })
+            localStorage.setItem("userInfo", JSON.stringify(data))
+        } catch (error) {
+            const message = error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+            dispatch({ type: USER_UPDATE_FAIL, payload: message })
+        }
+    }
+
 }
