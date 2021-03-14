@@ -24,6 +24,8 @@ const data = {
             price: 100,
             countInStock: 10,
             description: "Best Sell",
+            brand: "Nike",
+            category: "Shirt"
         },
         {
             image: '/images/p2.jpg',
@@ -33,6 +35,8 @@ const data = {
             price: 80,
             countInStock: 10,
             description: "Best Sell",
+            brand: "Adidas",
+            category: "Shirt"
         },
         {
             image: '/images/p3.jpg',
@@ -42,6 +46,8 @@ const data = {
             price: 65,
             countInStock: 10,
             description: "Very Good",
+            brand: "Puma",
+            category: "Shirt"
         },
         {
             image: '/images/p4.jpg',
@@ -51,6 +57,8 @@ const data = {
             price: 70,
             countInStock: 10,
             description: "Best Sell",
+            brand: "Adidas",
+            category: "Pants"
         },
         {
             image: '/images/p5.jpg',
@@ -60,6 +68,8 @@ const data = {
             price: 120,
             countInStock: 8,
             description: "Very Good",
+            brand: "Nike",
+            category: "Pants"
         },
         {
             image: '/images/p6.jpg',
@@ -69,6 +79,8 @@ const data = {
             price: 110,
             countInStock: 10,
             description: "Best Sell",
+            brand: "Puma",
+            category: "Pants"
         },
     ]
 }
