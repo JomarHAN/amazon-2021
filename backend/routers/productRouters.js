@@ -9,8 +9,23 @@ const productRouter = express.Router()
 productRouter.get('/seed', async (req, res) => {
     const createSample = await Product.insertMany(data.products)
     res.send({ createSample })
-    // res.send(data.products)
 })
+
+productRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+    const product = new Product({
+        name: Date.now(),
+        image: "/images/p1.jpg",
+        price: 0,
+        category: "sample category",
+        brand: "sample brand",
+        countInStock: 0,
+        rating: 0,
+        numReviews: 0,
+        description: "sample description"
+    })
+    const createProduct = await product.save()
+    res.send({ product: createProduct })
+}))
 
 productRouter.get('/', expressAsyncHandler(async (req, res) => {
     const products = await Product.find({})
