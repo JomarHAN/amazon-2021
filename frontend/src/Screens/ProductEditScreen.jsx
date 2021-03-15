@@ -98,7 +98,6 @@ function ProductEditScreen(props) {
       })
     );
   };
-  // console.log(image1);
   return (
     <div>
       <form onSubmit={submitHandler} className="form">

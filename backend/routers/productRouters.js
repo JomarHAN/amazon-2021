@@ -11,6 +11,21 @@ productRouter.get('/seed', async (req, res) => {
     res.send({ createSample })
 })
 
+
+productRouter.get('/', expressAsyncHandler(async (req, res) => {
+    const products = await Product.find({})
+    res.send(products)
+}))
+
+productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id)
+    if (product) {
+        res.send(product)
+    } else {
+        res.status(404).send({ message: "Product Not Found" })
+    }
+}))
+
 productRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
     const product = new Product({
         name: Date.now(),
@@ -31,6 +46,7 @@ productRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) =>
     const createProduct = await product.save()
     res.send({ product: createProduct })
 }))
+
 
 productRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id)
@@ -54,19 +70,14 @@ productRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) 
     }
 }))
 
-productRouter.get('/', expressAsyncHandler(async (req, res) => {
-    const products = await Product.find({})
-    res.send(products)
-}))
-
-productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
+productRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id)
     if (product) {
-        res.send(product)
+        const productDelete = await product.remove()
+        res.send({ message: `Product ${req.params.id} was deleted`, product: productDelete })
     } else {
         res.status(404).send({ message: "Product Not Found" })
     }
 }))
-
 
 export default productRouter;
