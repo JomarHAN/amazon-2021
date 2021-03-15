@@ -138,8 +138,45 @@ img.medium{
   width: 100%;
 }
 img.large{
-  width: 70%;
+  width: 50%;
 }
+.product-details{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.image-collection{
+  display: flex;
+  flex-direction: column;
+  flex: 0.9;
+}
+.item-collection{
+  flex: 1
+}
+img.small-fixed.active{
+  border: 5px #20a020 solid;
+}
+img.small-fixed{
+  width: 25%;
+  cursor: pointer;
+}
+img.upload{
+  width: 10rem;
+  margin-top: 1.2rem;
+}
+.output-area{
+  display: flex;
+  justify-content: center;
+}
+.output-area img{
+  width: 14rem;
+  height: 18rem;
+  margin-right: 0.5rem;
+}
+.input-area{
+  width: 14rem;
+}
+
 /* Card */
 .card{
   border: 0.1rem solid #c0c0c0;

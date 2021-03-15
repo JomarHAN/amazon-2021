@@ -14,7 +14,12 @@ productRouter.get('/seed', async (req, res) => {
 productRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
     const product = new Product({
         name: Date.now(),
-        image: "/images/p1.jpg",
+        imageAlbum: {
+            image1: "/Images_Template/image-1.png",
+            image2: "/Images_Template/image-2.png",
+            image3: "/Images_Template/image-3.png",
+            image4: "/Images_Template/image-4.png",
+        },
         price: 0,
         category: "sample category",
         brand: "sample brand",
@@ -32,7 +37,12 @@ productRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) 
     if (product) {
         product.name = req.body.name;
         product.price = req.body.price;
-        product.image = req.body.image;
+        product.imageAlbum = {
+            image1: req.body.imageAlbum.image1,
+            image2: req.body.imageAlbum.image2,
+            image3: req.body.imageAlbum.image3,
+            image4: req.body.imageAlbum.image4,
+        };
         product.category = req.body.category;
         product.brand = req.body.brand;
         product.countInStock = req.body.countInStock;

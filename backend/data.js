@@ -17,7 +17,12 @@ const data = {
     ],
     products: [
         {
-            image: '/images/p1.jpg',
+            imageAlbum: {
+                image1: "/images/p1.jpg",
+                image2: "/images/p2.jpg",
+                image3: "/images/p3.jpg",
+                image4: "/images/p4.jpg",
+            },
             name: "Nike Slim Shirt",
             rating: 4,
             numReviews: 10,
@@ -28,7 +33,12 @@ const data = {
             category: "Shirt"
         },
         {
-            image: '/images/p2.jpg',
+            imageAlbum: {
+                image1: "/images/p2.jpg",
+                image2: "/images/p3.jpg",
+                image3: "/images/p4.jpg",
+                image4: "/images/p5.jpg",
+            },
             name: "Adidas Spangled Shirt",
             rating: 3.5,
             numReviews: 20,
@@ -39,7 +49,12 @@ const data = {
             category: "Shirt"
         },
         {
-            image: '/images/p3.jpg',
+            imageAlbum: {
+                image1: "/images/p3.jpg",
+                image2: "/images/p4.jpg",
+                image3: "/images/p5.jpg",
+                image4: "/images/p6.jpg",
+            },
             name: "Puma Blue Shirt",
             rating: 5,
             numReviews: 160,
@@ -50,7 +65,12 @@ const data = {
             category: "Shirt"
         },
         {
-            image: '/images/p4.jpg',
+            imageAlbum: {
+                image1: "/images/p4.jpg",
+                image2: "/images/p5.jpg",
+                image3: "/images/p6.jpg",
+                image4: "/images/p1.jpg",
+            },
             name: "Adidas White Kaki Pants",
             rating: 4,
             numReviews: 10,
@@ -61,7 +81,12 @@ const data = {
             category: "Pants"
         },
         {
-            image: '/images/p5.jpg',
+            imageAlbum: {
+                image1: "/images/p5.jpg",
+                image2: "/images/p6.jpg",
+                image3: "/images/p1.jpg",
+                image4: "/images/p2.jpg",
+            },
             name: "Nike Black Pants",
             rating: 5,
             numReviews: 0,
@@ -72,7 +97,12 @@ const data = {
             category: "Pants"
         },
         {
-            image: '/images/p6.jpg',
+            imageAlbum: {
+                image1: "/images/p6.jpg",
+                image2: "/images/p1.jpg",
+                image3: "/images/p2.jpg",
+                image4: "/images/p3.jpg",
+            },
             name: "Puma Gray Pants",
             rating: 4.5,
             numReviews: 40,
