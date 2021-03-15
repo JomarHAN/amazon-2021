@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetail } from "../actions/productActions";
+import { getProductDetail, updateProduct } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { PRODUCT_UPDATE_RESET } from "../constanst/productConstants";
 
 function ProductEditScreen(props) {
   const productId = props.match.params.id;
@@ -16,10 +17,19 @@ function ProductEditScreen(props) {
   const { loading, error, product } = useSelector(
     (state) => state.productDetail
   );
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = useSelector((state) => state.productUpdate);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!product) {
+    if (successUpdate) {
+      props.history.push("/productlist");
+    }
+    if (!product || successUpdate || product._id !== productId) {
       dispatch(getProductDetail(productId));
+      dispatch({ type: PRODUCT_UPDATE_RESET });
     } else {
       setName(product.name);
       setPrice(product.price);
@@ -29,24 +39,40 @@ function ProductEditScreen(props) {
       setCountInStock(product.countInStock);
       setDescription(product.description);
     }
-  }, [dispatch, productId, product]);
+  }, [dispatch, productId, product, successUpdate, props]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(
+      updateProduct({
+        _id: product._id,
+        name,
+        price,
+        image,
+        category,
+        brand,
+        countInStock,
+        description,
+      })
+    );
   };
 
   return (
     <div>
       <form onSubmit={submitHandler} className="form">
-        <div>
-          <h1>Edit Product {product._id}</h1>
-        </div>
         {loading ? (
           <LoadingBox />
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <>
+            {loadingUpdate && <LoadingBox />}
+            {errorUpdate && (
+              <MessageBox variant="danger">{errorUpdate}</MessageBox>
+            )}
+            <div>
+              <h1>Edit Product {product._id}</h1>
+            </div>
             <div>
               <label htmlFor="Name">Name</label>
               <input

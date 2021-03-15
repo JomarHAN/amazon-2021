@@ -1,4 +1,4 @@
-import { productCreatedReducer, productDetailReducer, productsListReducer } from './reducers/productReducers'
+import { productCreatedReducer, productDetailReducer, productsListReducer, productUpdateReducer } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
@@ -32,6 +32,7 @@ const reducer = combineReducers({
     userProfile: userProfileReducer,
     userUpdate: userUpdateReducer,
     productCreated: productCreatedReducer,
+    productUpdate: productUpdateReducer,
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
