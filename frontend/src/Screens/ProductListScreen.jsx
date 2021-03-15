@@ -10,7 +10,7 @@ function ProductListScreen(props) {
     (state) => state.productsList
   );
   const {
-    productSample,
+    product: productCreate,
     loading: loadingCreate,
     error: errorCreate,
     success: successCreate,
@@ -26,10 +26,10 @@ function ProductListScreen(props) {
   };
   useEffect(() => {
     if (successCreate) {
-      props.history.push(`/product/${productSample._id}/edit`);
+      props.history.push(`/product/${productCreate._id}/edit`);
       dispatch({ type: PRODUCT_CREATE_RESET });
     }
-  }, [productSample, props, successCreate, dispatch]);
+  }, [productCreate, props, successCreate, dispatch]);
   return (
     <div>
       <div className="row">
