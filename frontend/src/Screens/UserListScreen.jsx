@@ -1,21 +1,38 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserList } from "../actions/userActions";
+import { deleteUser, getUserList } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { USER_DELETE_RESET } from "../constanst/userConstants";
 
 function UserListScreen(props) {
   const { loading, error, users } = useSelector((state) => state.userList);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+    message: messageDelete,
+  } = useSelector((state) => state.userDelete);
   const dispatch = useDispatch();
 
-  const deleteUserHandler = (userId) => {};
+  const deleteUserHandler = (userId) => {
+    if (window.confirm(`Are you sure to delete User: ${userId}`)) {
+      dispatch(deleteUser(userId));
+    }
+  };
 
   useEffect(() => {
+    if (successDelete) {
+      window.alert(`${messageDelete}`);
+      dispatch({ type: USER_DELETE_RESET });
+    }
     dispatch(getUserList());
-  }, [dispatch]);
+  }, [dispatch, successDelete, messageDelete]);
   return (
     <div>
       <h1>Users List</h1>
+      {loadingDelete && <LoadingBox />}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {loading ? (
         <LoadingBox />
       ) : error ? (

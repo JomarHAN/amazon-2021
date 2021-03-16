@@ -84,6 +84,21 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
     }
 }))
 
+userRouter.delete('/delete/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+    if (user) {
+        if (user.isAdmin) {
+            res.status(401).send({ message: "Not able to delete admin account!" })
+            return
+        } else {
+            const userDeleted = await user.remove()
+            res.send({ message: `User ${req.params.id} was deleted successfully!`, user: userDeleted })
+        }
+    } else {
+        res.status(404).send({ message: `User: ${req.params.id} was not found` })
+    }
+}))
+
 userRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
     const users = await User.find({})
     res.send(users)
