@@ -1,19 +1,34 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderList } from "../actions/orderActions";
+import { deleteOrder, getOrderList } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { ORDER_DELETE_RESET } from "../constanst/orderConstants";
 
 function OrderListScreen(props) {
   const { loading, error, orders } = useSelector((state) => state.orderList);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = useSelector((state) => state.orderDelete);
   const dispatch = useDispatch();
   useEffect(() => {
+    if (successDelete) {
+      dispatch({ type: ORDER_DELETE_RESET });
+    }
     dispatch(getOrderList());
-  }, [dispatch]);
-  const handleDeleteOrder = (orderId) => {};
+  }, [dispatch, successDelete]);
+  const handleDeleteOrder = (orderId) => {
+    if (window.confirm(`Are you sure to delete the order ${orderId}`)) {
+      dispatch(deleteOrder(orderId));
+    }
+  };
   return (
     <div>
       <h1>Orders List</h1>
+      {loadingDelete && <LoadingBox />}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {loading ? (
         <LoadingBox />
       ) : error ? (
@@ -33,7 +48,7 @@ function OrderListScreen(props) {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, i) => (
+            {orders?.map((order, i) => (
               <tr key={order._id}>
                 <td>{i + 1}</td>
                 <td>{order._id}</td>
