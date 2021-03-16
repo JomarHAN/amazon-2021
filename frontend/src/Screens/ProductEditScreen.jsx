@@ -61,7 +61,7 @@ function ProductEditScreen(props) {
       bodyFormData.append("image", file);
       setLoadingImage1(true);
       try {
-        const { data } = await axios.post("/api/uploads", bodyFormData, {
+        const { data } = await axios.post("/api/uploads/s3", bodyFormData, {
           headers: {
             Authorization: `Bearer ${userInfo.token}`,
             "Content-Type": "multipart/form-data",

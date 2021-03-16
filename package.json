@@ -18,13 +18,15 @@
   },
   "homepage": "https://github.com/JomarHAN/amazon-2021#readme",
   "dependencies": {
+    "aws-sdk": "^2.864.0",
     "bcrypt": "^5.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.19",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0"
   },
   "devDependencies": {
     "eslint": "^7.21.0"
