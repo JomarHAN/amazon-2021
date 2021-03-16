@@ -13,6 +13,9 @@ import {
     ORDER_HISTORY_FAIL,
     ORDER_HISTORY_REQUEST,
     ORDER_HISTORY_SUCCESS,
+    ORDER_LIST_FAIL,
+    ORDER_LIST_REQUEST,
+    ORDER_LIST_SUCCESS,
 } from "../constanst/orderConstants"
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -86,5 +89,23 @@ export const getOrderHistory = () => async (dispatch, getState) => {
             ? error.response.data.message
             : error.message
         dispatch({ type: ORDER_HISTORY_FAIL, payload: message })
+    }
+}
+
+export const getOrderList = () => async (dispatch, getState) => {
+    dispatch({ type: ORDER_LIST_REQUEST })
+    const { userSignin: { userInfo } } = getState()
+    try {
+        const { data } = await Axios.get('/api/orders', {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        })
+        dispatch({ type: ORDER_LIST_SUCCESS, payload: data })
+    } catch (error) {
+        const message = error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        dispatch({ type: ORDER_LIST_FAIL, payload: message })
     }
 }

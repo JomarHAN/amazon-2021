@@ -1,9 +1,18 @@
 import express from 'express'
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { isAuth } from '../utils.js';
+import { isAdmin, isAuth } from '../utils.js';
 
 const orderRouter = express.Router()
+
+orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({}).populate('user', 'name')
+    if (orders) {
+        res.send(orders)
+    } else {
+        res.status(404).send({ message: "No Order Found" })
+    }
+}))
 
 orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
     if (req.body.cartItems.length === 0) {
