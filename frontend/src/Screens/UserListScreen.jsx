@@ -63,7 +63,7 @@ function UserListScreen(props) {
                   <button
                     className="small"
                     type="button"
-                    onClick={() => props.history.push(`/profile/${user._id}`)}
+                    onClick={() => props.history.push(`/user/${user._id}/edit`)}
                   >
                     Details
                   </button>

@@ -99,6 +99,20 @@ userRouter.delete('/delete/:id', isAuth, isAdmin, expressAsyncHandler(async (req
     }
 }))
 
+userRouter.put('/update/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+    if (user) {
+        user.name = req.body.name
+        user.email = req.body.email
+        user.isSeller = req.body.isSeller
+        user.isAdmin = req.body.isAdmin
+        const userUpdate = await user.save()
+        res.send({ message: "User updated successfully!", user: userUpdate })
+    } else {
+        res.status(404).send({ message: "User Not Found" })
+    }
+}))
+
 userRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
     const users = await User.find({})
     res.send(users)

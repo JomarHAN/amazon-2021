@@ -19,6 +19,9 @@ import {
     USER_DELETE_FAIL,
     USER_DELETE_REQUEST,
     USER_DELETE_SUCCESS,
+    USER_ADMIN_UPDATE_REQUEST,
+    USER_ADMIN_UPDATE_FAIL,
+    USER_ADMIN_UPDATE_SUCCESS,
 } from "../constanst/userConstants"
 
 export const signin = (user) => async (dispatch) => {
@@ -136,5 +139,23 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
             ? error.response.data.message
             : error.message
         dispatch({ type: USER_DELETE_FAIL, payload: message })
+    }
+}
+
+export const adminUpdateUser = (user) => async (dispatch, getState) => {
+    dispatch({ type: USER_ADMIN_UPDATE_REQUEST })
+    const { userSignin: { userInfo } } = getState()
+    try {
+        const { data } = await Axios.put(`/api/users/update/${user._id}`, user, {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        })
+        dispatch({ type: USER_ADMIN_UPDATE_SUCCESS, payload: data.user })
+    } catch (error) {
+        const message = error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        dispatch({ type: USER_ADMIN_UPDATE_FAIL, payload: message })
     }
 }
