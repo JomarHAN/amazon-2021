@@ -82,14 +82,14 @@ export const getUserProfile = (userId) => async (dispatch, getState) => {
     }
 }
 
-export const handleUserUpdate = (name, email, password, confirmPassword) => async (dispatch, getState) => {
+export const handleUserUpdate = (name, email, password, confirmPassword, business, logo, description) => async (dispatch, getState) => {
     dispatch({ type: USER_UPDATE_REQUEST })
     if (password !== confirmPassword) {
         dispatch({ type: USER_UPDATE_FAIL, payload: "Password and Confirm Password are not match" })
     } else {
         const { userSignin: { userInfo } } = getState()
         try {
-            const { data } = await Axios.put('/api/users/profile', { name, email, password }, {
+            const { data } = await Axios.put('/api/users/profile', { name, email, password, seller: { business: business, logo: logo, description: description } }, {
                 headers: {
                     Authorization: `Bearer ${userInfo.token}`
                 }

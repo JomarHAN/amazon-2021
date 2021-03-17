@@ -30,7 +30,8 @@ const data = {
             countInStock: 10,
             description: "Best Sell",
             brand: "Nike",
-            category: "Shirt"
+            category: "Shirt",
+            seller: "60499da7da870c0ba5ad3f1a"
         },
         {
             imageAlbum: {
@@ -46,7 +47,8 @@ const data = {
             countInStock: 10,
             description: "Best Sell",
             brand: "Adidas",
-            category: "Shirt"
+            category: "Shirt",
+            seller: "60499da7da870c0ba5ad3f1a"
         },
         {
             imageAlbum: {
@@ -62,7 +64,8 @@ const data = {
             countInStock: 10,
             description: "Very Good",
             brand: "Puma",
-            category: "Shirt"
+            category: "Shirt",
+            seller: "60512065aaac0114d8b0d7b2"
         },
         {
             imageAlbum: {
@@ -78,7 +81,8 @@ const data = {
             countInStock: 10,
             description: "Best Sell",
             brand: "Adidas",
-            category: "Pants"
+            category: "Pants",
+            seller: "60499da7da870c0ba5ad3f1a"
         },
         {
             imageAlbum: {
@@ -94,7 +98,8 @@ const data = {
             countInStock: 8,
             description: "Very Good",
             brand: "Nike",
-            category: "Pants"
+            category: "Pants",
+            seller: "60512065aaac0114d8b0d7b2"
         },
         {
             imageAlbum: {
@@ -110,7 +115,8 @@ const data = {
             countInStock: 10,
             description: "Best Sell",
             brand: "Puma",
-            category: "Pants"
+            category: "Pants",
+            seller: "60512065aaac0114d8b0d7b2"
         },
     ]
 }

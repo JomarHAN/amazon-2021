@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartAddItem, cartDeleteItem } from "../actions/cartActions";
 import MessageBox from "../components/MessageBox";
 import { Link } from "react-router-dom";
+import { CART_ADD_ITEM_FAIL_RESET } from "../constanst/cartConstants";
 
 function CartScreen(props) {
   const productId = props.match.params.id;
   const qty = props.location.search
     ? Number(props.location.search.split("=")[1])
     : 1;
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems, error } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -30,6 +31,17 @@ function CartScreen(props) {
     <div className="row top">
       <div className="col-2">
         <h1>Shopping Cart</h1>
+        {error && (
+          <MessageBox variant="danger">
+            {error}{" "}
+            <Link
+              to="/"
+              onClick={() => dispatch({ type: CART_ADD_ITEM_FAIL_RESET })}
+            >
+              Go Back to Shop
+            </Link>{" "}
+          </MessageBox>
+        )}
         {cartItems.length === 0 ? (
           <MessageBox>
             Cart is empty <Link to="/">Go Shopping</Link>

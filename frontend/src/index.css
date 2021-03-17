@@ -176,7 +176,11 @@ img.upload{
 .input-area{
   width: 14rem;
 }
-
+img.logo{
+  margin-top: 1rem;
+  width: 20rem;
+  height: 20rem;
+}
 /* Card */
 .card{
   border: 0.1rem solid #c0c0c0;

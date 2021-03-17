@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile, handleUserUpdate } from "../actions/userActions";
@@ -16,14 +17,38 @@ function ProfileScreen(props) {
   if (!userInfo) {
     props.history.push("/signin");
   }
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const dispatch = useDispatch();
+  const [logo, setLogo] = useState("");
+  const [business, setBusiness] = useState("");
+  const [description, setDescription] = useState("");
+  const [loadingLogo, setLoadingLogo] = useState(false);
+  const [errorLogo, setErrorLogo] = useState("");
+  const handleUploadLogo = async (e) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append("image", file);
+    setLoadingLogo(true);
+    try {
+      const { data } = await axios.post("/api/uploads/s3", bodyFormData, {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setLoadingLogo(false);
+      setLogo(data);
+    } catch (error) {
+      setLoadingLogo(false);
+      setErrorLogo(error.message);
+    }
+  };
 
   useEffect(() => {
-    if (!user || successUpdate) {
+    if (!user || successUpdate || user._id !== userInfo._id) {
       dispatch(getUserProfile(userInfo._id));
       dispatch({ type: USER_UPDATE_RESET });
     } else {
@@ -31,11 +56,31 @@ function ProfileScreen(props) {
       setEmail(user.email);
       setPassword("");
       setConfirmPassword("");
+      if (user.isSeller) {
+        setLogo(
+          user.seller.logo
+            ? user.seller.logo
+            : "/Images_Template/logo-sample.png"
+        );
+        setBusiness(user.seller.business ? user.seller.business : "");
+        setDescription(user.seller.description ? user.seller.description : "");
+      }
     }
   }, [dispatch, userInfo, user, successUpdate]);
+
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(handleUserUpdate(name, email, password, confirmPassword));
+    dispatch(
+      handleUserUpdate(
+        name,
+        email,
+        password,
+        confirmPassword,
+        business,
+        logo,
+        description
+      )
+    );
   };
   return (
     <div>
@@ -96,6 +141,45 @@ function ProfileScreen(props) {
                 placeholder="Enter Confirm Password"
               />
             </div>
+            {userInfo.isSeller && (
+              <>
+                <div>
+                  <label htmlFor="business">Business</label>
+                  <input
+                    type="text"
+                    id="business"
+                    placeholder="Business Name"
+                    value={business}
+                    onChange={(e) => setBusiness(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="Description">Description</label>
+                  <input
+                    type="text"
+                    id="Description"
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="logo">Logo</label>
+                  <input
+                    type="file"
+                    id="logo"
+                    onChange={(e) => handleUploadLogo(e)}
+                  />
+                  {loadingLogo ? (
+                    <LoadingBox />
+                  ) : errorLogo ? (
+                    <MessageBox variant="danger">{errorLogo}</MessageBox>
+                  ) : (
+                    <img src={logo} alt={logo} className="logo" />
+                  )}
+                </div>
+              </>
+            )}
             <div>
               <label />
               <button type="submit" className="primary">

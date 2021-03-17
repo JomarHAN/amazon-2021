@@ -135,14 +135,6 @@ function ProductEditScreen(props) {
               />
             </div>
             <div>
-              <label htmlFor="Image">Image</label>
-              {/* <input
-                type="text"
-                id="Image"
-                placeholder="Enter Image"
-                value={image1}
-                onChange={(e) => setImage1(e.target.value)}
-              /> */}
               {loadingImage1 && <LoadingBox />}
               {errorImage1 && (
                 <MessageBox variant="danger">{errorImage1}</MessageBox>

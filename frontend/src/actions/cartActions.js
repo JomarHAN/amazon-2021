@@ -1,8 +1,13 @@
 import Axios from 'axios'
-import { CART_ADD_ITEM, CART_DELETE_ITEM, SAVE_SHIPPING_ADDRESS, SAVE_PAYMENT_METHOD } from '../constanst/cartConstants'
+import { CART_ADD_ITEM, CART_ADD_ITEM_FAIL, CART_DELETE_ITEM, SAVE_SHIPPING_ADDRESS, SAVE_PAYMENT_METHOD } from '../constanst/cartConstants'
 
 export const cartAddItem = (productId, qty) => async (dispatch, getState) => {
     const { data } = await Axios.get(`/api/products/${productId}`)
+    const { cart: { cartItems } } = getState()
+    if (cartItems.length > 0 && cartItems[0].seller !== data.seller) {
+        dispatch({ type: CART_ADD_ITEM_FAIL, payload: "Can not purchase from diffirent seller in same time!" })
+        return;
+    }
     dispatch({
         type: CART_ADD_ITEM, payload: {
             name: data.name,
@@ -10,10 +15,12 @@ export const cartAddItem = (productId, qty) => async (dispatch, getState) => {
             price: data.price,
             countInStock: data.countInStock,
             productId: data._id,
+            seller: data.seller,
             qty
         }
     })
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+
 }
 
 export const cartDeleteItem = (id) => async (dispatch, getState) => {

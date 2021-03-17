@@ -1,6 +1,6 @@
 import express from 'express'
 import multer from 'multer'
-import { isAuth } from '../utils.js'
+import { isAuth, isSellerOrAdmin } from '../utils.js'
 import multerS3 from 'multer-s3'
 import aws from 'aws-sdk'
 import config from '../config.js'
@@ -40,7 +40,7 @@ const storageS3 = multerS3({
 
 const uploadS3 = multer({ storage: storageS3 })
 
-uploadRouter.post('/s3', uploadS3.single('image'), (req, res) => {
+uploadRouter.post('/s3', isAuth, isSellerOrAdmin, uploadS3.single('image'), (req, res) => {
     res.send(req.file.location)
 })
 

@@ -72,6 +72,9 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
         if (req.body.password) {
             user.password = bcrypt.hashSync(req.body.password, 8)
         }
+        user.seller.logo = req.body.seller.logo;
+        user.seller.description = req.body.seller.description;
+        user.seller.business = req.body.seller.business;
         const updateUser = await user.save()
         res.send({
             _id: updateUser._id,
@@ -79,6 +82,7 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
             email: updateUser.email,
             isAdmin: updateUser.isAdmin,
             isSeller: user.isSeller,
+            seller: user.seller,
             token: generateToken(updateUser)
         })
     }

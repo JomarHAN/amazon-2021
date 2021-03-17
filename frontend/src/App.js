@@ -20,6 +20,7 @@ import ProductEditScreen from "./Screens/ProductEditScreen";
 import OrderListScreen from "./Screens/OrderListScreen";
 import UserListScreen from "./Screens/UserListScreen";
 import UserEditScreen from "./Screens/UserEditScreen";
+import SellerRoute from "./components/SellerRoute";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -87,6 +88,21 @@ function App() {
                 </ul>
               </div>
             )}
+            {userInfo?.isSeller && (
+              <div className="dropdown">
+                <Link to="#seller">
+                  Seller <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/productlist/seller">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist/seller">Orders</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </header>
         <main>
@@ -99,10 +115,12 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen} />
           <Route path="/order/:id" component={OrderScreen} />
           <Route path="/orderhistory" component={OrderHistoryScreen} />
+          <SellerRoute path="/productlist/seller" component={ProductListScreen} />
+          <SellerRoute path="/orderlist/seller" component={OrderListScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} exact />
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
-          <AdminRoute path="/productlist" component={ProductListScreen} />
-          <AdminRoute path="/orderlist" component={OrderListScreen} />
+          <AdminRoute path="/productlist" component={ProductListScreen} exact />
+          <AdminRoute path="/orderlist" component={OrderListScreen} exact />
           <AdminRoute path="/userlist" component={UserListScreen} />
           <AdminRoute path="/product/:id/edit" component={ProductEditScreen} exact />
           <Route path="/" component={HomeScreen} exact />

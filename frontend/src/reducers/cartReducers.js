@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM, CART_DELETE_ITEM, CART_EMPTY, SAVE_PAYMENT_METHOD, SAVE_SHIPPING_ADDRESS } from "../constanst/cartConstants";
+import { CART_ADD_ITEM, CART_ADD_ITEM_FAIL, CART_ADD_ITEM_FAIL_RESET, CART_DELETE_ITEM, CART_EMPTY, SAVE_PAYMENT_METHOD, SAVE_SHIPPING_ADDRESS } from "../constanst/cartConstants";
 
 export const cartReducer = (state = { cartItems: [] }, action) => {
     switch (action.type) {
@@ -16,6 +16,10 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
                     cartItems: [...state.cartItems, item]
                 }
             }
+        case CART_ADD_ITEM_FAIL:
+            return { ...state, cartItems: [...state.cartItems], error: action.payload }
+        case CART_ADD_ITEM_FAIL_RESET:
+            return { ...state, cartItems: [...state.cartItems], error: null }
         case CART_DELETE_ITEM:
             return {
                 ...state,
