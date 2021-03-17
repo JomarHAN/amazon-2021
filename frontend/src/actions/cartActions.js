@@ -4,8 +4,8 @@ import { CART_ADD_ITEM, CART_ADD_ITEM_FAIL, CART_DELETE_ITEM, SAVE_SHIPPING_ADDR
 export const cartAddItem = (productId, qty) => async (dispatch, getState) => {
     const { data } = await Axios.get(`/api/products/${productId}`)
     const { cart: { cartItems } } = getState()
-    if (cartItems.length > 0 && cartItems[0].seller !== data.seller) {
-        dispatch({ type: CART_ADD_ITEM_FAIL, payload: "Can not purchase from diffirent seller in same time!" })
+    if (cartItems.length > 0 && cartItems[0].seller._id !== data.seller._id) {
+        dispatch({ type: CART_ADD_ITEM_FAIL, payload: `Can not add item. Only can purchase item from ${cartItems[0].seller.seller.business}` })
         return;
     }
     dispatch({

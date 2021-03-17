@@ -8,7 +8,11 @@ function SellerRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) =>
-        userInfo.isSeller ? <Component {...props} /> : <Redirect to="/signin" />
+        userInfo?.isSeller ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/signin" />
+        )
       }
     />
   );
