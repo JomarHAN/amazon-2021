@@ -203,21 +203,23 @@ function OrderScreen(props) {
                   )}
                 </li>
               )}
-              {order.isPaid && !order.isDelivered && userInfo.isAdmin && (
-                <li>
-                  <button
-                    className="primary block"
-                    type="button"
-                    onClick={() => handleDelivery()}
-                  >
-                    DELIVERY
-                  </button>
-                  {loadingDelivery && <LoadingBox />}
-                  {errorDelivery && (
-                    <MessageBox variant="danger">{errorDelivery}</MessageBox>
-                  )}
-                </li>
-              )}
+              {order.isPaid &&
+                !order.isDelivered &&
+                (userInfo.isAdmin || userInfo.isSeller) && (
+                  <li>
+                    <button
+                      className="primary block"
+                      type="button"
+                      onClick={() => handleDelivery()}
+                    >
+                      DELIVERY
+                    </button>
+                    {loadingDelivery && <LoadingBox />}
+                    {errorDelivery && (
+                      <MessageBox variant="danger">{errorDelivery}</MessageBox>
+                    )}
+                  </li>
+                )}
             </ul>
           </div>
         </div>

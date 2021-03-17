@@ -1,12 +1,14 @@
 import express from 'express'
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { isAdmin, isAuth } from '../utils.js';
+import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
 const orderRouter = express.Router()
 
-orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({}).populate('user', 'name')
+orderRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
+    const seller = req.query.seller
+    const sellerFilter = seller ? { seller } : {}
+    const orders = await Order.find({ ...sellerFilter }).populate('user', 'name')
     if (orders) {
         res.send(orders)
     } else {
@@ -27,6 +29,7 @@ orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
             taxPrice: req.body.taxPrice,
             totalPrice: req.body.totalPrice,
             user: req.user._id,
+            seller: req.body.cartItems[0].seller._id
         })
         const createdOrder = await order.save()
         res.send({ message: "New Order Created", order: createdOrder })
@@ -65,7 +68,7 @@ orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
     }
 }))
 
-orderRouter.put('/:id/delivery', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+orderRouter.put('/:id/delivery', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
     if (order) {
         order.isDelivered = true
