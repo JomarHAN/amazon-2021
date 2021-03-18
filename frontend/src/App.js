@@ -131,7 +131,7 @@ function App() {
             exact
           />
           <Route
-            path="/search/fields/:fields/name/:name?/category/:category?"
+            path="/search/fields/:fields/name/:name/category/:category/min/:min/max/:max/rating/:rating/order/:order"
             component={SearchResultScreen}
             exact
           />
