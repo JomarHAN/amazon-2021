@@ -22,6 +22,8 @@ import UserListScreen from "./Screens/UserListScreen";
 import UserEditScreen from "./Screens/UserEditScreen";
 import SellerRoute from "./components/SellerRoute";
 import SellerScreen from "./Screens/SellerScreen";
+import SearchBox from "./components/SearchBox";
+import SearchResultScreen from "./Screens/SearchResultScreen";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -38,6 +40,9 @@ function App() {
             <Link to="/" className="brand">
               Amazon
             </Link>
+          </div>
+          <div style={{ flex: 1 }}>
+            <Route render={(props) => <SearchBox {...props} />} />
           </div>
           <div>
             <Link to="/cart">
@@ -107,6 +112,10 @@ function App() {
           </div>
         </header>
         <main>
+          <Route
+            path="/search/category=:category/name=:name?"
+            component={SearchResultScreen}
+          />
           <Route path="/seller/:id" component={SellerScreen} />
           <Route path="/product/:id" component={ProductScreen} exact />
           <Route path="/cart/:id?" component={CartScreen} />

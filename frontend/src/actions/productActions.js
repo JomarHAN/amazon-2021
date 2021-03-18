@@ -33,10 +33,10 @@ export const getTopProduct = () => async (dispatch) => {
     }
 }
 
-export const getListProducts = ({ seller = "" }) => async (dispatch) => {
+export const getListProducts = ({ seller = "", category = "", name = "" }) => async (dispatch) => {
     dispatch({ type: PRODUCT_LIST_REQUEST })
     try {
-        const { data } = await Axios.get(`/api/products?seller=${seller}`)
+        const { data } = await Axios.get(`/api/products?seller=${seller}&category=${category}&name=${name}`)
         dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data })
     } catch (error) {
         const message = error.response && error.response.data.message

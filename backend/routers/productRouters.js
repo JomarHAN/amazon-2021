@@ -20,7 +20,11 @@ productRouter.get('/seed', async (req, res) => {
 productRouter.get('/', expressAsyncHandler(async (req, res) => {
     const seller = req.query.seller
     const sellerFilter = seller ? { seller } : {}
-    const products = await Product.find({ ...sellerFilter }).populate('seller', 'seller.business seller.logo')
+    const category = req.query.category
+    const categoryFilter = category ? { category: { $regex: category, $options: 'i' } } : {}
+    const name = req.query.name
+    const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {}
+    const products = await Product.find({ ...sellerFilter, ...categoryFilter, ...nameFilter }).populate('seller', 'seller.business seller.logo')
     res.send(products)
 }))
 

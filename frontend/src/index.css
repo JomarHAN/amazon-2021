@@ -308,3 +308,21 @@ img.logo{
 .carousel .slide{
   background-color: lightgray;
 }
+
+/* Search */
+.search button{
+  border-radius: 0 0.5rem 0.5rem 0;
+  border-left: none;
+  /* margin-right: 0.5rem; */
+}
+.search input{
+  border-radius: 0;
+  border-right: none;
+  border-left: none;
+  /* margin-left: 0.5rem; */
+  flex: 1;
+}
+.search select{
+  border-radius: 0.5rem 0 0 0.5rem;
+  border-right: none;
+}
