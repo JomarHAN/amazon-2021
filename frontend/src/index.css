@@ -327,3 +327,8 @@ img.logo{
   border-radius: 0.5rem 0 0 0.5rem;
   border-right: none;
 }
+
+a.active{
+  font-weight: bold;
+  font-size: 2rem;
+}

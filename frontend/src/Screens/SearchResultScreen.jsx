@@ -50,11 +50,21 @@ function SearchResultScreen(props) {
           <h3>Department</h3>
           <ul>
             <li>
-              <Link to={getSearchUrl({ category: "All" })}>All</Link>
+              <Link
+                className={category === "All" ? "active" : ""}
+                to={getSearchUrl({ category: "All" })}
+              >
+                All
+              </Link>
             </li>
             {categories?.map((c) => (
               <li key={c}>
-                <Link to={getSearchUrl({ category: c })}>{c}</Link>
+                <Link
+                  className={c === category ? "active" : ""}
+                  to={getSearchUrl({ category: c })}
+                >
+                  {c}
+                </Link>
               </li>
             ))}
           </ul>
