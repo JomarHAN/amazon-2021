@@ -2,7 +2,7 @@ import express from 'express'
 import expressAsyncHandler from 'express-async-handler';
 import data from '../data.js';
 import Product from '../models/productModel.js';
-import { isAdmin, isAuth } from '../utils.js';
+import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
 const productRouter = express.Router()
 
@@ -20,11 +20,13 @@ productRouter.get('/seed', async (req, res) => {
 productRouter.get('/', expressAsyncHandler(async (req, res) => {
     const seller = req.query.seller
     const sellerFilter = seller ? { seller } : {}
-    const category = req.query.category
-    const categoryFilter = category ? { category: { $regex: category, $options: 'i' } } : {}
+    const fields = req.query.fields
+    const fieldsFilter = fields ? { fields: { $regex: fields, $options: 'i' } } : {}
     const name = req.query.name
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {}
-    const products = await Product.find({ ...sellerFilter, ...categoryFilter, ...nameFilter }).populate('seller', 'seller.business seller.logo')
+    const category = req.query.category
+    const categoryFilter = category ? { category: { $regex: category, $options: 'i' } } : {}
+    const products = await Product.find({ ...sellerFilter, ...fieldsFilter, ...nameFilter, ...categoryFilter }).populate('seller', 'seller.business seller.logo')
     res.send(products)
 }))
 
@@ -37,7 +39,7 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     }
 }))
 
-productRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
     const product = new Product({
         name: Date.now(),
         imageAlbum: {
@@ -52,14 +54,16 @@ productRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) =>
         countInStock: 0,
         rating: 0,
         numReviews: 0,
-        description: "sample description"
+        description: "sample description",
+        fields: "sample fields",
+        seller: req.user._id
     })
     const createProduct = await product.save()
     res.send({ product: createProduct })
 }))
 
 
-productRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+productRouter.put('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id)
     if (product) {
         product.name = req.body.name;
@@ -81,7 +85,7 @@ productRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) 
     }
 }))
 
-productRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+productRouter.delete('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id)
     if (product) {
         const productDelete = await product.remove()

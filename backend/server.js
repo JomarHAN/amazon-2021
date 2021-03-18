@@ -25,6 +25,9 @@ app.use('/api/orders', orderRouter)
 app.get('/api/config/paypal', (req, res) => {
     res.send(configSecret.paypal_client_id || 'sb')
 })
+app.get('/api/fields', (req, res) => {
+    res.send(data.fields)
+})
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 app.get('/', (req, res) => {

@@ -1,6 +1,13 @@
 import bcrypt from 'bcrypt'
 
 const data = {
+    fields: [
+        "Fashion",
+        "Athletic",
+        "Vehicle",
+        "Appliances",
+        "Phones"
+    ],
     users: [
         {
             name: "Jomar",
@@ -31,7 +38,8 @@ const data = {
             description: "Best Sell",
             brand: "Nike",
             category: "Shirt",
-            seller: "60499da7da870c0ba5ad3f1a"
+            seller: "60499da7da870c0ba5ad3f1a",
+            fields: "Fashion",
         },
         {
             imageAlbum: {
@@ -48,7 +56,8 @@ const data = {
             description: "Best Sell",
             brand: "Adidas",
             category: "Shirt",
-            seller: "60499da7da870c0ba5ad3f1a"
+            seller: "60499da7da870c0ba5ad3f1a",
+            fields: "Fashion",
         },
         {
             imageAlbum: {
@@ -65,7 +74,8 @@ const data = {
             description: "Very Good",
             brand: "Puma",
             category: "Shirt",
-            seller: "60512065aaac0114d8b0d7b2"
+            seller: "60512065aaac0114d8b0d7b2",
+            fields: "Fashion",
         },
         {
             imageAlbum: {
@@ -82,7 +92,8 @@ const data = {
             description: "Best Sell",
             brand: "Adidas",
             category: "Pants",
-            seller: "60499da7da870c0ba5ad3f1a"
+            seller: "60499da7da870c0ba5ad3f1a",
+            fields: "Fashion",
         },
         {
             imageAlbum: {
@@ -99,7 +110,8 @@ const data = {
             description: "Very Good",
             brand: "Nike",
             category: "Pants",
-            seller: "60512065aaac0114d8b0d7b2"
+            seller: "60512065aaac0114d8b0d7b2",
+            fields: "Fashion",
         },
         {
             imageAlbum: {
@@ -116,7 +128,8 @@ const data = {
             description: "Best Sell",
             brand: "Puma",
             category: "Pants",
-            seller: "60512065aaac0114d8b0d7b2"
+            seller: "60512065aaac0114d8b0d7b2",
+            fields: "Fashion",
         },
     ]
 }

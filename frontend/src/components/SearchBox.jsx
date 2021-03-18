@@ -2,29 +2,26 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 function SearchBox(props) {
-  const [category, setCategory] = useState("All");
+  const [fieldSelect, setFieldSelect] = useState("All");
   const [name, setName] = useState("");
-  const { products } = useSelector((state) => state.productsList);
-  const categories = products
-    ?.map((x) => x.category)
-    .reduce((a, b) => (a.includes(b) ? a : [...a, b]), []);
+  const { fields } = useSelector((state) => state.productFields);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (category === "All" && name === "") {
+    if (fieldSelect === "All" && name === "") {
       props.history.push("/");
     } else {
-      props.history.push(`/search/category=${category}/name=${name}`);
-      setCategory("All");
+      props.history.push(`/search/fields/${fieldSelect}/name/${name}`);
+      setFieldSelect("All");
     }
   };
   return (
     <form onSubmit={handleSubmit} className="search">
       <div className="row">
         <div>
-          <select onChange={(e) => setCategory(e.target.value)}>
+          <select onChange={(e) => setFieldSelect(e.target.value)}>
             <option value="All">All</option>
-            {categories?.map((x) => (
+            {fields?.map((x) => (
               <option value={x}>{x}</option>
             ))}
           </select>

@@ -24,14 +24,22 @@ import SellerRoute from "./components/SellerRoute";
 import SellerScreen from "./Screens/SellerScreen";
 import SearchBox from "./components/SearchBox";
 import SearchResultScreen from "./Screens/SearchResultScreen";
+import { useEffect } from "react";
+import axios from "axios";
+import { PRODUCT_FIELDS_LIST } from "./constanst/productConstants";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.userSignin);
+
   const dispatch = useDispatch();
   const handleSignout = () => {
     dispatch(signout());
   };
+  useEffect(async () => {
+    const { data } = await axios.get("/api/fields");
+    dispatch({ type: PRODUCT_FIELDS_LIST, payload: data });
+  }, [dispatch]);
   return (
     <Router>
       <div className="grid-container">
@@ -113,8 +121,19 @@ function App() {
         </header>
         <main>
           <Route
-            path="/search/category=:category/name=:name?"
+            path="/search/fields/:fields"
             component={SearchResultScreen}
+            exact
+          />
+          <Route
+            path="/search/fields/:fields/name/:name?"
+            component={SearchResultScreen}
+            exact
+          />
+          <Route
+            path="/search/fields/:fields/name/:name?/category/:category?"
+            component={SearchResultScreen}
+            exact
           />
           <Route path="/seller/:id" component={SellerScreen} />
           <Route path="/product/:id" component={ProductScreen} exact />
@@ -131,16 +150,16 @@ function App() {
             component={ProductListScreen}
           />
           <SellerRoute path="/orderlist/seller" component={OrderListScreen} />
+          <SellerRoute
+            path="/product/:id/edit"
+            component={ProductEditScreen}
+            exact
+          />
           <PrivateRoute path="/profile" component={ProfileScreen} exact />
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
           <AdminRoute path="/productlist" component={ProductListScreen} exact />
           <AdminRoute path="/orderlist" component={OrderListScreen} exact />
           <AdminRoute path="/userlist" component={UserListScreen} />
-          <AdminRoute
-            path="/product/:id/edit"
-            component={ProductEditScreen}
-            exact
-          />
           <Route path="/" component={HomeScreen} exact />
         </main>
         <footer className="row center">All right reserved</footer>

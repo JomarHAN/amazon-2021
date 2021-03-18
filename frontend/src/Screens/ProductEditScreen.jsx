@@ -18,6 +18,7 @@ function ProductEditScreen(props) {
   const [brand, setBrand] = useState("");
   const [countInStock, setCountInStock] = useState("");
   const [description, setDescription] = useState("");
+  const [fields, setFields] = useState("");
   const { loading, error, product } = useSelector(
     (state) => state.productDetail
   );
@@ -45,6 +46,7 @@ function ProductEditScreen(props) {
       setBrand(product.brand);
       setCountInStock(product.countInStock);
       setDescription(product.description);
+      setFields(product.fields);
     }
   }, [dispatch, productId, product, successUpdate, props]);
 
@@ -95,6 +97,7 @@ function ProductEditScreen(props) {
         brand,
         countInStock,
         description,
+        fields,
       })
     );
   };
@@ -197,6 +200,16 @@ function ProductEditScreen(props) {
                   </button>
                 </div>
               </div>
+            </div>
+            <div>
+              <label htmlFor="Fields">Fields</label>
+              <input
+                type="text"
+                id="Fields"
+                placeholder="Enter Fields"
+                value={fields}
+                onChange={(e) => setFields(e.target.value)}
+              />
             </div>
             <div>
               <label htmlFor="Category">Category</label>

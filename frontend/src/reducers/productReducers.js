@@ -20,7 +20,17 @@ import {
     PRODUCT_TOP_REQUEST,
     PRODUCT_TOP_SUCCESS,
     PRODUCT_TOP_FAIL,
+    PRODUCT_FIELDS_LIST,
 } from "../constanst/productConstants";
+
+export const productFieldsReducer = (state = {}, action) => {
+    switch (action.type) {
+        case PRODUCT_FIELDS_LIST:
+            return { ...state, fields: action.payload }
+        default:
+            return state;
+    }
+}
 
 export const productsListReducer = (state = { loading: true }, action) => {
     switch (action.type) {
