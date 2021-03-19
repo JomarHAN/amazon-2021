@@ -337,3 +337,35 @@ a.active{
   font-weight: bold;
   font-size: 1.7rem;
 }
+
+/* Map */
+.full-container{
+  margin: -1rem;
+  height: calc(100% + 2rem);
+}
+.map-input-box {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0.5rem auto;
+  width: 50rem;
+  height: 4rem;
+  display: flex;
+}
+.map-input-box input {
+  border-radius: 1rem 0 0 1rem;
+  border-right: 0;
+  flex: 1;
+}
+.map-input-box button.confirm {
+  border-radius: 0 1rem 1rem 0;
+  border-left: 0;
+}
+.map-back{
+  border-radius: 50%!important;
+  border: 0.1rem solid rgb(153, 153, 153);
+  background-color: #203040;
+  color: #ffffff;
+  margin-right: 0.5rem;
+}

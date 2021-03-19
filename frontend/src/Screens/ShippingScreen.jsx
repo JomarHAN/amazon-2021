@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CheckoutStep from "../components/CheckoutStep";
 import { saveShippingAddress } from "../actions/cartActions";
 
 function ShippingScreen(props) {
+  const { mapShippingAddress } = useSelector(
+    (state) => state.userShippingAddress
+  );
   const [fullName, setFullName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -13,6 +16,17 @@ function ShippingScreen(props) {
   if (cartItems.length === 0) {
     props.history.push("/cart");
   }
+
+  useEffect(() => {
+    if (mapShippingAddress) {
+      setFullName(mapShippingAddress.user);
+      setAddress(mapShippingAddress.address);
+      setCity(mapShippingAddress.city);
+      setUsState(mapShippingAddress.state);
+      setZipcode(mapShippingAddress.postal_code);
+    }
+  }, [mapShippingAddress]);
+
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -85,8 +99,18 @@ function ShippingScreen(props) {
         </div>
         <div>
           <label />
+          <button
+            type="button"
+            className="block"
+            onClick={() => props.history.push("/map")}
+          >
+            Choose on Map
+          </button>
+        </div>
+        <div>
+          <label />
           <button type="submit" className="primary">
-            Continue
+            Confirm Address
           </button>
         </div>
       </form>

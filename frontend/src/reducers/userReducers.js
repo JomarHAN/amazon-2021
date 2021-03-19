@@ -28,7 +28,8 @@ import {
     USER_REVIEW_REQUEST,
     USER_REVIEW_SUCCESS,
     USER_REVIEW_FAIL,
-    USER_REVIEW_RESET
+    USER_REVIEW_RESET,
+    USER_SHIPPING_ADDRESS
 } from "../constanst/userConstants";
 
 export const userSigninReducer = (state = {}, action) => {
@@ -142,6 +143,15 @@ export const userReviewReducer = (state = {}, action) => {
             return { loading: false, error: action.payload }
         case USER_REVIEW_RESET:
             return {}
+        default:
+            return state;
+    }
+}
+
+export const userShippingAddressReducer = (state = {}, action) => {
+    switch (action.type) {
+        case USER_SHIPPING_ADDRESS:
+            return { ...state, mapShippingAddress: action.payload }
         default:
             return state;
     }

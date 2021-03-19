@@ -16,6 +16,8 @@ const orderSchema = new mongoose.Schema({
         city: { type: String, required: true },
         usState: { type: String, required: true },
         zipcode: { type: String, required: true },
+        lat: Number,
+        lng: Number
     },
     paymentMethod: { type: String, required: true },
     paymentResult: {

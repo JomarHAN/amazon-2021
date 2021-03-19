@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/JomarHAN/amazon-2021#readme",
   "dependencies": {
+    "@react-google-maps/api": "^2.1.1",
     "aws-sdk": "^2.864.0",
     "bcrypt": "^5.0.1",
     "dotenv": "^8.2.0",

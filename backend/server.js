@@ -28,6 +28,9 @@ app.get('/api/config/paypal', (req, res) => {
 app.get('/api/fields', (req, res) => {
     res.send(data.fields)
 })
+app.get('/api/config/googlemap', (req, res) => {
+    res.send(configSecret.google_api_key || 'gm')
+})
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 app.get('/', (req, res) => {

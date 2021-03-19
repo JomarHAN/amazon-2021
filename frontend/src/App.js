@@ -27,6 +27,7 @@ import SearchResultScreen from "./Screens/SearchResultScreen";
 import { useEffect } from "react";
 import axios from "axios";
 import { PRODUCT_FIELDS_LIST } from "./constanst/productConstants";
+import MapScreen from "./Screens/MapScreen";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -40,8 +41,8 @@ function App() {
     const fetchData = async () => {
       const { data } = await axios.get("/api/fields");
       dispatch({ type: PRODUCT_FIELDS_LIST, payload: data });
-    }
-    fetchData()
+    };
+    fetchData();
   }, [dispatch]);
   return (
     <Router>
@@ -159,6 +160,7 @@ function App() {
             exact
           />
           <PrivateRoute path="/profile" component={ProfileScreen} exact />
+          <PrivateRoute path="/map" component={MapScreen} />
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
           <AdminRoute path="/productlist" component={ProductListScreen} exact />
           <AdminRoute path="/orderlist" component={OrderListScreen} exact />
