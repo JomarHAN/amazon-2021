@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 function SearchBox(props) {
@@ -12,9 +12,10 @@ function SearchBox(props) {
       props.history.push("/");
     } else {
       props.history.push(`/search/fields/${fieldSelect}/name/${name}`);
-      setFieldSelect("All");
+      // setFieldSelect("All");
     }
   };
+
   return (
     <form onSubmit={handleSubmit} className="search">
       <div className="row">
