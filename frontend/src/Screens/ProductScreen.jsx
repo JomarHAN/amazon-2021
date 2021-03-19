@@ -24,7 +24,7 @@ function ProductScreen(props) {
   const [rating, setRating] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
-    if (successReview) {
+    if (successReview || productId) {
       dispatch({ type: PRODUCT_REVIEW_RESET });
     }
     dispatch(getProductDetail(productId));
@@ -194,12 +194,11 @@ function ProductScreen(props) {
             </div>
           </div>
           <div className="review">
-            {product.reviews.length === 0 ? (
+            {product.reviews.length === 0 && (
               <MessageBox>There is no review</MessageBox>
-            ) : errorReview ? (
+            )}
+            {errorReview && (
               <MessageBox variant="danger">{errorReview}</MessageBox>
-            ) : (
-              ""
             )}
             {loadingReview && <LoadingBox />}
 

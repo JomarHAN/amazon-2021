@@ -22,6 +22,9 @@ import {
     USER_ADMIN_UPDATE_REQUEST,
     USER_ADMIN_UPDATE_FAIL,
     USER_ADMIN_UPDATE_SUCCESS,
+    USER_REVIEW_REQUEST,
+    USER_REVIEW_FAIL,
+    USER_REVIEW_SUCCESS,
 } from "../constanst/userConstants"
 
 export const signin = (user) => async (dispatch) => {
@@ -157,5 +160,24 @@ export const adminUpdateUser = (user) => async (dispatch, getState) => {
             ? error.response.data.message
             : error.message
         dispatch({ type: USER_ADMIN_UPDATE_FAIL, payload: message })
+    }
+}
+
+export const postReviewSeller = (review) => async (dispatch, getState) => {
+    dispatch({ type: USER_REVIEW_REQUEST })
+    const { userSignin: { userInfo } } = getState()
+    const { userProfile: { user } } = getState()
+    try {
+        const { data } = await Axios.put(`/api/users/${user._id}/review`, review, {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        })
+        dispatch({ type: USER_REVIEW_SUCCESS, payload: data.user })
+    } catch (error) {
+        const message = error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        dispatch({ type: USER_REVIEW_FAIL, payload: message })
     }
 }

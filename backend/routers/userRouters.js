@@ -64,6 +64,32 @@ userRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
     }
 }))
 
+userRouter.put('/:id/review', isAuth, expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+    if (user) {
+        if (`${user._id}` === `${req.user._id}`) {
+            return res.status(400).send({ message: "You are not able to rate yourself!" })
+        }
+        if (user.seller.reviews.find(x => x.buyerId === req.user._id)) {
+            return res.status(400).send({ message: "You have already reviewed!" })
+        }
+        const review = {
+            buyerName: req.user.name,
+            buyerId: req.user._id,
+            comment: req.body.comment,
+            rating: Number(req.body.rating)
+        }
+        user.seller.reviews.push(review)
+        user.seller.numReviews = user.seller.reviews.length
+        user.seller.rating = user.seller.reviews.reduce((a, c) => a + c.rating, 0) / user.seller.reviews.length
+        const userUpdate = await user.save()
+        res.send({ message: "Seller Reviewed", user: userUpdate })
+
+    } else {
+        res.status(404).send({ message: "User Not Found" })
+    }
+}))
+
 userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id)
     if (user) {

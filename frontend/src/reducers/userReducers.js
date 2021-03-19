@@ -24,7 +24,11 @@ import {
     USER_ADMIN_UPDATE_REQUEST,
     USER_ADMIN_UPDATE_SUCCESS,
     USER_ADMIN_UPDATE_FAIL,
-    USER_ADMIN_UPDATE_RESET
+    USER_ADMIN_UPDATE_RESET,
+    USER_REVIEW_REQUEST,
+    USER_REVIEW_SUCCESS,
+    USER_REVIEW_FAIL,
+    USER_REVIEW_RESET
 } from "../constanst/userConstants";
 
 export const userSigninReducer = (state = {}, action) => {
@@ -122,6 +126,21 @@ export const userAdminUpdateReducer = (state = {}, action) => {
         case USER_ADMIN_UPDATE_FAIL:
             return { loading: false, error: action.payload }
         case USER_ADMIN_UPDATE_RESET:
+            return {}
+        default:
+            return state;
+    }
+}
+
+export const userReviewReducer = (state = {}, action) => {
+    switch (action.type) {
+        case USER_REVIEW_REQUEST:
+            return { loading: true }
+        case USER_REVIEW_SUCCESS:
+            return { loading: false, success: true, user: action.payload }
+        case USER_REVIEW_FAIL:
+            return { loading: false, error: action.payload }
+        case USER_REVIEW_RESET:
             return {}
         default:
             return state;
