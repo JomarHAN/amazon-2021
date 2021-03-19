@@ -15,7 +15,7 @@ function Products(props) {
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
         <div className="row">
-          <div className="price">${product.price}</div>
+          <div className="price">${product.price.toFixed(2)}</div>
           <div>
             <Link to={`/seller/${product.seller._id}`}>
               <strong>{product.seller.seller.business}</strong>
