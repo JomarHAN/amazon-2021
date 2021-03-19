@@ -1,5 +1,14 @@
 import mongoose from 'mongoose'
 
+const review = new mongoose.Schema({
+    userId: { type: String, required: true },
+    userName: { type: String, required: true },
+    comment: { type: String, required: true },
+    rating: { type: Number, required: true }
+}, {
+    timestamps: true
+})
+
 const productSchema = new mongoose.Schema({
     imageAlbum: {
         image1: { type: String, required: true },
@@ -16,7 +25,8 @@ const productSchema = new mongoose.Schema({
     category: { type: String, required: true },
     brand: { type: String, required: true },
     seller: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    fields: { type: String, required: true }
+    fields: { type: String, required: true },
+    reviews: [review]
 })
 const Product = mongoose.model("Product", productSchema)
 export default Product;

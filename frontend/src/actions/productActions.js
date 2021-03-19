@@ -18,6 +18,9 @@ import {
     PRODUCT_DELETE_REQUEST,
     PRODUCT_DELETE_SUCCESS,
     PRODUCT_DELETE_FAIL,
+    PRODUCT_REVIEW_REQUEST,
+    PRODUCT_REVIEW_SUCCESS,
+    PRODUCT_REVIEW_FAIL,
 } from "../constanst/productConstants"
 
 export const getTopProduct = () => async (dispatch) => {
@@ -110,5 +113,24 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
             ? error.response.data.message
             : error.message
         dispatch({ type: PRODUCT_DELETE_FAIL, payload: message })
+    }
+}
+
+export const commentProduct = (review) => async (dispatch, getState) => {
+    dispatch({ type: PRODUCT_REVIEW_REQUEST })
+    const { userSignin: { userInfo } } = getState()
+    const { productDetail: { product } } = getState()
+    try {
+        const { data } = await Axios.put(`/api/products/${product._id}/review`, review, {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        })
+        dispatch({ type: PRODUCT_REVIEW_SUCCESS, payload: data })
+    } catch (error) {
+        const message = error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        dispatch({ type: PRODUCT_REVIEW_FAIL, payload: message })
     }
 }

@@ -45,6 +45,31 @@ productRouter.get('/', expressAsyncHandler(async (req, res) => {
     res.send(products)
 }))
 
+productRouter.put('/:id/review', isAuth, expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id)
+    if (product) {
+        if (product.reviews.find(x => x.userId === req.user._id)) {
+            return res.status(400).send({ message: "You already submitted a review!" })
+        }
+        const review = {
+            userName: req.user.name,
+            userId: req.user._id,
+            comment: req.body.comment,
+            rating: Number(req.body.rating)
+        }
+        product.reviews.push(review)
+        product.numReviews = product.reviews.length
+        product.rating = product.reviews.reduce((a, b) => a + b.rating, 0) / product.reviews.length
+        const updateProduct = await product.save()
+        res.send({
+            message: "Review Created",
+            review: updateProduct.reviews[updateProduct.reviews.length - 1]
+        })
+    } else {
+        res.status(404).send({ message: "Product Not Found" })
+    }
+}))
+
 productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id).populate("seller", "seller.business seller.rating seller.numReviews")
     if (product) {
