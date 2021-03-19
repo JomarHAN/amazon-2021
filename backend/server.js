@@ -7,6 +7,7 @@ import orderRouter from './routers/orderRouters.js'
 import productRouter from './routers/productRouters.js'
 import path from 'path'
 import uploadRouter from './routers/uploadRouter.js'
+import draftRouter from './routers/draftRouter.js'
 
 const app = express()
 app.use(express.json())
@@ -18,6 +19,7 @@ mongoose.connect(configSecret.mongo_url, {
     useCreateIndex: true
 })
 
+app.use('/api/drafts', draftRouter)
 app.use('/api/uploads', uploadRouter)
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)

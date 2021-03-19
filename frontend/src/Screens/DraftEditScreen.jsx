@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetail, updateProduct } from "../actions/productActions";
+import { getDraftDetail, updateDraft } from "../actions/draftActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { PRODUCT_UPDATE_RESET } from "../constanst/productConstants";
 
-function ProductEditScreen(props) {
-  const productId = props.match.params.id;
+function DraftEditScreen(props) {
+  const draftId = props.match.params.id;
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image1, setImage1] = useState("");
@@ -19,36 +18,26 @@ function ProductEditScreen(props) {
   const [countInStock, setCountInStock] = useState("");
   const [description, setDescription] = useState("");
   const [fields, setFields] = useState("");
-  const { loading, error, product } = useSelector(
-    (state) => state.productDetail
-  );
-  const {
-    loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-  } = useSelector((state) => state.productUpdate);
+  const { loading, error, draft } = useSelector((state) => state.draftDetail);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    if (successUpdate) {
-      props.history.push("/productlist");
-    }
-    if (!product || successUpdate || product._id !== productId) {
-      dispatch(getProductDetail(productId));
-      dispatch({ type: PRODUCT_UPDATE_RESET });
+    if (!draft) {
+      dispatch(getDraftDetail(draftId));
     } else {
-      setName(product.name);
-      setPrice(product.price);
-      setImage1(product.imageAlbum.image1);
-      setImage2(product.imageAlbum.image2);
-      setImage3(product.imageAlbum.image3);
-      setImage4(product.imageAlbum.image4);
-      setCategory(product.category);
-      setBrand(product.brand);
-      setCountInStock(product.countInStock);
-      setDescription(product.description);
-      setFields(product.fields);
+      setName(draft.name);
+      setPrice(draft.price);
+      setImage1(draft.imageAlbum.image1);
+      setImage2(draft.imageAlbum.image2);
+      setImage3(draft.imageAlbum.image3);
+      setImage4(draft.imageAlbum.image4);
+      setCategory(draft.category);
+      setBrand(draft.brand);
+      setCountInStock(draft.countInStock);
+      setDescription(draft.description);
+      setFields(draft.fields);
     }
-  }, [dispatch, productId, product, successUpdate, props]);
+  }, [dispatch, draftId, draft]);
 
   const [loadingImage1, setLoadingImage1] = useState(false);
   const [errorImage1, setErrorImage1] = useState("");
@@ -85,11 +74,11 @@ function ProductEditScreen(props) {
       }
     };
   };
-  const submitHandler = (e) => {
+  const handleSaveDraft = (e) => {
     e.preventDefault();
     dispatch(
-      updateProduct({
-        _id: product._id,
+      updateDraft({
+        _id: draft._id,
         name,
         price,
         imageAlbum: { image1, image2, image3, image4 },
@@ -103,19 +92,15 @@ function ProductEditScreen(props) {
   };
   return (
     <div>
-      <form onSubmit={submitHandler} className="form">
+      <form className="form" onSubmit={handleSaveDraft}>
         {loading ? (
           <LoadingBox />
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <>
-            {loadingUpdate && <LoadingBox />}
-            {errorUpdate && (
-              <MessageBox variant="danger">{errorUpdate}</MessageBox>
-            )}
             <div>
-              <h1>Edit Product {product._id}</h1>
+              <h1>Edit Product {draft?._id}</h1>
             </div>
             <div>
               <label htmlFor="Name">Name</label>
@@ -244,9 +229,9 @@ function ProductEditScreen(props) {
             <div>
               <label htmlFor="Description">Description</label>
               <textarea
-                rows="3"
                 type="text"
                 id="Description"
+                rows="3"
                 placeholder="Enter Description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -255,7 +240,7 @@ function ProductEditScreen(props) {
             <div>
               <label />
               <button type="submit" className="primary">
-                Update
+                Save Draft & Preview
               </button>
             </div>
           </>
@@ -265,4 +250,4 @@ function ProductEditScreen(props) {
   );
 }
 
-export default ProductEditScreen;
+export default DraftEditScreen;

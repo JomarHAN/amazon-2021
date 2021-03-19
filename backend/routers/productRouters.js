@@ -1,6 +1,7 @@
 import express from 'express'
 import expressAsyncHandler from 'express-async-handler';
 import data from '../data.js';
+import Draft from '../models/draftModel.js';
 import Product from '../models/productModel.js';
 import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
@@ -79,28 +80,30 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     }
 }))
 
-productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
-    const product = new Product({
-        name: Date.now(),
-        imageAlbum: {
-            image1: "/Images_Template/image-1.png",
-            image2: "/Images_Template/image-2.png",
-            image3: "/Images_Template/image-3.png",
-            image4: "/Images_Template/image-4.png",
-        },
-        price: 0,
-        category: "sample category",
-        brand: "sample brand",
-        countInStock: 0,
-        rating: 0,
-        numReviews: 0,
-        description: "sample description",
-        fields: "sample fields",
-        seller: req.user._id
-    })
-    const createProduct = await product.save()
-    res.send({ product: createProduct })
-}))
+
+
+// productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
+//     const product = new Product({
+//         name: Date.now(),
+//         imageAlbum: {
+//             image1: "/Images_Template/image-1.png",
+//             image2: "/Images_Template/image-2.png",
+//             image3: "/Images_Template/image-3.png",
+//             image4: "/Images_Template/image-4.png",
+//         },
+//         price: 0,
+//         category: "sample category",
+//         brand: "sample brand",
+//         countInStock: 0,
+//         rating: 0,
+//         numReviews: 0,
+//         description: "sample description",
+//         fields: "sample fields",
+//         seller: req.user._id
+//     })
+//     const createProduct = await product.save()
+//     res.send({ product: createProduct })
+// }))
 
 
 productRouter.put('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {

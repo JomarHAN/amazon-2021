@@ -21,6 +21,12 @@ import {
     PRODUCT_REVIEW_REQUEST,
     PRODUCT_REVIEW_SUCCESS,
     PRODUCT_REVIEW_FAIL,
+    PRODUCT_DRAFT_REQUEST,
+    PRODUCT_DRAFT_SUCCESS,
+    PRODUCT_DRAFT_FAIL,
+    PRODUCT_SAVE_DRAFT_REQUEST,
+    PRODUCT_SAVE_DRAFT_SUCCESS,
+    PRODUCT_SAVE_DRAFT_FAIL,
 } from "../constanst/productConstants"
 
 export const getTopProduct = () => async (dispatch) => {
@@ -62,23 +68,6 @@ export const getProductDetail = (productId) => async (dispatch) => {
     }
 }
 
-export const createProduct = () => async (dispatch, getState) => {
-    dispatch({ type: PRODUCT_CREATE_REQUEST })
-    const { userSignin: { userInfo } } = getState()
-    try {
-        const { data } = await Axios.post('/api/products', {}, {
-            headers: {
-                Authorization: `Bearer ${userInfo.token}`
-            }
-        })
-        dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: data.product })
-    } catch (error) {
-        const message = error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        dispatch({ type: PRODUCT_CREATE_FAIL, payload: message })
-    }
-}
 
 export const updateProduct = (product) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_UPDATE_REQUEST })

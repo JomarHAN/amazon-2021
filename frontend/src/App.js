@@ -28,6 +28,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { PRODUCT_FIELDS_LIST } from "./constanst/productConstants";
 import MapScreen from "./Screens/MapScreen";
+import DraftEditScreen from "./Screens/DraftEditScreen";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -157,6 +158,11 @@ function App() {
           <SellerRoute
             path="/product/:id/edit"
             component={ProductEditScreen}
+            exact
+          />
+          <SellerRoute
+            path="/product/draft/:id"
+            component={DraftEditScreen}
             exact
           />
           <PrivateRoute path="/profile" component={ProfileScreen} exact />
