@@ -36,9 +36,12 @@ function App() {
   const handleSignout = () => {
     dispatch(signout());
   };
-  useEffect(async () => {
-    const { data } = await axios.get("/api/fields");
-    dispatch({ type: PRODUCT_FIELDS_LIST, payload: data });
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get("/api/fields");
+      dispatch({ type: PRODUCT_FIELDS_LIST, payload: data });
+    }
+    fetchData()
   }, [dispatch]);
   return (
     <Router>

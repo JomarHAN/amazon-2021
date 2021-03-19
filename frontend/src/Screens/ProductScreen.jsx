@@ -193,8 +193,7 @@ function ProductScreen(props) {
               </div>
             </div>
           </div>
-          <div>
-            <h2>Reviews</h2>
+          <div className="review">
             {product.reviews.length === 0 ? (
               <MessageBox>There is no review</MessageBox>
             ) : errorReview ? (
@@ -208,9 +207,6 @@ function ProductScreen(props) {
               <li>
                 {userInfo ? (
                   <form onSubmit={handlerSubmit} className="form">
-                    <div>
-                      <h2>Write your review</h2>
-                    </div>
                     <div>
                       <label htmlFor="rating">Rating</label>
                       <select
@@ -249,6 +245,7 @@ function ProductScreen(props) {
                   </MessageBox>
                 )}
               </li>
+              <h1>Reviews</h1>
               {product.reviews.map((review) => (
                 <li key={review._id}>
                   <strong>{review.userName}</strong>

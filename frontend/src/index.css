@@ -252,6 +252,11 @@ img.logo{
   margin: 1rem 0;
   /* display: block; */
 }
+/* Review */
+.review{
+  width: 60rem;
+  margin: 0 auto;
+}
 /* Dropdown */
 .dropdown{
   display: inline-block;
