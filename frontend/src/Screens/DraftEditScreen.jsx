@@ -4,6 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDraftDetail, updateDraft } from "../actions/draftActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import {
+  DRAFT_DETAIL_RESET,
+  DRAFT_UPDATE_RESET,
+} from "../constanst/draftConstants";
 
 function DraftEditScreen(props) {
   const draftId = props.match.params.id;
@@ -19,9 +23,18 @@ function DraftEditScreen(props) {
   const [description, setDescription] = useState("");
   const [fields, setFields] = useState("");
   const { loading, error, draft } = useSelector((state) => state.draftDetail);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = useSelector((state) => state.draftUpdate);
 
   const dispatch = useDispatch();
   useEffect(() => {
+    if (successUpdate) {
+      dispatch({ type: DRAFT_UPDATE_RESET });
+      props.history.push(`/preview/${draftId}`);
+    }
     if (!draft) {
       dispatch(getDraftDetail(draftId));
     } else {
@@ -37,7 +50,7 @@ function DraftEditScreen(props) {
       setDescription(draft.description);
       setFields(draft.fields);
     }
-  }, [dispatch, draftId, draft]);
+  }, [dispatch, draftId, draft, successUpdate, props]);
 
   const [loadingImage1, setLoadingImage1] = useState(false);
   const [errorImage1, setErrorImage1] = useState("");
@@ -93,6 +106,8 @@ function DraftEditScreen(props) {
   return (
     <div>
       <form className="form" onSubmit={handleSaveDraft}>
+        {loadingUpdate && <LoadingBox />}
+        {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
         {loading ? (
           <LoadingBox />
         ) : error ? (

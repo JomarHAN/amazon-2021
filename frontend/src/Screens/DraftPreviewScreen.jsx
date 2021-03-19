@@ -1,37 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProductDetail, commentProduct } from "../actions/productActions";
 import Rating from "../components/Rating";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { PRODUCT_REVIEW_RESET } from "../constanst/productConstants";
+import { getDraftDetail } from "../actions/draftActions";
+import { DRAFT_DETAIL_RESET } from "../constanst/draftConstants";
 
 function DraftPreviewScreen(props) {
   const productId = props.match.params.id;
   const [qty, setQty] = useState(1);
-  const { product, loading, error } = useSelector(
-    (state) => state.productDetail
-  );
+  const { draft, loading, error } = useSelector((state) => state.draftDetail);
 
   const { userInfo } = useSelector((state) => state.userSignin);
   const [imageViewing, setImageViewing] = useState("");
-  const [comment, setComment] = useState("");
-  const [rating, setRating] = useState("");
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (productId) {
-      dispatch({ type: PRODUCT_REVIEW_RESET });
-    }
-    dispatch(getProductDetail(productId));
-  }, [dispatch, productId, successReview]);
 
-  if (!product) {
+  useEffect(() => {
+    dispatch(getDraftDetail(productId));
+  }, [dispatch, productId]);
+
+  if (!draft) {
     return <div>Product Not Found</div>;
   }
-  const addToCartHandler = () => {
-    props.history.push(`/cart/${productId}?qty=${qty}`);
-  };
 
   const handleChange = (e) => {
     const images = document.querySelectorAll(".small-fixed");
@@ -41,11 +32,6 @@ function DraftPreviewScreen(props) {
     }
     document.querySelector(`#${imageIdClicked}`).classList.add("active");
     setImageViewing(e.target.attributes[0].value);
-  };
-
-  const handlerSubmit = (e) => {
-    e.preventDefault();
-    dispatch(commentProduct({ comment, rating }));
   };
 
   return (
@@ -61,15 +47,15 @@ function DraftPreviewScreen(props) {
             <div className="col-2">
               <div className="product-details">
                 <img
-                  src={imageViewing ? imageViewing : product.imageAlbum.image1}
-                  alt={product.name}
+                  src={imageViewing ? imageViewing : draft.imageAlbum.image1}
+                  alt={draft.name}
                   className="large"
                 />
                 <ul className="image-collection">
                   <li className="item-collection">
                     <img
-                      src={product.imageAlbum.image1}
-                      alt={product.name}
+                      src={draft.imageAlbum.image1}
+                      alt={draft.name}
                       className="small-fixed active"
                       id="i-1"
                       onClick={handleChange}
@@ -77,8 +63,8 @@ function DraftPreviewScreen(props) {
                   </li>
                   <li className="item-collection">
                     <img
-                      src={product.imageAlbum.image2}
-                      alt={product.name}
+                      src={draft.imageAlbum.image2}
+                      alt={draft.name}
                       className="small-fixed"
                       id="i-2"
                       onClick={handleChange}
@@ -86,8 +72,8 @@ function DraftPreviewScreen(props) {
                   </li>
                   <li className="item-collection">
                     <img
-                      src={product.imageAlbum.image3}
-                      alt={product.name}
+                      src={draft.imageAlbum.image3}
+                      alt={draft.name}
                       className="small-fixed"
                       id="i-3"
                       onClick={handleChange}
@@ -95,8 +81,8 @@ function DraftPreviewScreen(props) {
                   </li>
                   <li className="item-collection">
                     <img
-                      src={product.imageAlbum.image4}
-                      alt={product.name}
+                      src={draft.imageAlbum.image4}
+                      alt={draft.name}
                       className="small-fixed"
                       id="i-4"
                       onClick={handleChange}
@@ -108,16 +94,13 @@ function DraftPreviewScreen(props) {
             <div className="col-1">
               <ul>
                 <li>
-                  <h1>{product.name}</h1>
+                  <h1>{draft.name}</h1>
                 </li>
                 <li>
-                  <Rating
-                    rating={product.rating}
-                    numReviews={product.numReviews}
-                  />
+                  <Rating rating={draft.rating} numReviews={draft.numReviews} />
                 </li>
-                <li>Price: ${product.price.toFixed(2)}</li>
-                <li>Description: {product.description}</li>
+                <li>Price: ${draft.price.toFixed(2)}</li>
+                <li>Description: {draft.description}</li>
               </ul>
             </div>
             <div className="col-1">
@@ -126,26 +109,26 @@ function DraftPreviewScreen(props) {
                   <li>
                     <h3>
                       Seller{" "}
-                      <Link to={`/seller/${product.seller._id}`}>
-                        {product.seller.seller.business}
+                      <Link to={`/seller/${draft.seller._id}`}>
+                        {draft.seller.seller.business}
                       </Link>
                     </h3>
                     <Rating
-                      rating={product.seller.seller.rating}
-                      numReviews={product.seller.seller.numReviews}
+                      rating={draft.seller.seller.rating}
+                      numReviews={draft.seller.seller.numReviews}
                     />
                   </li>
                   <li>
                     <div className="row">
                       <div>Price</div>
-                      <div className="price">${product.price.toFixed(2)}</div>
+                      <div className="price">${draft.price.toFixed(2)}</div>
                     </div>
                   </li>
                   <li>
                     <div className="row">
                       <div>Status</div>
                       <div>
-                        {product.countInStock > 0 ? (
+                        {draft.countInStock > 0 ? (
                           <span className="success">In Stock</span>
                         ) : (
                           <span className="danger">Unavailable</span>
@@ -153,7 +136,7 @@ function DraftPreviewScreen(props) {
                       </div>
                     </div>
                   </li>
-                  {product.countInStock > 0 && (
+                  {draft.countInStock > 0 && (
                     <>
                       <li>
                         <div className="row">
@@ -163,7 +146,7 @@ function DraftPreviewScreen(props) {
                               value={qty}
                               onChange={(e) => setQty(e.target.value)}
                             >
-                              {[...Array(product.countInStock).keys()].map(
+                              {[...Array(draft.countInStock).keys()].map(
                                 (x) => (
                                   <option key={x + 1} value={x + 1}>
                                     {x + 1}
@@ -174,19 +157,31 @@ function DraftPreviewScreen(props) {
                           </div>
                         </div>
                       </li>
-                      <li>
-                        <button
-                          className="primary block"
-                          type="button"
-                          onClick={addToCartHandler}
-                        >
-                          Add to cart
-                        </button>
-                      </li>
                     </>
                   )}
                 </ul>
               </div>
+              <form className="form">
+                <div>
+                  <button type="button" className="primary block">
+                    <strong>PUBLIC</strong>
+                  </button>
+                </div>
+                <div>
+                  <button type="button" className="block">
+                    <strong>LATER</strong>
+                  </button>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="block"
+                    onClick={() => props.history.push(`/draft/${productId}`)}
+                  >
+                    <strong>EDIT</strong>
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

@@ -30,7 +30,7 @@ function ProductListScreen(props) {
 
   useEffect(() => {
     if (successDraft) {
-      props.history.push(`/product/draft/${productDraft._id}`);
+      props.history.push(`/draft/${productDraft._id}`);
       dispatch({ type: DRAFT_CREATE_RESET });
     }
     if (successDelete) {
