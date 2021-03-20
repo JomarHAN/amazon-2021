@@ -53,7 +53,10 @@ function App() {
         <header className="row">
           <div>
             <Link to="/" className="brand">
-              Amazon
+              <img
+                src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
+                alt=""
+              />
             </Link>
           </div>
           <div style={{ flex: 1 }}>
@@ -169,15 +172,8 @@ function App() {
             component={ProductEditScreen}
             exact
           />
-          <SellerRoute
-            path="/draft/:id"
-            component={DraftEditScreen}
-            exact
-          />
-          <SellerRoute
-            path="/preview/:id"
-            component={DraftPreviewScreen}
-          />
+          <SellerRoute path="/draft/:id" component={DraftEditScreen} exact />
+          <SellerRoute path="/preview/:id" component={DraftPreviewScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} exact />
           <PrivateRoute path="/map" component={MapScreen} />
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} />

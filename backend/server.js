@@ -5,7 +5,7 @@ import userRouter from './routers/userRouters.js'
 import configSecret from './config.js'
 import orderRouter from './routers/orderRouters.js'
 import productRouter from './routers/productRouters.js'
-import path, { dirname } from 'path'
+import path from 'path'
 import uploadRouter from './routers/uploadRouter.js'
 import draftRouter from './routers/draftRouter.js'
 
