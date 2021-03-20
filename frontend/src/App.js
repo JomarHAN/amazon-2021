@@ -30,6 +30,7 @@ import { PRODUCT_FIELDS_LIST } from "./constanst/productConstants";
 import MapScreen from "./Screens/MapScreen";
 import DraftEditScreen from "./Screens/DraftEditScreen";
 import DraftPreviewScreen from "./Screens/DraftPreviewScreen";
+import DraftListScreen from "./Screens/DraftListScreen";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -105,6 +106,9 @@ function App() {
                   <li>
                     <Link to="/userlist">Users</Link>
                   </li>
+                  <li>
+                    <Link to="/draftslist">Drafts</Link>
+                  </li>
                 </ul>
               </div>
             )}
@@ -119,6 +123,9 @@ function App() {
                   </li>
                   <li>
                     <Link to="/orderlist/seller">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/draftslist/seller">Drafts</Link>
                   </li>
                 </ul>
               </div>
@@ -156,6 +163,7 @@ function App() {
             component={ProductListScreen}
           />
           <SellerRoute path="/orderlist/seller" component={OrderListScreen} />
+          <SellerRoute path="/draftslist/seller" component={DraftListScreen} />
           <SellerRoute
             path="/product/:id/edit"
             component={ProductEditScreen}
@@ -176,6 +184,7 @@ function App() {
           <AdminRoute path="/productlist" component={ProductListScreen} exact />
           <AdminRoute path="/orderlist" component={OrderListScreen} exact />
           <AdminRoute path="/userlist" component={UserListScreen} />
+          <AdminRoute path="/draftslist" component={DraftListScreen} exact />
           <Route path="/" component={HomeScreen} exact />
         </main>
         <footer className="row center">All right reserved</footer>

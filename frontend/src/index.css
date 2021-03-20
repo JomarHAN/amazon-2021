@@ -86,6 +86,16 @@ button.block{
 button.small{
   font-size: 1.2rem;
 }
+button.public{
+  background-color: green;
+  color: whitesmoke;
+  font-weight: bold;
+}
+button.delete{
+  background-color: rgb(250, 78, 78);
+  color: whitesmoke;
+  font-weight: bold;
+}
 /* Header */
 header a{
   color: #ffffff;

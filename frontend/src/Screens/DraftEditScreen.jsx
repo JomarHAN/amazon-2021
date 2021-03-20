@@ -35,7 +35,7 @@ function DraftEditScreen(props) {
       dispatch({ type: DRAFT_UPDATE_RESET });
       props.history.push(`/preview/${draftId}`);
     }
-    if (!draft) {
+    if (!draft || draft._id !== draftId) {
       dispatch(getDraftDetail(draftId));
     } else {
       setName(draft.name);

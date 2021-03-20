@@ -82,28 +82,28 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
 
 
 
-// productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
-//     const product = new Product({
-//         name: Date.now(),
-//         imageAlbum: {
-//             image1: "/Images_Template/image-1.png",
-//             image2: "/Images_Template/image-2.png",
-//             image3: "/Images_Template/image-3.png",
-//             image4: "/Images_Template/image-4.png",
-//         },
-//         price: 0,
-//         category: "sample category",
-//         brand: "sample brand",
-//         countInStock: 0,
-//         rating: 0,
-//         numReviews: 0,
-//         description: "sample description",
-//         fields: "sample fields",
-//         seller: req.user._id
-//     })
-//     const createProduct = await product.save()
-//     res.send({ product: createProduct })
-// }))
+productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
+    const product = new Product({
+        name: req.body.name,
+        imageAlbum: {
+            image1: req.body.imageAlbum.image1,
+            image2: req.body.imageAlbum.image2,
+            image3: req.body.imageAlbum.image3,
+            image4: req.body.imageAlbum.image4,
+        },
+        price: Number(req.body.price),
+        category: req.body.category,
+        brand: req.body.brand,
+        countInStock: Number(req.body.countInStock),
+        rating: Number(req.body.rating),
+        numReviews: Number(req.body.numReviews),
+        description: req.body.description,
+        fields: req.body.fields,
+        seller: req.user._id
+    })
+    const createProduct = await product.save()
+    res.send({ product: createProduct })
+}))
 
 
 productRouter.put('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {

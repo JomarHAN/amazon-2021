@@ -63,4 +63,23 @@ draftRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, r
     res.send(newDraft)
 }))
 
+draftRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
+    const seller = req.query.seller
+    const filterSeller = seller ? { seller: seller } : {}
+    const drafts = await Draft.find({ ...filterSeller }).populate('seller', 'name')
+    if (drafts) {
+        res.send(drafts)
+    } else {
+        res.status(404).send({ message: "No Drafts Found" })
+    }
+}))
+
+draftRouter.delete('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
+    const draft = await Draft.findById(req.params.id)
+    if (draft) {
+        const draftRemove = await draft.remove()
+        res.send(draftRemove)
+    }
+}))
+
 export default draftRouter;
