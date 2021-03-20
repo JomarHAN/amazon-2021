@@ -5,7 +5,7 @@ import userRouter from './routers/userRouters.js'
 import configSecret from './config.js'
 import orderRouter from './routers/orderRouters.js'
 import productRouter from './routers/productRouters.js'
-import path from 'path'
+import path, { dirname } from 'path'
 import uploadRouter from './routers/uploadRouter.js'
 import draftRouter from './routers/draftRouter.js'
 
@@ -35,6 +35,12 @@ app.get('/api/config/googlemap', (req, res) => {
 })
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+
+app.use(express.static(path.join(__dirname, '/frontend/build')))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
+})
+
 app.get('/', (req, res) => {
     res.send('Server is ready')
 })

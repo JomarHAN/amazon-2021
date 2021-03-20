@@ -5,6 +5,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build": "cd frontend && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,5 +32,6 @@
   },
   "devDependencies": {
     "eslint": "^7.21.0"
-  }
+  },
+  "engines": {"node": "12.4.0", "npm":"6.9.0"}
 }
