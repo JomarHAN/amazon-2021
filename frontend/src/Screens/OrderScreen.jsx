@@ -173,7 +173,7 @@ function OrderScreen(props) {
                     <strong>Total</strong>
                   </div>
                   <div>
-                    <strong>{order.totalPrice.toFixed(2)}</strong>
+                    <strong>${order.totalPrice.toFixed(2)}</strong>
                   </div>
                 </div>
               </li>

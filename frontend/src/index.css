@@ -123,6 +123,9 @@ a.brand{
 }
 .col-1{
   flex: 1 1 25rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 .col-2{
   flex: 2 1 50rem;
@@ -153,15 +156,14 @@ img.small{
   width: 100%;
 }
 img.medium{
-  /* max-width: 29rem;
+  max-width: 25rem;
   width: 100%;
-  max-height: 39rem;
-   */
-   width: 20rem;
-   height: 25rem;
+  /* max-height: 28rem; */
+  
 }
 img.large{
   width: 50%;
+  /* height: 50rem; */
 }
 .product-details{
   display: flex;
@@ -172,9 +174,12 @@ img.large{
   display: flex;
   flex-direction: column;
   flex: 0.9;
+  justify-content: space-between;
 }
 .item-collection{
-  flex: 1
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 img.small-fixed.active{
   border: 5px #20a020 solid;
@@ -210,6 +215,8 @@ img.logo{
   background-color: #f8f8f8;
   border-radius: 0.5rem;
   margin: 1rem;
+  /* width: 25rem;
+  height: 44rem; */
 }
 .card-body{
   padding: 1rem;
