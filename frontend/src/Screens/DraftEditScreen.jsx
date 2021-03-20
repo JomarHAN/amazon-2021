@@ -4,10 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDraftDetail, updateDraft } from "../actions/draftActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import {
-  DRAFT_DETAIL_RESET,
-  DRAFT_UPDATE_RESET,
-} from "../constanst/draftConstants";
+import { DRAFT_UPDATE_RESET } from "../constanst/draftConstants";
 
 function DraftEditScreen(props) {
   const draftId = props.match.params.id;
@@ -28,7 +25,7 @@ function DraftEditScreen(props) {
     error: errorUpdate,
     success: successUpdate,
   } = useSelector((state) => state.draftUpdate);
-
+  const { fields: pFields } = useSelector((state) => state.productFields);
   const dispatch = useDispatch();
   useEffect(() => {
     if (successUpdate) {
@@ -203,13 +200,24 @@ function DraftEditScreen(props) {
             </div>
             <div>
               <label htmlFor="Fields">Fields</label>
-              <input
+              {/* <input
                 type="text"
                 id="Fields"
                 placeholder="Enter Fields"
                 value={fields}
                 onChange={(e) => setFields(e.target.value)}
-              />
+              /> */}
+              <select
+                value={fields}
+                onChange={(e) => setFields(e.target.value)}
+              >
+                <option value="">Select...</option>
+                {pFields?.map((f) => (
+                  <option value={f} key={f}>
+                    {f}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label htmlFor="Category">Category</label>

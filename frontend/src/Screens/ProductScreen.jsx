@@ -54,7 +54,6 @@ function ProductScreen(props) {
 
   return (
     <div>
-      <Link to="/">Back to result</Link>
       {loading ? (
         <LoadingBox />
       ) : error ? (

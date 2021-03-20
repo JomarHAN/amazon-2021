@@ -153,8 +153,12 @@ img.small{
   width: 100%;
 }
 img.medium{
-  max-width: 29rem;
+  /* max-width: 29rem;
   width: 100%;
+  max-height: 39rem;
+   */
+   width: 20rem;
+   height: 25rem;
 }
 img.large{
   width: 50%;
@@ -319,6 +323,7 @@ img.logo{
 /* Carousel */
 .carousel .slide img{
   max-width: 30rem;
+  height: 40rem;
 }
 .carousel .slide{
   background-color: lightgray;
