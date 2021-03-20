@@ -26,6 +26,8 @@ function ProductScreen(props) {
   useEffect(() => {
     if (successReview || productId) {
       dispatch({ type: PRODUCT_REVIEW_RESET });
+      setComment("");
+      setRating("");
     }
     dispatch(getProductDetail(productId));
   }, [dispatch, productId, successReview]);
