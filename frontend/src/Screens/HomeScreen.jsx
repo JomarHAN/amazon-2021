@@ -22,7 +22,7 @@ function HomeScreen() {
     dispatch(getListProducts({}));
     dispatch(getTopProduct());
   }, [dispatch]);
-
+  console.log(products);
   return (
     <div>
       {loadingTopSell ? (

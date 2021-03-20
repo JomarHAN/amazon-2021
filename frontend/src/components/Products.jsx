@@ -18,7 +18,7 @@ function Products(props) {
           <div className="price">${product.price.toFixed(2)}</div>
           <div>
             <Link to={`/seller/${product.seller._id}`}>
-              <strong>{product.seller.seller.business}</strong>
+              <strong>{product.seller.seller?.business}</strong>
             </Link>
           </div>
         </div>

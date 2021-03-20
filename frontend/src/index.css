@@ -127,9 +127,6 @@ a.brand img{
 }
 .col-1{
   flex: 1 1 25rem;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
 }
 .col-2{
   flex: 2 1 50rem;
