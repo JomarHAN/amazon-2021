@@ -31,7 +31,7 @@ function UserEditScreen(props) {
       dispatch({ type: USER_ADMIN_UPDATE_RESET });
       props.history.push("/userlist");
     }
-    if (!user || user._id !== userId) {
+    if (!user || user._id !== userId || successUpdate) {
       dispatch(getUserProfile(userId));
     } else {
       setName(user.name);
