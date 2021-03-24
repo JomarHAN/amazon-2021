@@ -150,8 +150,13 @@ function ProductScreen(props) {
                     <div className="row">
                       <div>Status</div>
                       <div>
-                        {product.countInStock > 0 ? (
+                        {product.countInStock > 5 ? (
                           <span className="success">In Stock</span>
+                        ) : product.countInStock > 0 &&
+                          product.countInStock <= 5 ? (
+                          <span className="danger">
+                            {product.countInStock} items left
+                          </span>
                         ) : (
                           <span className="danger">Unavailable</span>
                         )}

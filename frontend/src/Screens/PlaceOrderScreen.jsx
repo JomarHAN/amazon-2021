@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createOrder } from "../actions/orderActions";
+import { recountProductStock } from "../actions/productActions";
 import CheckoutStep from "../components/CheckoutStep";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -9,6 +10,7 @@ import { ORDER_CREATE_RESET } from "../constanst/orderConstants";
 
 function PlaceOrderScreen(props) {
   const cart = useSelector((state) => state.cart);
+
   if (!cart.paymentMethod) {
     props.history.push("/payment");
   }
@@ -33,6 +35,7 @@ function PlaceOrderScreen(props) {
   useEffect(() => {
     if (success) {
       dispatch({ type: ORDER_CREATE_RESET });
+      dispatch(recountProductStock(cart.cartItems));
       props.history.push(`/order/${order._id}`);
     }
   }, [dispatch, props, order, success]);
