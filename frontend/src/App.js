@@ -31,6 +31,7 @@ import MapScreen from "./Screens/MapScreen";
 import DraftEditScreen from "./Screens/DraftEditScreen";
 import DraftPreviewScreen from "./Screens/DraftPreviewScreen";
 import DraftListScreen from "./Screens/DraftListScreen";
+import DashboardScreen from "./Screens/DashboardScreen";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -97,9 +98,9 @@ function App() {
                   Admin <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
-                  {/* <li>
+                  <li>
                     <Link to="/dashboard">Dashboard</Link>
-                  </li> */}
+                  </li>
                   <li>
                     <Link to="/productlist">Products</Link>
                   </li>
@@ -181,6 +182,7 @@ function App() {
           <AdminRoute path="/orderlist" component={OrderListScreen} exact />
           <AdminRoute path="/userlist" component={UserListScreen} />
           <AdminRoute path="/draftslist" component={DraftListScreen} exact />
+          <AdminRoute path="/dashboard" component={DashboardScreen} />
           <Route path="/" component={HomeScreen} exact />
         </main>
         <footer className="row center">All right reserved</footer>
