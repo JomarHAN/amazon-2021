@@ -38,7 +38,7 @@ function PlaceOrderScreen(props) {
       dispatch(recountProductStock(cart.cartItems));
       props.history.push(`/order/${order._id}`);
     }
-  }, [dispatch, props, order, success]);
+  }, [dispatch, props, order, success, cart]);
 
   return (
     <div>

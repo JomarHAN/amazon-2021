@@ -18,9 +18,6 @@ import {
     PRODUCT_REVIEW_REQUEST,
     PRODUCT_REVIEW_SUCCESS,
     PRODUCT_REVIEW_FAIL,
-    PRODUCT_RECOUNT_REQUEST,
-    PRODUCT_RECOUNT_SUCCESS,
-    PRODUCT_RECOUNT_FAIL,
 } from "../constanst/productConstants"
 
 export const getTopProduct = () => async (dispatch) => {
@@ -120,6 +117,6 @@ export const commentProduct = (review) => async (dispatch, getState) => {
 
 export const recountProductStock = (products) => async () => {
     products.map(async (p) => {
-        const { data } = await Axios.put('/api/products/recount', p)
+        await Axios.put('/api/products/recount', p)
     })
 }
