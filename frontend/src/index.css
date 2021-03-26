@@ -394,15 +394,37 @@ a.active{
 }
 
 /* Dashboard */
+.dashboard{
+  padding: 0;
+}
 .card-dashboard{
   border: 0.1rem solid #c0c0c0;
   background-color: #f8f8f8;
   border-radius: 0.5rem;
   margin: 1rem;
   flex: 1;
-  height: 17rem;
+  height: 16rem;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.card-dashboard h3{
+.chartjs-render-monitor{
+  height: 125px !important;
+  width: 265px !important;
+}
+.title-card{
   margin: 0;
+  font-size: 2rem;
+}
+.today-card{
+  font-size: 3rem;
+}
+.week-card{
+  font-size: 2rem;
+  color: rgb(136, 136, 136);
+}
+.subOrder{
+  font-weight: bold;
+  font-size: 1.5rem;
 }

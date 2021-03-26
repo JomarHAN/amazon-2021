@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Pie, Doughnut } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
+import TopCardChart from "./TopCardChart";
+import TopCardIncome from "./TopCardIncome";
 
 function DashboardScreen() {
   const { userInfo } = useSelector((state) => state.userSignin);
@@ -22,42 +24,23 @@ function DashboardScreen() {
   };
   return (
     <div>
-      <h1 className="dashboard">Dashboard of {userInfo.name}</h1>
+      <h1 className="dashboard">{userInfo.name}'s Dashboard</h1>
       <div className="row">
-        <div className="card-dashboard">
-          <h3>Earning</h3>
-          <h2>
-            Today: <span>$1,000</span>
-          </h2>
-          <small>
-            This Week: <span>$2,900</span>
-          </small>
-        </div>
-        <div className="card-dashboard">
-          <h3>Orders</h3>
-          <h2>
-            Today: <span>12 orders</span>
-          </h2>
-          <small>
-            This Week: <span>20 orders</span>
-          </small>
-        </div>
-        <div className="card-dashboard">
-          <h3>Paid Orders</h3>
-          <Pie data={dataPaid} />
-          <div className="row">
-            <small className="done">Paid: 10</small>
-            <small className="notyet">Not Paid: 5</small>
-          </div>
-        </div>
-        <div className="card-dashboard">
-          <h3>Delivered Orders</h3>
-          <Doughnut data={dataDelivered} />
-          <div className="row">
-            <small className="done">Delivered: 10</small>
-            <small className="notyet">Not Develiverd: 5</small>
-          </div>
-        </div>
+        <TopCardIncome title="Earning" today={`$1000`} week={`$2900`} />
+        <TopCardIncome title="Orders" today={`12 orders`} week={`20 orders`} />
+
+        <TopCardChart
+          title="Paid Order"
+          dataChart={dataPaid}
+          subDone={10}
+          subNotDone={5}
+        />
+        <TopCardChart
+          title="Delivered Order"
+          dataChart={dataDelivered}
+          subDone={10}
+          subNotDone={5}
+        />
       </div>
     </div>
   );
