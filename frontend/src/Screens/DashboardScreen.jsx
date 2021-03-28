@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { dashboardCards } from "../actions/dashboardActions";
+import { getDashboardCardsInfo } from "../actions/dashboardActions";
 import { getOrderList } from "../actions/orderActions";
 import TopCardChart from "./TopCardChart";
 import TopCardIncome from "./TopCardIncome";
@@ -11,18 +11,25 @@ function DashboardScreen() {
   const mo = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
   const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
   const today = `${ye}-${mo}-${da}`;
-  // const { orders } = useSelector((state) => state.orderList);
+  const { orders } = useSelector((state) => state.orderList);
   const { userInfo } = useSelector((state) => state.userSignin);
+  const { cardDashboard } = useSelector((state) => state.dashboardCards);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getOrderList({}));
-    dispatch(dashboardCards(today));
-  }, [dispatch, today]);
+    if (!orders) {
+      dispatch(getOrderList({}));
+    } else {
+      dispatch(getDashboardCardsInfo(today));
+    }
+  }, [dispatch, today, orders]);
   const dataPaid = {
     datasets: [
       {
-        data: [70, 30],
+        data: [
+          cardDashboard.paidOrders,
+          cardDashboard.totalOrders - cardDashboard.paidOrders,
+        ],
         backgroundColor: ["lightgreen", "lightgray"],
       },
     ],
@@ -30,7 +37,10 @@ function DashboardScreen() {
   const dataDelivered = {
     datasets: [
       {
-        data: [80, 20],
+        data: [
+          cardDashboard.deliveredOrders,
+          cardDashboard.totalOrders - cardDashboard.deliveredOrders,
+        ],
         backgroundColor: ["lightblue", "lightgray"],
       },
     ],
@@ -39,20 +49,29 @@ function DashboardScreen() {
     <div>
       <h1 className="dashboard">{userInfo.name}'s Dashboard</h1>
       <div className="row">
-        <TopCardIncome title="Earning" today={`$1000`} week={`$2900`} />
-        <TopCardIncome title="Orders" today={`12 orders`} week={`20 orders`} />
+        <TopCardIncome
+          title="Earning"
+          today={`$${cardDashboard.todayIncome.toFixed(2)}`}
+          week={`$${cardDashboard.totalIncome.toFixed(2)}`}
+        />
+        <TopCardIncome
+          title="Orders"
+          today={`${cardDashboard.todayOrders} orders`}
+          week={`${cardDashboard.totalOrders} orders`}
+        />
 
         <TopCardChart
           title="Paid Order"
           dataChart={dataPaid}
-          subDone={10}
-          subNotDone={5}
+          subDone={cardDashboard.paidOrders}
+          subNotDone={cardDashboard.totalOrders - cardDashboard.paidOrders}
+          Paid
         />
         <TopCardChart
           title="Delivered Order"
           dataChart={dataDelivered}
-          subDone={10}
-          subNotDone={5}
+          subDone={cardDashboard.deliveredOrders}
+          subNotDone={cardDashboard.totalOrders - cardDashboard.deliveredOrders}
         />
       </div>
     </div>
