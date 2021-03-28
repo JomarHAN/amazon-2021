@@ -5,7 +5,8 @@ import { getOrderList } from "../actions/orderActions";
 import TopCardChart from "./TopCardChart";
 import TopCardIncome from "./TopCardIncome";
 
-function DashboardScreen() {
+function DashboardScreen(props) {
+  const dashboard = props.location.pathname.indexOf("/dashboard") > 0;
   const d = new Date();
   const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
   const mo = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
@@ -14,8 +15,8 @@ function DashboardScreen() {
   const { orders } = useSelector((state) => state.orderList);
   const { userInfo } = useSelector((state) => state.userSignin);
   const { cardDashboard } = useSelector((state) => state.dashboardCards);
-
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (!orders) {
       dispatch(getOrderList({}));
@@ -33,8 +34,10 @@ function DashboardScreen() {
         backgroundColor: ["lightgreen", "lightgray"],
       },
     ],
+    labels: ["Paid", "Not"],
   };
   const dataDelivered = {
+    labels: ["Delivered", "Not"],
     datasets: [
       {
         data: [
@@ -51,8 +54,8 @@ function DashboardScreen() {
       <div className="row">
         <TopCardIncome
           title="Earning"
-          today={`$${cardDashboard.todayIncome.toFixed(2)}`}
-          week={`$${cardDashboard.totalIncome.toFixed(2)}`}
+          today={`$${cardDashboard?.todayIncome?.toFixed(2)}`}
+          week={`$${cardDashboard?.totalIncome?.toFixed(2)}`}
         />
         <TopCardIncome
           title="Orders"

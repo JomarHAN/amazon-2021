@@ -1,4 +1,4 @@
-import { DASHBOARD_CARDS_INFO_REQUEST } from "../constanst/dashboardConstants";
+import { DASHBOARD_CARDS_INFO_REQUEST, DASHBOARD_CARDS_INFO_RESET } from "../constanst/dashboardConstants";
 
 export const dashboardCardsReducer = (state = { cardDashboard: {} }, action) => {
     switch (action.type) {
@@ -21,6 +21,11 @@ export const dashboardCardsReducer = (state = { cardDashboard: {} }, action) => 
                     totalIncome,
                     todayIncome
                 }
+            }
+        case DASHBOARD_CARDS_INFO_RESET:
+            return {
+                ...state,
+                cardDashboard: {}
             }
         default:
             return state;

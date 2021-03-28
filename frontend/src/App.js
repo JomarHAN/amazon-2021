@@ -99,7 +99,7 @@ function App() {
                 </Link>
                 <ul className="dropdown-content">
                   <li>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link to="/private/dashboard">Dashboard</Link>
                   </li>
                   <li>
                     <Link to="/productlist">Products</Link>
@@ -182,7 +182,7 @@ function App() {
           <AdminRoute path="/orderlist" component={OrderListScreen} exact />
           <AdminRoute path="/userlist" component={UserListScreen} />
           <AdminRoute path="/draftslist" component={DraftListScreen} exact />
-          <AdminRoute path="/dashboard" component={DashboardScreen} />
+          <AdminRoute path="/private/dashboard" component={DashboardScreen} />
           <Route path="/" component={HomeScreen} exact />
         </main>
         <footer className="row center">All right reserved</footer>
