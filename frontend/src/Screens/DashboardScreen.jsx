@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDashboardCardsInfo } from "../actions/dashboardActions";
 import { getOrderList } from "../actions/orderActions";
@@ -6,7 +6,7 @@ import TopCardChart from "./TopCardChart";
 import TopCardIncome from "./TopCardIncome";
 
 function DashboardScreen(props) {
-  const dashboard = props.location.pathname.indexOf("/dashboard") > 0;
+  const [isDashboard, setIsDashboard] = useState(false);
   const d = new Date();
   const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
   const mo = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
@@ -18,12 +18,13 @@ function DashboardScreen(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!orders) {
+    if (!orders || !isDashboard) {
       dispatch(getOrderList({}));
+      setIsDashboard(true);
     } else {
       dispatch(getDashboardCardsInfo(today));
     }
-  }, [dispatch, today, orders]);
+  }, [dispatch, today, orders, isDashboard]);
   const dataPaid = {
     datasets: [
       {
