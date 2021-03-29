@@ -55,13 +55,15 @@ function DashboardScreen(props) {
       <div className="row">
         <TopCardIncome
           title="Earning"
-          today={`$${cardDashboard?.todayIncome?.toFixed(2)}`}
-          week={`$${cardDashboard?.totalIncome?.toFixed(2)}`}
+          today={`$${cardDashboard.todayIncome?.toFixed(2)}`}
+          week={`$${cardDashboard.totalIncome?.toFixed(2)}`}
+          green={cardDashboard.todayIncome}
         />
         <TopCardIncome
           title="Orders"
           today={`${cardDashboard.todayOrders} orders`}
           week={`${cardDashboard.totalOrders} orders`}
+          green={cardDashboard.todayOrders}
         />
 
         <TopCardChart
