@@ -1,7 +1,6 @@
 import React from "react";
 
 function TopCardIncome({ title, today, week, green }) {
-  console.log(today);
   return (
     <div className="card-dashboard">
       <h3 className="title-card">{title}</h3>
