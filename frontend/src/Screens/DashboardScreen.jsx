@@ -31,7 +31,6 @@ function DashboardScreen(props) {
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [
       {
-        label: "# of Votes",
         data: [12, 19, 3, 5, 2, 3],
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
@@ -97,15 +96,15 @@ function DashboardScreen(props) {
       </div>
       <div className="row">
         <div className="tableChart-dashboard">
-          <h3>Income</h3>
+          <h1>Income</h1>
           <Bar data={data} options={options} />
         </div>
         <div className="tableChart-dashboard">
-          <h3>Orders</h3>
+          <h1>Orders</h1>
           <Bar data={data} options={options} />
         </div>
         <div className="tableChart-dashboard">
-          <h3>Products Trending</h3>
+          <h1>Products Trending</h1>
           <Bar data={data} options={options} />
         </div>
       </div>

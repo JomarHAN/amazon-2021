@@ -409,7 +409,7 @@ a.active{
   flex-direction: column;
   justify-content: space-between;
 }
-.chartjs-render-monitor{
+.card-dashboard .chartjs-render-monitor{
   height: 125px !important;
   width: 265px !important;
 }
@@ -436,5 +436,7 @@ a.active{
   flex: 1;
   height: 25rem;
   padding: 2rem;
-
+}
+.tableChart-dashboard h1{
+  margin: 0;
 }
