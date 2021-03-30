@@ -428,3 +428,13 @@ a.active{
   font-weight: bold;
   font-size: 1.5rem;
 }
+.tableChart-dashboard{
+  border: 0.1rem solid #c0c0c0;
+  background-color: #f8f8f8;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  flex: 1;
+  height: 25rem;
+  padding: 2rem;
+
+}
