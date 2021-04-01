@@ -1,21 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WeeklyChart from "./WeekIncomeChart";
 
 function WeekDashboardScreen() {
-  const d = new Date();
-  const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
-  const mo = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
-  const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
-  console.log(d.getDate());
+  const [first, setFirst] = useState(1);
+  const [last, setLast] = useState(7);
+  const [mon, setMon] = useState();
+  const [sun, setSun] = useState();
+  const getDay = (num) => {
+    const curr = new Date();
+    const day = curr.getDate() - curr.getDay() + num;
+    return new Date(curr.setDate(day)).toLocaleString().split(",")[0];
+  };
+
+  useEffect(() => {
+    setMon(getDay(first));
+    setSun(getDay(last));
+  }, [getDay, first, last]);
+
   return (
     <div className="weekly">
       <div className="row">
         <div className="change-week">
-          <button>
+          <button
+            type="button"
+            onClick={() => {
+              setFirst(first - 7);
+              setLast(last - 7);
+            }}
+          >
             <i className="fa fa-caret-left"></i>
           </button>
-          <h1>03/29/2021</h1> - <h1>04/04/2021</h1>
-          <button>
+          <h1>{mon}</h1> - <h1>{sun}</h1>
+          <button
+            type="button"
+            onClick={() => {
+              setFirst(first + 7);
+              setLast(last + 7);
+            }}
+          >
             <i className="fa fa-caret-right"></i>
           </button>
         </div>
