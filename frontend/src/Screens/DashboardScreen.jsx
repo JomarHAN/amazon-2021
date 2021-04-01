@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { getDashboardCardsInfo } from "../actions/dashboardActions";
 import { getOrderList } from "../actions/orderActions";
-import TopCardChart from "./TopCardChart";
-import TopCardIncome from "./TopCardIncome";
+import TodayDashboardScreen from "./TodayDashboardScreen";
+
 import WeekDashboardScreen from "./WeekDashboardScreen";
 
 function DashboardScreen() {
@@ -16,7 +15,7 @@ function DashboardScreen() {
   const today = `${ye}-${mo}-${da}`;
   const { orders } = useSelector((state) => state.orderList);
   const { userInfo } = useSelector((state) => state.userSignin);
-  const { cardDashboard } = useSelector((state) => state.dashboardCards);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,32 +30,7 @@ function DashboardScreen() {
   return (
     <div>
       <h1 className="dashboard">{userInfo.name}'s Dashboard</h1>
-      <div className="row">
-        <TopCardIncome
-          title="Earning"
-          today={`$${cardDashboard.todayIncome?.toFixed(2)}`}
-          week={`$${cardDashboard.totalIncome?.toFixed(2)}`}
-          green={cardDashboard.todayIncome}
-        />
-        <TopCardIncome
-          title="Orders"
-          today={`${cardDashboard.todayOrders} orders`}
-          week={`${cardDashboard.totalOrders} orders`}
-          green={cardDashboard.todayOrders}
-        />
-
-        <TopCardChart
-          title="Paid Order"
-          subDone={cardDashboard.paidOrders}
-          subNotDone={cardDashboard.totalOrders - cardDashboard.paidOrders}
-          Paid
-        />
-        <TopCardChart
-          title="Delivered Order"
-          subDone={cardDashboard.deliveredOrders}
-          subNotDone={cardDashboard.totalOrders - cardDashboard.deliveredOrders}
-        />
-      </div>
+      <TodayDashboardScreen />
       <WeekDashboardScreen />
     </div>
   );
