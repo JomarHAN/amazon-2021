@@ -1,8 +1,8 @@
 import React from "react";
-import { Pie } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 
-function TopChart({ title, dataChart, subDone, subNotDone, Paid }) {
+function TopChart({ title, subDone, subNotDone, Paid }) {
   const { cardDashboard } = useSelector((state) => state.dashboardCards);
   const data = {
     dataPaid: {
@@ -33,7 +33,7 @@ function TopChart({ title, dataChart, subDone, subNotDone, Paid }) {
   return (
     <div className="card-dashboard">
       <h3 className="title-card">{title}</h3>
-      <Pie data={Paid ? data.dataPaid : data.dataDelivered} />
+      <Doughnut data={Paid ? data.dataPaid : data.dataDelivered} />
       <div className="row">
         <small className="subOrder">
           {Paid ? "Paid" : "Delivered"}: {subDone}
