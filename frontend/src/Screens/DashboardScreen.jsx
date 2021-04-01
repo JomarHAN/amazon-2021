@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDashboardCardsInfo } from "../actions/dashboardActions";
@@ -8,11 +9,8 @@ import WeekDashboardScreen from "./WeekDashboardScreen";
 
 function DashboardScreen() {
   const [isDashboard, setIsDashboard] = useState(false);
-  const d = new Date();
-  const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
-  const mo = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
-  const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
-  const today = `${ye}-${mo}-${da}`;
+  const today = moment().format("YYYY-MM-DD");
+
   const { orders } = useSelector((state) => state.orderList);
   const { userInfo } = useSelector((state) => state.userSignin);
 
