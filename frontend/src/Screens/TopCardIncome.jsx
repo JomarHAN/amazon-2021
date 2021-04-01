@@ -7,7 +7,7 @@ function TopCardIncome({ title, today, week, green }) {
       <h2 className="today-card">
         Today: <span className={green > 0 && "success"}>+{today}</span>
       </h2>
-      <small className="week-card">
+      <small className="total-card">
         Total Income: <span>{week}</span>
       </small>
     </div>

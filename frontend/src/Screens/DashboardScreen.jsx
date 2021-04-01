@@ -31,6 +31,7 @@ function DashboardScreen() {
     <div>
       <h1 className="dashboard">{userInfo.name}'s Dashboard</h1>
       <TodayDashboardScreen />
+      <hr />
       <WeekDashboardScreen />
     </div>
   );

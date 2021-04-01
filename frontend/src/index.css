@@ -420,7 +420,7 @@ a.active{
 .today-card{
   font-size: 3rem;
 }
-.week-card{
+.total-card{
   font-size: 2rem;
   color: rgb(136, 136, 136);
 }
@@ -438,4 +438,22 @@ a.active{
 }
 .tableChart-dashboard h1{
   margin: 0;
+}
+
+.change-week{
+  margin: 0 80rem;
+}
+.change-week button{
+  border: none;
+  outline-width: 0;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgb(198, 230, 250);
+}
+.change-week button:hover{
+  background-color: rgb(159, 217, 253);
 }
