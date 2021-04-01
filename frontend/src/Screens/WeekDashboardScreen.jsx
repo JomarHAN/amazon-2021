@@ -8,8 +8,6 @@ function WeekDashboardScreen() {
   const [mon, setMon] = useState();
   const [sun, setSun] = useState();
 
-  //   console.log(moment().subtract(0, "days").format("L"));
-
   useEffect(() => {
     const getDay = (num) => {
       const day = moment().get("date") - moment().get("day") + num;
@@ -20,6 +18,11 @@ function WeekDashboardScreen() {
     setSun(getDay(last));
   }, [first, last]);
 
+  const onChangeWeek = (num) => {
+    setFirst(first + num);
+    setLast(last + num);
+  };
+
   return (
     <div className="weekly">
       <div className="row">
@@ -27,8 +30,7 @@ function WeekDashboardScreen() {
           <button
             type="button"
             onClick={() => {
-              setFirst(first - 7);
-              setLast(last - 7);
+              onChangeWeek(-7);
             }}
           >
             <i className="fa fa-caret-left"></i>
@@ -37,8 +39,7 @@ function WeekDashboardScreen() {
           <button
             type="button"
             onClick={() => {
-              setFirst(first + 7);
-              setLast(last + 7);
+              onChangeWeek(7);
             }}
           >
             <i className="fa fa-caret-right"></i>
