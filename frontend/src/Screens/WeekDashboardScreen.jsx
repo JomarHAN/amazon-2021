@@ -6,16 +6,17 @@ function WeekDashboardScreen() {
   const [last, setLast] = useState(7);
   const [mon, setMon] = useState();
   const [sun, setSun] = useState();
-  const getDay = (num) => {
-    const curr = new Date();
-    const day = curr.getDate() - curr.getDay() + num;
-    return new Date(curr.setDate(day)).toLocaleString().split(",")[0];
-  };
 
   useEffect(() => {
+    const getDay = (num) => {
+      const curr = new Date();
+      const day = curr.getDate() - curr.getDay() + num;
+      const result = new Date(curr.setDate(day)).toLocaleString().split(",")[0];
+      return result;
+    };
     setMon(getDay(first));
     setSun(getDay(last));
-  }, [getDay, first, last]);
+  }, [first, last]);
 
   return (
     <div className="weekly">
