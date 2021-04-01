@@ -441,7 +441,11 @@ a.active{
 }
 
 .change-week{
-  margin: 0 80rem;
+  width: 30rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
 }
 .change-week button{
   border: none;
