@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeekBussiness } from "../actions/dashboardActions";
 import BarChart from "./BarChart";
+import LineChart from "./LineChart";
 import StackedChart from "./StackedChart";
 
 function WeekDashboardScreen() {
@@ -67,7 +68,7 @@ function WeekDashboardScreen() {
       <div className="row">
         <BarChart title="Income" orders={orders} />
         <StackedChart title="Orders" />
-        <BarChart title="Products Trending" />
+        <LineChart title="Products Trending" />
       </div>
     </div>
   );
