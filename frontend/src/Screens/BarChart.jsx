@@ -46,7 +46,7 @@ function BarChart({ title, orders }) {
   };
   return (
     <div className="tableChart-dashboard">
-      <h1>Income</h1>
+      <h1>{title}</h1>
       <Bar data={data} options={options} />
     </div>
   );
