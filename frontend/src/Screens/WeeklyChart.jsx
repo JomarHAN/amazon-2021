@@ -1,7 +1,8 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 
-function WeeklyChart({ title }) {
+function WeeklyChart({ title, orders }) {
+  console.log(orders);
   const data = {
     labels: [
       "Monday",

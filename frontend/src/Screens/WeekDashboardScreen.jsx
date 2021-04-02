@@ -2,7 +2,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeekBussiness } from "../actions/dashboardActions";
-import WeeklyChart from "./WeekIncomeChart";
+import WeeklyChart from "./WeeklyChart";
 
 function WeekDashboardScreen() {
   const [first, setFirst] = useState(1);
