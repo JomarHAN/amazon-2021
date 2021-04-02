@@ -1,26 +1,36 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getWeekBussiness } from "../actions/dashboardActions";
 import WeeklyChart from "./WeekIncomeChart";
 
 function WeekDashboardScreen() {
   const [first, setFirst] = useState(1);
   const [last, setLast] = useState(7);
-  const [mon, setMon] = useState();
-  const [sun, setSun] = useState();
+  const getDay = (num) => {
+    const day = moment().get("date") - moment().get("day") + num;
+    const result = moment().set("date", day).format("MM-DD-YYYY");
+    return result;
+  };
+  const [dayStart, setDayStart] = useState();
+  const [dayEnd, setDayEnd] = useState();
+  const [click, setClick] = useState(false);
+  const { orders } = useSelector((state) => state.dashboardWeek);
 
+  const dispatch = useDispatch();
   useEffect(() => {
-    const getDay = (num) => {
-      const day = moment().get("date") - moment().get("day") + num;
-      const result = moment().set("date", day).format("YYYY-MM-DD");
-      return result;
-    };
-    setMon(getDay(first));
-    setSun(getDay(last));
-  }, [first, last]);
+    if ((!dayStart && !dayEnd) || click) {
+      setDayStart(getDay(first));
+      setDayEnd(getDay(last));
+      setClick(false);
+    }
+    dispatch(getWeekBussiness(dayEnd, dayStart));
+  }, [dispatch, dayEnd, dayStart, first, last, click]);
 
   const onChangeWeek = (num) => {
     setFirst(first + num);
     setLast(last + num);
+    setClick(true);
   };
 
   return (
@@ -35,7 +45,7 @@ function WeekDashboardScreen() {
           >
             <i className="fa fa-caret-left"></i>
           </button>
-          <h1>{mon}</h1> - <h1>{sun}</h1>
+          <h1>{dayStart}</h1> - <h1>{dayEnd}</h1>
           <button
             type="button"
             onClick={() => {
@@ -47,7 +57,7 @@ function WeekDashboardScreen() {
         </div>
       </div>
       <div className="row">
-        <WeeklyChart title="Income" />
+        <WeeklyChart title="Income" orders={orders} />
         <WeeklyChart title="Orders" />
         <WeeklyChart title="Products Trending" />
       </div>

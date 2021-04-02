@@ -9,9 +9,9 @@ const orderRouter = express.Router()
 orderRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
     const seller = req.query.seller
     const sellerFilter = seller ? { seller } : {}
-    const sun = req.query.sun
-    const mon = req.query.mon
-    const weekFilter = sun && mon ? { orderDate: { $gte: mon, $lte: sun } } : {}
+    const dayStart = req.query.dayStart
+    const dayEnd = req.query.dayEnd
+    const weekFilter = dayStart && dayEnd ? { orderDate: { $gte: dayStart, $lte: dayEnd } } : {}
     const orders = await Order.find({ ...sellerFilter, ...weekFilter }).populate('user', 'name')
     if (orders) {
         res.send(orders)
