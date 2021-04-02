@@ -11,7 +11,7 @@ function WeekDashboardScreen() {
   useEffect(() => {
     const getDay = (num) => {
       const day = moment().get("date") - moment().get("day") + num;
-      const result = moment().set("date", day).format("MM/DD/YYYY");
+      const result = moment().set("date", day).format("YYYY-MM-DD");
       return result;
     };
     setMon(getDay(first));
