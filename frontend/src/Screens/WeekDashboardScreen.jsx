@@ -2,7 +2,8 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeekBussiness } from "../actions/dashboardActions";
-import WeeklyChart from "./WeeklyChart";
+import BarChart from "./BarChart";
+import StackedChart from "./StackedChart";
 
 function WeekDashboardScreen() {
   const [first, setFirst] = useState(1);
@@ -12,6 +13,7 @@ function WeekDashboardScreen() {
     const result = moment().set("date", day).format("MM-DD-YYYY");
     return result;
   };
+  const today = moment().format("MM-DD-YYYY");
   const [dayStart, setDayStart] = useState();
   const [dayEnd, setDayEnd] = useState();
   const [click, setClick] = useState(false);
@@ -27,7 +29,12 @@ function WeekDashboardScreen() {
     dispatch(getWeekBussiness(dayEnd, dayStart));
   }, [dispatch, dayEnd, dayStart, first, last, click]);
 
-  const onChangeWeek = (num) => {
+  const onPreviousWeek = (num) => {
+    setFirst(first - num);
+    setLast(last - num);
+    setClick(true);
+  };
+  const onNextWeek = (num) => {
     setFirst(first + num);
     setLast(last + num);
     setClick(true);
@@ -40,7 +47,7 @@ function WeekDashboardScreen() {
           <button
             type="button"
             onClick={() => {
-              onChangeWeek(-7);
+              onPreviousWeek(7);
             }}
           >
             <i className="fa fa-caret-left"></i>
@@ -49,17 +56,18 @@ function WeekDashboardScreen() {
           <button
             type="button"
             onClick={() => {
-              onChangeWeek(7);
+              onNextWeek(7);
             }}
+            disabled={getDay(first + 7) > today}
           >
             <i className="fa fa-caret-right"></i>
           </button>
         </div>
       </div>
       <div className="row">
-        <WeeklyChart title="Income" orders={orders} />
-        <WeeklyChart title="Orders" />
-        <WeeklyChart title="Products Trending" />
+        <BarChart title="Income" orders={orders} />
+        <StackedChart title="Orders" />
+        <BarChart title="Products Trending" />
       </div>
     </div>
   );

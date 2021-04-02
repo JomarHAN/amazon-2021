@@ -1,18 +1,10 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 
-function WeeklyChart({ title, orders }) {
-  console.log(orders);
+function BarChart({ title, orders }) {
+  // console.log(orders);
   const data = {
-    labels: [
-      "Monday",
-      "Tuesday",
-      "Wednesdy",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ],
+    labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
     datasets: [
       {
         data: [12, 19, 3, 5, 2, 3, 12],
@@ -48,12 +40,16 @@ function WeeklyChart({ title, orders }) {
         },
       ],
     },
+    legend: {
+      display: false,
+    },
   };
   return (
     <div className="tableChart-dashboard">
+      <h1>Income</h1>
       <Bar data={data} options={options} />
     </div>
   );
 }
 
-export default WeeklyChart;
+export default BarChart;

@@ -439,6 +439,10 @@ a.active{
 .tableChart-dashboard h1{
   margin: 0;
 }
+.tableChart-dashboard canvas{
+  height: 210px !important;
+  width: 100% !important;
+}
 
 .change-week{
   width: 30rem;
