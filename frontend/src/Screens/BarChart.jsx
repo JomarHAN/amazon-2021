@@ -2,18 +2,25 @@ import React, { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { getBarChartInfo } from "../actions/dashboardActions";
+import LoadingBox from "../components/LoadingBox";
 
-function BarChart({ title, weekDateInfo }) {
-  const { orders } = useSelector((state) => state.dashboardWeek);
+function BarChart({ title, weekDateInfo, orders }) {
+  const { chartWeeklyInfo } = useSelector(
+    (state) => state.dashboardChartWeekly
+  );
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getBarChartInfo(weekDateInfo, orders));
+    if (orders) {
+      dispatch(getBarChartInfo(weekDateInfo, orders));
+    }
   }, [weekDateInfo, dispatch, orders]);
+
   const data = {
     labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        data: [12, 19, 3, 5, 2, 3, 12],
+        data:
+          chartWeeklyInfo.length > 0 ? chartWeeklyInfo : [0, 0, 0, 0, 0, 0, 0],
         label: title,
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
@@ -46,6 +53,10 @@ function BarChart({ title, weekDateInfo }) {
         },
       ],
     },
+    parsing: {
+      xAxisKey: chartWeeklyInfo?.length > 0 && "date",
+      yAxisKey: chartWeeklyInfo?.length > 0 && "sold.income",
+    },
     legend: {
       display: false,
     },
@@ -53,7 +64,11 @@ function BarChart({ title, weekDateInfo }) {
   return (
     <div className="tableChart-dashboard">
       <h1>{title}</h1>
-      <Bar data={data} options={options} />
+      {chartWeeklyInfo.length === 0 ? (
+        <LoadingBox />
+      ) : (
+        <Bar data={data} options={options} />
+      )}
     </div>
   );
 }

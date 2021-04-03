@@ -28,13 +28,11 @@ export const getWeekBussiness = (dayEnd, dayStart) => async (dispatch, getState)
 }
 
 export const getBarChartInfo = (weekDateInfo, orders) => async (dispatch) => {
-    console.log(orders)
     weekDateInfo.map(d => (
         d.sold.income = orders?.reduce((a, c) => {
             return c.orderDate === d.date && c.isPaid ? a + c.totalPrice : a
         }, 0)
     ))
-
     dispatch({ type: DASHBOARD_CHART_WEEKLY, payload: weekDateInfo })
 
 }

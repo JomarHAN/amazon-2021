@@ -50,7 +50,13 @@ export const dashboardWeekReducer = (state = { loading: true }, action) => {
 export const dashboardChartWeeklyReducer = (state = { chartWeeklyInfo: {} }, action) => {
     switch (action.type) {
         case DASHBOARD_CHART_WEEKLY:
-            return { ...state, chartWeeklyInfo: action.payload }
+            const array = []
+            const data = action.payload
+            data.map(d => array.push(d.sold.income))
+            return {
+                ...state,
+                chartWeeklyInfo: array
+            }
         default:
             return state;
     }
