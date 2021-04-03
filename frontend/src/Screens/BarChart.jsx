@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
+import { useDispatch, useSelector } from "react-redux";
+import { getBarChartInfo } from "../actions/dashboardActions";
 
-function BarChart({ title, orders }) {
-  // console.log(orders);
+function BarChart({ title, weekDateInfo }) {
+  const { orders } = useSelector((state) => state.dashboardWeek);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getBarChartInfo(weekDateInfo, orders));
+  }, [weekDateInfo, dispatch, orders]);
   const data = {
     labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
     datasets: [

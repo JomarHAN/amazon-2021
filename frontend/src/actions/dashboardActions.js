@@ -1,5 +1,5 @@
 import axios from "axios"
-import { DASHBOARD_CARDS_INFO_REQUEST, DASHBOARD_WEEKLY_FAIL, DASHBOARD_WEEKLY_REQUEST, DASHBOARD_WEEKLY_SUCCESS } from "../constanst/dashboardConstants"
+import { DASHBOARD_CARDS_INFO_REQUEST, DASHBOARD_CHART_WEEKLY, DASHBOARD_WEEKLY_FAIL, DASHBOARD_WEEKLY_REQUEST, DASHBOARD_WEEKLY_SUCCESS } from "../constanst/dashboardConstants"
 
 export const getDashboardCardsInfo = (today) => async (dispatch, getState) => {
     const { orderList: { orders } } = getState()
@@ -10,7 +10,6 @@ export const getDashboardCardsInfo = (today) => async (dispatch, getState) => {
 }
 
 export const getWeekBussiness = (dayEnd, dayStart) => async (dispatch, getState) => {
-    // console.log(dayStart + " ---> " + dayEnd)
     dispatch({ type: DASHBOARD_WEEKLY_REQUEST })
     const { userSignin: { userInfo } } = getState()
     try {
@@ -26,4 +25,16 @@ export const getWeekBussiness = (dayEnd, dayStart) => async (dispatch, getState)
             : error.message
         dispatch({ type: DASHBOARD_WEEKLY_FAIL, payload: message })
     }
+}
+
+export const getBarChartInfo = (weekDateInfo, orders) => async (dispatch) => {
+    console.log(orders)
+    weekDateInfo.map(d => (
+        d.sold.income = orders?.reduce((a, c) => {
+            return c.orderDate === d.date && c.isPaid ? a + c.totalPrice : a
+        }, 0)
+    ))
+
+    dispatch({ type: DASHBOARD_CHART_WEEKLY, payload: weekDateInfo })
+
 }
