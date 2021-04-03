@@ -5,9 +5,7 @@ import { getBarChartInfo } from "../actions/dashboardActions";
 import LoadingBox from "../components/LoadingBox";
 
 function BarChart({ title, weekDateInfo, orders }) {
-  const { chartWeeklyInfo } = useSelector(
-    (state) => state.dashboardChartWeekly
-  );
+  const { chartInfo } = useSelector((state) => state.barChart);
   const dispatch = useDispatch();
   useEffect(() => {
     if (orders) {
@@ -19,8 +17,7 @@ function BarChart({ title, weekDateInfo, orders }) {
     labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        data:
-          chartWeeklyInfo.length > 0 ? chartWeeklyInfo : [0, 0, 0, 0, 0, 0, 0],
+        data: chartInfo.length > 0 ? chartInfo : [0, 0, 0, 0, 0, 0, 0],
         label: title,
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
@@ -49,13 +46,16 @@ function BarChart({ title, weekDateInfo, orders }) {
         {
           ticks: {
             beginAtZero: true,
+            callback: function (value, index, values) {
+              return "$" + value;
+            },
           },
         },
       ],
     },
     parsing: {
-      xAxisKey: chartWeeklyInfo?.length > 0 && "date",
-      yAxisKey: chartWeeklyInfo?.length > 0 && "sold.income",
+      xAxisKey: chartInfo?.length > 0 && "date",
+      yAxisKey: chartInfo?.length > 0 && "sold.income",
     },
     legend: {
       display: false,
@@ -64,7 +64,7 @@ function BarChart({ title, weekDateInfo, orders }) {
   return (
     <div className="tableChart-dashboard">
       <h1>{title}</h1>
-      {chartWeeklyInfo.length === 0 ? (
+      {chartInfo.length === 0 ? (
         <LoadingBox />
       ) : (
         <Bar data={data} options={options} />

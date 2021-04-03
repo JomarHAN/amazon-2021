@@ -1,5 +1,5 @@
 import axios from "axios"
-import { DASHBOARD_CARDS_INFO_REQUEST, DASHBOARD_CHART_WEEKLY, DASHBOARD_WEEKLY_FAIL, DASHBOARD_WEEKLY_REQUEST, DASHBOARD_WEEKLY_SUCCESS } from "../constanst/dashboardConstants"
+import { DASHBOARD_CARDS_INFO_REQUEST, DASHBOARD_BAR_CHART_WEEKLY, DASHBOARD_WEEKLY_FAIL, DASHBOARD_WEEKLY_REQUEST, DASHBOARD_WEEKLY_SUCCESS } from "../constanst/dashboardConstants"
 
 export const getDashboardCardsInfo = (today) => async (dispatch, getState) => {
     const { orderList: { orders } } = getState()
@@ -33,6 +33,6 @@ export const getBarChartInfo = (weekDateInfo, orders) => async (dispatch) => {
             return c.orderDate === d.date && c.isPaid ? a + c.totalPrice : a
         }, 0)
     ))
-    dispatch({ type: DASHBOARD_CHART_WEEKLY, payload: weekDateInfo })
+    dispatch({ type: DASHBOARD_BAR_CHART_WEEKLY, payload: weekDateInfo })
 
 }

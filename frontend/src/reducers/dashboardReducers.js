@@ -1,4 +1,12 @@
-import { DASHBOARD_CARDS_INFO_REQUEST, DASHBOARD_CARDS_INFO_RESET, DASHBOARD_CHART_WEEKLY, DASHBOARD_WEEKLY_FAIL, DASHBOARD_WEEKLY_REQUEST, DASHBOARD_WEEKLY_RESET, DASHBOARD_WEEKLY_SUCCESS } from "../constanst/dashboardConstants";
+import {
+    DASHBOARD_CARDS_INFO_REQUEST,
+    DASHBOARD_CARDS_INFO_RESET,
+    DASHBOARD_BAR_CHART_WEEKLY,
+    DASHBOARD_WEEKLY_FAIL,
+    DASHBOARD_WEEKLY_REQUEST,
+    DASHBOARD_WEEKLY_RESET,
+    DASHBOARD_WEEKLY_SUCCESS
+} from "../constanst/dashboardConstants";
 
 export const dashboardCardsReducer = (state = { cardDashboard: {} }, action) => {
     switch (action.type) {
@@ -47,15 +55,15 @@ export const dashboardWeekReducer = (state = { loading: true }, action) => {
     }
 }
 
-export const dashboardChartWeeklyReducer = (state = { chartWeeklyInfo: {} }, action) => {
+export const barChartReducer = (state = { chartInfo: {} }, action) => {
     switch (action.type) {
-        case DASHBOARD_CHART_WEEKLY:
+        case DASHBOARD_BAR_CHART_WEEKLY:
             const array = []
             const data = action.payload
             data.map(d => array.push(d.sold.income))
             return {
                 ...state,
-                chartWeeklyInfo: array
+                chartInfo: array
             }
         default:
             return state;
