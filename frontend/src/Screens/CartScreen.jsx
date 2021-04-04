@@ -4,6 +4,7 @@ import { cartAddItem, cartDeleteItem } from "../actions/cartActions";
 import MessageBox from "../components/MessageBox";
 import { Link } from "react-router-dom";
 import { CART_ADD_ITEM_FAIL_RESET } from "../constanst/cartConstants";
+import numeral from "numeral";
 
 function CartScreen(props) {
   const productId = props.match.params.id;
@@ -73,7 +74,7 @@ function CartScreen(props) {
                       ))}
                     </select>
                   </div>
-                  <div>${item.price.toFixed(2)}</div>
+                  <div>${numeral(item.price).format("0,0.00")}</div>
                   <div>
                     <button
                       type="button"
@@ -94,7 +95,9 @@ function CartScreen(props) {
             <li>
               <h2>
                 Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : $
-                {cartItems.reduce((a, c) => a + c.qty * c.price, 0).toFixed(2)}
+                {numeral(
+                  cartItems.reduce((a, c) => a + c.qty * c.price, 0)
+                ).format("0,0.00")}
               </h2>
             </li>
             {cartItems.length > 0 && (

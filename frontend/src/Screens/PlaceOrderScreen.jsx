@@ -1,3 +1,4 @@
+import numeral from "numeral";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -88,8 +89,8 @@ function PlaceOrderScreen(props) {
                           </Link>
                         </div>
                         <div>
-                          {item.qty} x ${item.price.toFixed(2)} = $
-                          {item.qty * item.price.toFixed(2)}
+                          {item.qty} x ${numeral(item.price).format("0,0.00")} =
+                          ${numeral(item.qty * item.price).format("0,0.00")}
                         </div>
                       </div>
                     </li>
@@ -108,15 +109,15 @@ function PlaceOrderScreen(props) {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>${cart.itemsPrice.toFixed(2)}</div>
+                  <div>${numeral(cart.itemsPrice).format("0,0.00")}</div>
                 </div>
                 <div className="row">
                   <div>Shipping Fee</div>
-                  <div>${cart.shippingPrice.toFixed(2)}</div>
+                  <div>${numeral(cart.shippingPrice).format("0,0.00")}</div>
                 </div>
                 <div className="row">
                   <div>Taxes (15%)</div>
-                  <div>${cart.taxPrice.toFixed(2)}</div>
+                  <div>${numeral(cart.taxPrice).format("0,0.00")}</div>
                 </div>
                 <hr />
                 <div className="row">
@@ -124,7 +125,9 @@ function PlaceOrderScreen(props) {
                     <strong>Total</strong>
                   </div>
                   <div>
-                    <strong>${cart.totalPrice.toFixed(2)}</strong>
+                    <strong>
+                      ${numeral(cart.totalPrice).format("0,0.00")}
+                    </strong>
                   </div>
                 </div>
               </li>

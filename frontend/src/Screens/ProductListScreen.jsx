@@ -1,3 +1,4 @@
+import numeral from "numeral";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createDraft } from "../actions/draftActions";
@@ -97,7 +98,7 @@ function ProductListScreen(props) {
                 <td>{i + 1}</td>
                 <td>{product._id}</td>
                 <td>{product.name}</td>
-                <td>${product.price.toFixed(2)}</td>
+                <td>${numeral(product.price).format("0,0.00")}</td>
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
                 <td>

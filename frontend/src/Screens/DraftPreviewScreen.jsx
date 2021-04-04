@@ -11,6 +11,7 @@ import {
 } from "../actions/draftActions";
 import { PRODUCT_CREATE_RESET } from "../constanst/productConstants";
 import { DRAFT_REMOVE_RESET } from "../constanst/draftConstants";
+import numeral from "numeral";
 
 function DraftPreviewScreen(props) {
   const draftId = props.match.params.id;
@@ -124,7 +125,7 @@ function DraftPreviewScreen(props) {
                 <li>
                   <Rating rating={draft.rating} numReviews={draft.numReviews} />
                 </li>
-                <li>Price: ${draft.price.toFixed(2)}</li>
+                <li>Price: ${numeral(draft.price).format("0,0.00")}</li>
                 <li>Description: {draft.description}</li>
               </ul>
             </div>
@@ -146,7 +147,9 @@ function DraftPreviewScreen(props) {
                   <li>
                     <div className="row">
                       <div>Price</div>
-                      <div className="price">${draft.price.toFixed(2)}</div>
+                      <div className="price">
+                        ${numeral(draft.price).format("0,0.00")}
+                      </div>
                     </div>
                   </li>
                   <li>

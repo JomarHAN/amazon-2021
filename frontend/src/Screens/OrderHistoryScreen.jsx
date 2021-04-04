@@ -1,3 +1,4 @@
+import numeral from "numeral";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderHistory } from "../actions/orderActions";
@@ -40,7 +41,7 @@ function OrderHistoryScreen(props) {
                 <td>{i + 1}</td>
                 <td>{order._id}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
-                <td>${order.totalPrice.toFixed(2)}</td>
+                <td>${numeral(order.totalPrice).format("0,0.00")}</td>
                 <td>{order.isPaid ? order.paidAt.substring(0, 10) : "No"}</td>
                 <td>
                   {order.isDelivered

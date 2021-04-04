@@ -1,3 +1,4 @@
+import numeral from "numeral";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDraftList, removeDraft } from "../actions/draftActions";
@@ -57,7 +58,7 @@ function DraftListScreen(props) {
               {!sellerMode && userInfo.isAdmin && <th>{d.seller.name}</th>}
               <td>{d._id}</td>
               <td>{d.name}</td>
-              <td>{d.price.toFixed(2)}</td>
+              <td>{numeral(d.price).format("0,0.00")}</td>
               <td>{d.category}</td>
               <td>{d.brand}</td>
               <td>{d.fields}</td>
