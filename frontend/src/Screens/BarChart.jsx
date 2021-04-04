@@ -66,7 +66,7 @@ function BarChart({ title, weekDateInfo, orders }) {
           title: {
             font: {
               weight: "bold",
-              size: "20",
+              size: "15",
             },
           },
         },

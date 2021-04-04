@@ -40,7 +40,7 @@ function TopChart({ title, subDone, subNotDone, Paid }) {
           title: {
             font: {
               weight: "bold",
-              size: "20",
+              size: "15",
             },
           },
         },
