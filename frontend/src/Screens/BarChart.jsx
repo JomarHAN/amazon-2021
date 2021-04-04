@@ -60,8 +60,16 @@ function BarChart({ title, weekDateInfo, orders }) {
     plugins: {
       datalabels: {
         display: true,
-        color: "black",
+        color: "gray",
         align: "top",
+        labels: {
+          title: {
+            font: {
+              weight: "bold",
+              size: "20",
+            },
+          },
+        },
       },
     },
   };

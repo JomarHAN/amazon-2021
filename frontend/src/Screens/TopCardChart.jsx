@@ -30,10 +30,30 @@ function TopChart({ title, subDone, subNotDone, Paid }) {
       ],
     },
   };
+  const options = {
+    plugins: {
+      datalabels: {
+        display: true,
+        color: "black",
+        align: "center",
+        labels: {
+          title: {
+            font: {
+              weight: "bold",
+              size: "20",
+            },
+          },
+        },
+      },
+    },
+  };
   return (
     <div className="card-dashboard">
       <h3 className="title-card">{title}</h3>
-      <Doughnut data={Paid ? data.dataPaid : data.dataDelivered} />
+      <Doughnut
+        data={Paid ? data.dataPaid : data.dataDelivered}
+        options={options}
+      />
       <div className="row">
         <small className="subOrder">
           {Paid ? "Paid" : "Delivered"}: {subDone}
