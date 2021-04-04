@@ -8,7 +8,7 @@ import StackedChart from "./StackedChart";
 
 function WeekDashboardScreen() {
   const { orders } = useSelector((state) => state.dashboardWeek);
-  const [first, setFirst] = useState(1);
+  const [first, setFirst] = useState(0);
   const [mon, setMon] = useState();
   const [tue, setTue] = useState();
   const [wed, setWed] = useState();
@@ -21,22 +21,19 @@ function WeekDashboardScreen() {
   const [dayEnd, setDayEnd] = useState();
   const [click, setClick] = useState(false);
   const weekDateInfo = [
+    { date: sun, sold: {} },
     { date: mon, sold: {} },
     { date: tue, sold: {} },
     { date: wed, sold: {} },
     { date: thu, sold: {} },
     { date: fri, sold: {} },
     { date: sat, sold: {} },
-    { date: sun, sold: {} },
   ];
   const getDay = (num) => {
     const day = moment().get("date") - moment().get("day") + num;
     const result = moment().set("date", day).format("MM-DD-YYYY");
     return result;
   };
-  console.log(getDay(0));
-  // console.log(moment().get("day"));
-  // console.log(weekDateInfo);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -45,13 +42,13 @@ function WeekDashboardScreen() {
       setDayEnd(getDay(first + 6));
       setClick(false);
     }
-    setMon(getDay(first));
-    setTue(getDay(first + 1));
-    setWed(getDay(first + 2));
-    setThu(getDay(first + 3));
-    setFri(getDay(first + 4));
-    setSat(getDay(first + 5));
-    setSun(getDay(first + 6));
+    setMon(getDay(first + 1));
+    setTue(getDay(first + 2));
+    setWed(getDay(first + 3));
+    setThu(getDay(first + 4));
+    setFri(getDay(first + 5));
+    setSat(getDay(first + 6));
+    setSun(getDay(first));
     dispatch(getWeekBussiness(dayEnd, dayStart));
   }, [dispatch, dayEnd, dayStart, first, click]);
 
@@ -84,7 +81,7 @@ function WeekDashboardScreen() {
             onClick={() => {
               onNextWeek(7);
             }}
-            disabled={getDay(first + 7) > today}
+            disabled={getDay(first + 6) > today}
           >
             <i className="fa fa-caret-right"></i>
           </button>

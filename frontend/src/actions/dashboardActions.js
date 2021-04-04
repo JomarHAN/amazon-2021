@@ -10,7 +10,6 @@ export const getDashboardCardsInfo = (today) => async (dispatch, getState) => {
 }
 
 export const getWeekBussiness = (dayEnd, dayStart) => async (dispatch, getState) => {
-    // console.log(dayStart + ' --> ' + dayEnd)
     dispatch({ type: DASHBOARD_WEEKLY_REQUEST })
     const { userSignin: { userInfo } } = getState()
     try {

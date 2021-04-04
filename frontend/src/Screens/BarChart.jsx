@@ -6,7 +6,6 @@ import LoadingBox from "../components/LoadingBox";
 
 function BarChart({ title, weekDateInfo, orders }) {
   const { chartInfo } = useSelector((state) => state.barChart);
-  // console.log(weekDateInfo);
   const dispatch = useDispatch();
   useEffect(() => {
     if (orders) {
@@ -15,7 +14,7 @@ function BarChart({ title, weekDateInfo, orders }) {
   }, [weekDateInfo, dispatch, orders]);
 
   const data = {
-    labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+    labels: ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
     datasets: [
       {
         data: chartInfo.length > 0 ? chartInfo : [0, 0, 0, 0, 0, 0, 0],
