@@ -9,7 +9,6 @@ import StackedChart from "./StackedChart";
 function WeekDashboardScreen() {
   const { orders } = useSelector((state) => state.dashboardWeek);
   const [first, setFirst] = useState(1);
-  const [last, setLast] = useState(7);
   const [mon, setMon] = useState();
   const [tue, setTue] = useState();
   const [wed, setWed] = useState();
@@ -17,11 +16,6 @@ function WeekDashboardScreen() {
   const [fri, setFri] = useState();
   const [sat, setSat] = useState();
   const [sun, setSun] = useState();
-  const getDay = (num) => {
-    const day = moment().get("date") - moment().get("day") + num;
-    const result = moment().set("date", day).format("MM-DD-YYYY");
-    return result;
-  };
   const today = moment().format("MM-DD-YYYY");
   const [dayStart, setDayStart] = useState();
   const [dayEnd, setDayEnd] = useState();
@@ -35,11 +29,20 @@ function WeekDashboardScreen() {
     { date: sat, sold: {} },
     { date: sun, sold: {} },
   ];
+  const getDay = (num) => {
+    const day = moment().get("date") - moment().get("day") + num;
+    const result = moment().set("date", day).format("MM-DD-YYYY");
+    return result;
+  };
+  console.log(getDay(0));
+  // console.log(moment().get("day"));
+  // console.log(weekDateInfo);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if ((!dayStart && !dayEnd) || click) {
       setDayStart(getDay(first));
-      setDayEnd(getDay(last));
+      setDayEnd(getDay(first + 6));
       setClick(false);
     }
     setMon(getDay(first));
@@ -50,16 +53,16 @@ function WeekDashboardScreen() {
     setSat(getDay(first + 5));
     setSun(getDay(first + 6));
     dispatch(getWeekBussiness(dayEnd, dayStart));
-  }, [dispatch, dayEnd, dayStart, first, last, click]);
+  }, [dispatch, dayEnd, dayStart, first, click]);
 
   const onPreviousWeek = (num) => {
     setFirst(first - num);
-    setLast(last - num);
+
     setClick(true);
   };
   const onNextWeek = (num) => {
     setFirst(first + num);
-    setLast(last + num);
+
     setClick(true);
   };
 
@@ -89,7 +92,11 @@ function WeekDashboardScreen() {
       </div>
       <div className="row">
         <BarChart title="Income" weekDateInfo={weekDateInfo} orders={orders} />
-        <StackedChart title="Orders" />
+        <StackedChart
+          title="Items"
+          weekDateInfo={weekDateInfo}
+          orders={orders}
+        />
         <LineChart title="Products Trending" />
       </div>
     </div>

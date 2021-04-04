@@ -6,6 +6,7 @@ import LoadingBox from "../components/LoadingBox";
 
 function BarChart({ title, weekDateInfo, orders }) {
   const { chartInfo } = useSelector((state) => state.barChart);
+  // console.log(weekDateInfo);
   const dispatch = useDispatch();
   useEffect(() => {
     if (orders) {
@@ -53,12 +54,16 @@ function BarChart({ title, weekDateInfo, orders }) {
         },
       ],
     },
-    parsing: {
-      xAxisKey: chartInfo?.length > 0 && "date",
-      yAxisKey: chartInfo?.length > 0 && "sold.income",
-    },
+
     legend: {
       display: false,
+    },
+    plugins: {
+      datalabels: {
+        display: true,
+        color: "black",
+        align: "top",
+      },
     },
   };
   return (
