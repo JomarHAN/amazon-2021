@@ -9,7 +9,7 @@ import WeekDashboardScreen from "./WeekDashboardScreen";
 
 function DashboardScreen() {
   const [isDashboard, setIsDashboard] = useState(false);
-  const today = moment().format("YYYY-MM-DD");
+  const today = moment().format("MM-DD-YYYY");
 
   const { orders } = useSelector((state) => state.orderList);
   const { userInfo } = useSelector((state) => state.userSignin);
@@ -20,9 +20,8 @@ function DashboardScreen() {
     if (!orders || !isDashboard) {
       dispatch(getOrderList({}));
       setIsDashboard(true);
-    } else {
-      dispatch(getDashboardCardsInfo(today));
     }
+    dispatch(getDashboardCardsInfo(today));
   }, [dispatch, today, orders, isDashboard]);
 
   return (
