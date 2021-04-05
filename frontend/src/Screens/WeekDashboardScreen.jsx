@@ -94,7 +94,7 @@ function WeekDashboardScreen() {
           orders={orders}
         />
         <ProductPortionChart
-          title="Items"
+          title="Product Portion"
           weekDateInfo={weekDateInfo}
           orders={orders}
         />

@@ -1,5 +1,12 @@
 import axios from "axios"
-import { DASHBOARD_CARDS_INFO_REQUEST, DASHBOARD_BAR_CHART_WEEKLY, DASHBOARD_WEEKLY_FAIL, DASHBOARD_WEEKLY_REQUEST, DASHBOARD_WEEKLY_SUCCESS } from "../constanst/dashboardConstants"
+import {
+    DASHBOARD_CARDS_INFO_REQUEST,
+    DASHBOARD_BAR_CHART_WEEKLY,
+    DASHBOARD_WEEKLY_FAIL,
+    DASHBOARD_WEEKLY_REQUEST,
+    DASHBOARD_WEEKLY_SUCCESS,
+    DASHBOARD_PIE_CHART_WEEKLY
+} from "../constanst/dashboardConstants"
 
 export const getDashboardCardsInfo = (today) => async (dispatch, getState) => {
     const { orderList: { orders } } = getState()
@@ -34,5 +41,13 @@ export const getBarChartInfo = (weekDateInfo, orders) => async (dispatch) => {
         }, 0)
     ))
     dispatch({ type: DASHBOARD_BAR_CHART_WEEKLY, payload: weekDateInfo })
+}
 
+export const getPieChartInfo = (orders) => (dispatch) => {
+    const orderItems = []
+    orders?.map(order => order.orderItems.map(o => orderItems.push(o)))
+    // orders.forEach(order=>{
+    //     orderItems
+    // })
+    dispatch({ type: DASHBOARD_PIE_CHART_WEEKLY, payload: orderItems })
 }

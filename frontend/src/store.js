@@ -5,7 +5,7 @@ import thunk from 'redux-thunk'
 import { userAdminUpdateReducer, userDeleteReducer, userListReducer, userProfileReducer, userRegisterReducer, userReviewReducer, userShippingAddressReducer, userSigninReducer, userUpdateReducer } from './reducers/userReducers'
 import { orderCreateReducer, orderDeleteReducer, orderDeliveryReducer, orderDetailsReducer, orderHistoryReducer, orderListReducer, orderPayReducer } from './reducers/orderReducers'
 import { draftCreatedReducer, draftDetailReducer, draftListReducer, draftRemoveReducer, draftUpdateReducer } from './reducers/draftReducers'
-import { dashboardCardsReducer, barChartReducer, dashboardWeekReducer } from './reducers/dashboardReducers'
+import { dashboardCardsReducer, barChartReducer, dashboardWeekReducer, pieChartReducer } from './reducers/dashboardReducers'
 const initialState = {
     cart: {
         cartItems: localStorage.getItem('cartItems')
@@ -53,7 +53,8 @@ const reducer = combineReducers({
     draftRemove: draftRemoveReducer,
     dashboardCards: dashboardCardsReducer,
     dashboardWeek: dashboardWeekReducer,
-    barChart: barChartReducer
+    barChart: barChartReducer,
+    pieChart: pieChartReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

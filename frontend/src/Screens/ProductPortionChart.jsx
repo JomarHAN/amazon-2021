@@ -1,53 +1,50 @@
-import React from "react";
-import { Bar } from "react-chartjs-2";
+import React, { useEffect } from "react";
+import { Pie } from "react-chartjs-2";
+import { useDispatch } from "react-redux";
+import { getPieChartInfo } from "../actions/dashboardActions";
+import { backgroundColor, borderColor } from "../utils";
 
 function ProductPortionChart({ title, weekDateInfo, orders }) {
-  console.log(orders);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (orders) {
+      dispatch(getPieChartInfo(orders));
+    }
+  }, [dispatch, weekDateInfo, orders]);
   const data = {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    labels: ["Red", "Blue", "Yellow", "Green"],
     datasets: [
       {
-        label: "Red",
-        data: [12, 19, 3, 5, 2, 3, 10],
-        backgroundColor: "rgb(255, 99, 132)",
-      },
-      {
-        label: "Blue",
-        data: [2, 3, 20, 5, 1, 4, 9],
-        backgroundColor: "rgb(54, 162, 235)",
-      },
-      {
-        label: "Green",
-        data: [3, 10, 13, 15, 22, 30, 45],
-        backgroundColor: "rgb(75, 192, 192)",
+        data: [12, 19, 3, 5, 9, 8, 9, 12, 10, 6, 7],
+        backgroundColor: backgroundColor,
+        borderColor: borderColor,
+        borderWidth: 1,
       },
     ],
   };
-
   const options = {
-    scales: {
-      yAxes: [
-        {
-          stacked: true,
-          ticks: {
-            beginAtZero: true,
+    legend: {
+      position: "right",
+    },
+    plugins: {
+      datalabels: {
+        color: "gray",
+        align: "center",
+        labels: {
+          title: {
+            font: {
+              weight: "bold",
+              size: "15",
+            },
           },
         },
-      ],
-      xAxes: [
-        {
-          stacked: true,
-        },
-      ],
-    },
-    legend: {
-      display: false,
+      },
     },
   };
   return (
     <div className="tableChart-dashboard">
       <h1>{title}</h1>
-      <Bar data={data} options={options} />
+      <Pie data={data} options={options} />
     </div>
   );
 }

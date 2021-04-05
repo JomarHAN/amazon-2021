@@ -5,7 +5,8 @@ import {
     DASHBOARD_WEEKLY_FAIL,
     DASHBOARD_WEEKLY_REQUEST,
     DASHBOARD_WEEKLY_RESET,
-    DASHBOARD_WEEKLY_SUCCESS
+    DASHBOARD_WEEKLY_SUCCESS,
+    DASHBOARD_PIE_CHART_WEEKLY
 } from "../constanst/dashboardConstants";
 
 export const dashboardCardsReducer = (state = { cardDashboard: {} }, action) => {
@@ -65,6 +66,17 @@ export const barChartReducer = (state = { chartInfo: {} }, action) => {
                 ...state,
                 chartInfo: array
             }
+        default:
+            return state;
+    }
+}
+
+export const pieChartReducer = (state = {}, action) => {
+    switch (action.type) {
+        case DASHBOARD_PIE_CHART_WEEKLY:
+            const orderItems = action.payload
+
+            return orderItems
         default:
             return state;
     }

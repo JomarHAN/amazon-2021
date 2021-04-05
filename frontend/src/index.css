@@ -441,7 +441,7 @@ a.active{
   margin: 0;
 }
 .tableChart-dashboard canvas{
-  height: 210px !important;
+  height: 270px !important;
   width: 100% !important;
 }
 
