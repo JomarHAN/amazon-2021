@@ -412,6 +412,7 @@ a.active{
 .card-dashboard .chartjs-render-monitor{
   height: 125px !important;
   width: 265px !important;
+  margin: 0 auto;
 }
 .title-card{
   margin: 0;

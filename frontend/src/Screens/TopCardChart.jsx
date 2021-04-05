@@ -46,6 +46,12 @@ function TopChart({ title, subDone, subNotDone, Paid }) {
         },
       },
     },
+    legend: {
+      position: "right",
+      labels: {
+        fontSize: 20,
+      },
+    },
   };
   return (
     <div className="card-dashboard">
