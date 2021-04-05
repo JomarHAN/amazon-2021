@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBarChartInfo } from "../actions/dashboardActions";
 import LoadingBox from "../components/LoadingBox";
 
-function BarChart({ title, weekDateInfo, orders }) {
+function IncomeChart({ title, weekDateInfo, orders }) {
   const { chartInfo } = useSelector((state) => state.barChart);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -85,4 +85,4 @@ function BarChart({ title, weekDateInfo, orders }) {
   );
 }
 
-export default BarChart;
+export default IncomeChart;

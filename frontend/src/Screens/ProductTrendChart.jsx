@@ -1,7 +1,7 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 
-function LineChart({ title }) {
+function ProductTrendChart({ title }) {
   const red = "255, 99, 132";
   const blue = "54, 162, 235";
   const data = {
@@ -56,4 +56,4 @@ function LineChart({ title }) {
   );
 }
 
-export default LineChart;
+export default ProductTrendChart;

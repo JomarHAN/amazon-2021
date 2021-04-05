@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeekBussiness } from "../actions/dashboardActions";
 import IncomeChart from "./IncomeChart";
-import LineChart from "./LineChart";
-import StackedChart from "./StackedChart";
+import ProductTrendChart from "./ProductTrendChart";
+import ProductPortionChart from "./ProductPortionChart";
 
 function WeekDashboardScreen() {
   const { orders } = useSelector((state) => state.dashboardWeek);
@@ -93,12 +93,12 @@ function WeekDashboardScreen() {
           weekDateInfo={weekDateInfo}
           orders={orders}
         />
-        <StackedChart
+        <ProductPortionChart
           title="Items"
           weekDateInfo={weekDateInfo}
           orders={orders}
         />
-        <LineChart title="Products Trending" />
+        <ProductTrendChart title="Products Trending" />
       </div>
     </div>
   );

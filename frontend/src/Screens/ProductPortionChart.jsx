@@ -1,7 +1,8 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 
-function StackedChart({ title, weekDateInfo, orders }) {
+function ProductPortionChart({ title, weekDateInfo, orders }) {
+  console.log(orders);
   const data = {
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
@@ -51,4 +52,4 @@ function StackedChart({ title, weekDateInfo, orders }) {
   );
 }
 
-export default StackedChart;
+export default ProductPortionChart;
