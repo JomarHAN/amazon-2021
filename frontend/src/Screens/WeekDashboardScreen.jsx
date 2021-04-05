@@ -2,7 +2,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeekBussiness } from "../actions/dashboardActions";
-import BarChart from "./BarChart";
+import IncomeChart from "./IncomeChart";
 import LineChart from "./LineChart";
 import StackedChart from "./StackedChart";
 
@@ -88,7 +88,11 @@ function WeekDashboardScreen() {
         </div>
       </div>
       <div className="row">
-        <BarChart title="Income" weekDateInfo={weekDateInfo} orders={orders} />
+        <IncomeChart
+          title="Income"
+          weekDateInfo={weekDateInfo}
+          orders={orders}
+        />
         <StackedChart
           title="Items"
           weekDateInfo={weekDateInfo}
