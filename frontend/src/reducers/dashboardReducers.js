@@ -71,12 +71,18 @@ export const barChartReducer = (state = { chartInfo: {} }, action) => {
     }
 }
 
-export const pieChartReducer = (state = {}, action) => {
+export const pieChartReducer = (state = { productsInfo: [] }, action) => {
     switch (action.type) {
         case DASHBOARD_PIE_CHART_WEEKLY:
-            const orderItems = action.payload
-
-            return orderItems
+            const item = action.payload
+            const copyProductInfo = state.productsInfo
+            copyProductInfo.reduce((a, c) => {
+                return c.id === item.id ? item.qty + a : item
+            }, 0)
+            return {
+                ...state,
+                productsInfo: copyProductInfo
+            }
         default:
             return state;
     }

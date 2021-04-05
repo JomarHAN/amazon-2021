@@ -44,10 +44,8 @@ export const getBarChartInfo = (weekDateInfo, orders) => async (dispatch) => {
 }
 
 export const getPieChartInfo = (orders) => (dispatch) => {
+
     const orderItems = []
-    orders?.map(order => order.orderItems.map(o => orderItems.push(o)))
-    // orders.forEach(order=>{
-    //     orderItems
-    // })
-    dispatch({ type: DASHBOARD_PIE_CHART_WEEKLY, payload: orderItems })
+    orders?.map(order => order.orderItems.map(o => orderItems.push({ id: o.productId, name: o.name, qty: o.qty })))
+    orderItems.map(item => dispatch({ type: DASHBOARD_PIE_CHART_WEEKLY, payload: item }))
 }
