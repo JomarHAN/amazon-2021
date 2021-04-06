@@ -1,21 +1,23 @@
 import React, { useEffect } from "react";
 import { Pie } from "react-chartjs-2";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getPieChartInfo } from "../actions/dashboardActions";
 import { backgroundColor, borderColor } from "../utils";
 
 function ProductPortionChart({ title, weekDateInfo, orders }) {
+  const { labelsInfo, dataInfo } = useSelector((state) => state.pieChart);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (orders) {
       dispatch(getPieChartInfo(orders));
     }
-  }, [dispatch, weekDateInfo, orders]);
+  }, [dispatch, orders]);
   const data = {
-    labels: ["Red", "Blue", "Yellow", "Green"],
+    labels: labelsInfo,
     datasets: [
       {
-        data: [12, 19, 3, 5, 9, 8, 9, 12, 10, 6, 7],
+        data: dataInfo,
         backgroundColor: backgroundColor,
         borderColor: borderColor,
         borderWidth: 1,

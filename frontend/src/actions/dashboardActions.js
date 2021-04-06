@@ -5,7 +5,8 @@ import {
     DASHBOARD_WEEKLY_FAIL,
     DASHBOARD_WEEKLY_REQUEST,
     DASHBOARD_WEEKLY_SUCCESS,
-    DASHBOARD_PIE_CHART_WEEKLY
+    DASHBOARD_PIE_CHART_WEEKLY,
+    DASHBOARD_PIE_CHART_RESET
 } from "../constanst/dashboardConstants"
 
 export const getDashboardCardsInfo = (today) => async (dispatch, getState) => {
@@ -44,7 +45,7 @@ export const getBarChartInfo = (weekDateInfo, orders) => async (dispatch) => {
 }
 
 export const getPieChartInfo = (orders) => (dispatch) => {
-
+    dispatch({ type: DASHBOARD_PIE_CHART_RESET })
     const orderItems = []
     orders?.map(order => order.orderItems.map(o => orderItems.push({ id: o.productId, name: o.name, qty: o.qty })))
     orderItems.map(item => dispatch({ type: DASHBOARD_PIE_CHART_WEEKLY, payload: item }))

@@ -6,7 +6,8 @@ import {
     DASHBOARD_WEEKLY_REQUEST,
     DASHBOARD_WEEKLY_RESET,
     DASHBOARD_WEEKLY_SUCCESS,
-    DASHBOARD_PIE_CHART_WEEKLY
+    DASHBOARD_PIE_CHART_WEEKLY,
+    DASHBOARD_PIE_CHART_RESET
 } from "../constanst/dashboardConstants";
 
 export const dashboardCardsReducer = (state = { cardDashboard: {} }, action) => {
@@ -71,18 +72,38 @@ export const barChartReducer = (state = { chartInfo: {} }, action) => {
     }
 }
 
-export const pieChartReducer = (state = { productsInfo: [] }, action) => {
+export const pieChartReducer = (state = { productsInfo: [], labelsInfo: [], dataInfo: [] }, action) => {
     switch (action.type) {
         case DASHBOARD_PIE_CHART_WEEKLY:
+            const newLalels = []
+            const newDataInfo = []
             const item = action.payload
-            const copyProductInfo = state.productsInfo
-            copyProductInfo.reduce((a, c) => {
-                return c.id === item.id ? item.qty + a : item
-            }, 0)
-            return {
-                ...state,
-                productsInfo: copyProductInfo
+            const existItem = state.productsInfo?.find(x => x.id === item.id)
+            if (existItem) {
+                existItem.qty = existItem.qty + item.qty;
+                const copyArray = state.productsInfo.filter(item => item.id !== existItem.id)
+                copyArray.push(existItem)
+                copyArray.map(item => {
+                    newLalels.push(item.name)
+                    newDataInfo.push(item.qty)
+                }
+                )
+                return {
+                    ...state,
+                    productsInfo: copyArray,
+                    labelsInfo: newLalels,
+                    dataInfo: newDataInfo
+                }
+            } else {
+                return {
+                    ...state,
+                    productsInfo: [...state.productsInfo, item],
+                    labelsInfo: [...state.labelsInfo, item.name],
+                    dataInfo: [...state.dataInfo, item.qty]
+                }
             }
+        case DASHBOARD_PIE_CHART_RESET:
+            return { ...state, productsInfo: [], labelsInfo: [], dataInfo: [] }
         default:
             return state;
     }
