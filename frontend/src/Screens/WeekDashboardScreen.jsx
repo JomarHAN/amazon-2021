@@ -61,7 +61,6 @@ function WeekDashboardScreen() {
   };
   const onNextWeek = (num) => {
     setFirst(first + num);
-
     setClick(true);
   };
 
@@ -100,7 +99,11 @@ function WeekDashboardScreen() {
           weekDateInfo={weekDateInfo}
           orders={orders}
         />
-        <ProductTrendChart title="Products Trending" />
+        <ProductTrendChart
+          title="Products Trending"
+          weekDateInfo={weekDateInfo}
+          orders={orders}
+        />
       </div>
     </div>
   );

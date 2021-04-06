@@ -1,7 +1,7 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 
-function ProductTrendChart({ title }) {
+function ProductTrendChart({ title, weekDateInfo, orders }) {
   const red = "255, 99, 132";
   const data = {
     labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -29,6 +29,21 @@ function ProductTrendChart({ title }) {
     },
     legend: {
       display: false,
+    },
+    plugins: {
+      datalabels: {
+        display: true,
+        color: "gray",
+        align: "top",
+        labels: {
+          title: {
+            font: {
+              weight: "bold",
+              size: "12",
+            },
+          },
+        },
+      },
     },
   };
   return (
