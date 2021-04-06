@@ -27,6 +27,10 @@ function ProductPortionChart({ title, weekDateInfo, orders }) {
   const options = {
     legend: {
       position: "right",
+      labels: {
+        boxWidth: 30,
+      },
+      maxWidth: "50",
     },
     plugins: {
       datalabels: {

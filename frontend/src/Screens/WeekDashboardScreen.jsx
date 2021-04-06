@@ -7,6 +7,11 @@ import ProductTrendChart from "./ProductTrendChart";
 import ProductPortionChart from "./ProductPortionChart";
 
 function WeekDashboardScreen() {
+  const getDay = (num) => {
+    const day = moment().get("date") - moment().get("day") + num;
+    const result = moment().set("date", day).format("MM-DD-YYYY");
+    return result;
+  };
   const { orders } = useSelector((state) => state.dashboardWeek);
   const [first, setFirst] = useState(0);
   const [mon, setMon] = useState();
@@ -29,18 +34,16 @@ function WeekDashboardScreen() {
     { date: fri, sold: {} },
     { date: sat, sold: {} },
   ];
-  const getDay = (num) => {
-    const day = moment().get("date") - moment().get("day") + num;
-    const result = moment().set("date", day).format("MM-DD-YYYY");
-    return result;
-  };
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if ((!dayStart && !dayEnd) || click) {
+    if (!dayStart || click) {
       setDayStart(getDay(first));
       setDayEnd(getDay(first + 6));
       setClick(false);
+    }
+    if (!click) {
+      dispatch(getWeekBussiness(dayEnd, dayStart));
     }
     setMon(getDay(first + 1));
     setTue(getDay(first + 2));
@@ -49,8 +52,7 @@ function WeekDashboardScreen() {
     setFri(getDay(first + 5));
     setSat(getDay(first + 6));
     setSun(getDay(first));
-    dispatch(getWeekBussiness(dayEnd, dayStart));
-  }, [dispatch, dayEnd, dayStart, first, click]);
+  }, [dispatch, dayStart, dayEnd, first, click]);
 
   const onPreviousWeek = (num) => {
     setFirst(first - num);
