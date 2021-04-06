@@ -30,7 +30,6 @@ function ProductPortionChart({ title, weekDateInfo, orders }) {
       labels: {
         boxWidth: 30,
       },
-      maxWidth: "50",
     },
     plugins: {
       datalabels: {

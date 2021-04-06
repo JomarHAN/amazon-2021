@@ -91,12 +91,12 @@ function WeekDashboardScreen() {
       </div>
       <div className="row">
         <IncomeChart
-          title="Income"
+          title="Income ($)"
           weekDateInfo={weekDateInfo}
           orders={orders}
         />
         <ProductPortionChart
-          title="Product Portion"
+          title="Product Portion (items)"
           weekDateInfo={weekDateInfo}
           orders={orders}
         />

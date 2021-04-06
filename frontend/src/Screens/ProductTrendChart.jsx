@@ -3,9 +3,8 @@ import { Line } from "react-chartjs-2";
 
 function ProductTrendChart({ title }) {
   const red = "255, 99, 132";
-  const blue = "54, 162, 235";
   const data = {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     datasets: [
       {
         data: [12, 19, 3, 5, 2, 3, 8],
@@ -13,13 +12,6 @@ function ProductTrendChart({ title }) {
         backgroundColor: `rgb(${red})`,
         borderColor: `rgba(${red}, 0.2)`,
         yAxisID: "y-axis-1",
-      },
-      {
-        data: [1, 5, 8, 9, 4, 10, 7],
-        fill: false,
-        backgroundColor: `rgb(${blue})`,
-        borderColor: `rgba(${blue}, 0.2)`,
-        yAxisID: "y-axis-2",
       },
     ],
   };
@@ -32,15 +24,6 @@ function ProductTrendChart({ title }) {
           display: true,
           position: "left",
           id: "y-axis-1",
-        },
-        {
-          type: "linear",
-          display: true,
-          position: "right",
-          id: "y-axis-2",
-          gridLines: {
-            drawOnArea: false,
-          },
         },
       ],
     },
