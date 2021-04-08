@@ -440,12 +440,14 @@ a.active{
   margin: 1rem;
   flex: 1;
   padding: 2rem;
+  min-width: 30rem;
 }
+
 .tableChart-dashboard h1{
   margin: 0;
 }
 .tableChart-dashboard canvas{
-  height: 270px !important;
+  height: 90% !important;
   width: 100% !important;
 }
 

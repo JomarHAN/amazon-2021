@@ -26,6 +26,7 @@ function ProductPortionChart({ title, orders }) {
   };
   const options = {
     legend: {
+      display: false,
       position: "right",
       labels: {
         boxWidth: 30,
