@@ -9,7 +9,9 @@ function ProductTrendChart({ title, weekDateInfo, orders }) {
   const [indexItem, setIndexItem] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getLineChartInfo(weekDateInfo, orders));
+    if (orders) {
+      dispatch(getLineChartInfo(weekDateInfo, orders));
+    }
   }, [weekDateInfo, orders, dispatch]);
   const data = {
     labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
