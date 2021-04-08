@@ -19,8 +19,14 @@ function ProductTrendChart({ title, weekDateInfo, orders }) {
       {
         data: info[indexItem]?.week,
         fill: false,
-        backgroundColor: borderColor[indexItem],
-        borderColor: backgroundColor[indexItem],
+        backgroundColor:
+          indexItem <= borderColor
+            ? borderColor[indexItem]
+            : borderColor[indexItem - borderColor.length],
+        borderColor:
+          indexItem <= backgroundColor
+            ? backgroundColor[indexItem]
+            : backgroundColor[indexItem - backgroundColor.length],
         yAxisID: "y-axis-1",
       },
     ],
