@@ -6,7 +6,9 @@ import {
     DASHBOARD_WEEKLY_REQUEST,
     DASHBOARD_WEEKLY_SUCCESS,
     DASHBOARD_PIE_CHART_WEEKLY,
-    DASHBOARD_PIE_CHART_RESET
+    DASHBOARD_LINE_CHART_WEEKLY,
+    DASHBOARD_PIE_CHART_RESET,
+    DASHBOARD_LINE_CHART_RESET
 } from "../constanst/dashboardConstants"
 
 export const getDashboardCardsInfo = (today) => async (dispatch, getState) => {
@@ -48,4 +50,23 @@ export const getPieChartInfo = (orders) => (dispatch) => {
     const orderItems = []
     orders?.map(order => order.orderItems.map(o => orderItems.push({ id: o.productId, name: o.name, qty: o.qty })))
     orderItems.map(item => dispatch({ type: DASHBOARD_PIE_CHART_WEEKLY, payload: item }))
+}
+
+export const getLineChartInfo = (weekDateInfo, orders) => (dispatch) => {
+    dispatch({ type: DASHBOARD_LINE_CHART_RESET })
+    const itemsArray = []
+    orders?.map(order => order.orderItems.map(o => itemsArray.push({
+        name: o.name,
+        qty: o.qty,
+        date: order.orderDate,
+        week: weekDateInfo.map(date =>
+            date.date === order.orderDate
+                ? date.qty = o.qty
+                : date.qty = 0
+        )
+    })
+    ))
+    itemsArray.map(item =>
+        dispatch({ type: DASHBOARD_LINE_CHART_WEEKLY, payload: item })
+    )
 }

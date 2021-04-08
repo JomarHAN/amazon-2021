@@ -466,3 +466,13 @@ a.active{
 .change-week button:hover{
   background-color: rgb(159, 217, 253);
 }
+
+.lineChart-select{
+  display: flex;
+  justify-content: space-between;
+}
+.lineChart-select select{
+  padding: 0;
+  font-size: 1.4rem;
+  width: 15rem;
+}

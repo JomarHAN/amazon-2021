@@ -7,7 +7,9 @@ import {
     DASHBOARD_WEEKLY_RESET,
     DASHBOARD_WEEKLY_SUCCESS,
     DASHBOARD_PIE_CHART_WEEKLY,
-    DASHBOARD_PIE_CHART_RESET
+    DASHBOARD_PIE_CHART_RESET,
+    DASHBOARD_LINE_CHART_WEEKLY,
+    DASHBOARD_LINE_CHART_RESET
 } from "../constanst/dashboardConstants";
 
 export const dashboardCardsReducer = (state = { cardDashboard: {} }, action) => {
@@ -104,6 +106,39 @@ export const pieChartReducer = (state = { productsInfo: [], labelsInfo: [], data
             }
         case DASHBOARD_PIE_CHART_RESET:
             return { ...state, productsInfo: [], labelsInfo: [], dataInfo: [] }
+        default:
+            return state;
+    }
+}
+
+export const lineChartReducer = (state = { info: [] }, action) => {
+    switch (action.type) {
+        case DASHBOARD_LINE_CHART_WEEKLY:
+            const item = action.payload
+            const existItem = state.info?.find(i => i.name === item.name)
+            if (existItem) {
+                var x = 0
+                while (x < existItem.week.length && x < item.week.length) {
+                    existItem.week[x] = existItem.week[x] + item.week[x]
+                    x++;
+                }
+                const newInfo = state.info.filter(i => i.name !== item.name)
+                newInfo.push(existItem)
+                return {
+                    ...state,
+                    info: newInfo
+                }
+            } else {
+                return {
+                    ...state,
+                    info: [...state.info, item]
+                }
+            }
+        case DASHBOARD_LINE_CHART_RESET:
+            return {
+                ...state,
+                info: []
+            }
         default:
             return state;
     }

@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import { useDispatch, useSelector } from "react-redux";
+import { getLineChartInfo } from "../actions/dashboardActions";
+import { backgroundColor, borderColor } from "../utils";
 
 function ProductTrendChart({ title, weekDateInfo, orders }) {
-  const red = "255, 99, 132";
+  const { info } = useSelector((state) => state.lineChart);
+  const [indexItem, setIndexItem] = useState(0);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getLineChartInfo(weekDateInfo, orders));
+  }, [weekDateInfo, orders, dispatch]);
   const data = {
     labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     datasets: [
       {
-        data: [12, 19, 3, 5, 2, 3, 8],
+        data: info[indexItem]?.week,
         fill: false,
-        backgroundColor: `rgb(${red})`,
-        borderColor: `rgba(${red}, 0.2)`,
+        backgroundColor: borderColor[indexItem],
+        borderColor: backgroundColor[indexItem],
         yAxisID: "y-axis-1",
       },
     ],
@@ -48,7 +56,16 @@ function ProductTrendChart({ title, weekDateInfo, orders }) {
   };
   return (
     <div className="tableChart-dashboard">
-      <h1>{title}</h1>
+      <div className="lineChart-select">
+        <h1>{title}</h1>
+        <select onChange={(e) => setIndexItem(e.target.value)}>
+          {info.map((item, i) => (
+            <option key={i} value={i}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <Line data={data} options={options} />
     </div>
   );

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPieChartInfo } from "../actions/dashboardActions";
 import { backgroundColor, borderColor } from "../utils";
 
-function ProductPortionChart({ title, weekDateInfo, orders }) {
+function ProductPortionChart({ title, orders }) {
   const { labelsInfo, dataInfo } = useSelector((state) => state.pieChart);
 
   const dispatch = useDispatch();
