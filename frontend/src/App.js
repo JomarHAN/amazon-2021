@@ -60,7 +60,7 @@ function App() {
               />
             </Link>
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="searchBox" style={{ flex: 1 }}>
             <Route render={(props) => <SearchBox {...props} />} />
           </div>
           <div>

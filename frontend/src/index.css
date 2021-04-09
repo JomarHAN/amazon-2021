@@ -148,6 +148,8 @@ a.brand img{
 .p-1{
   padding: 1rem;
 }
+
+
 /* Image */
 img{
   border-radius: 0.5rem;
@@ -159,12 +161,9 @@ img.small{
 img.medium{
   max-width: 25rem;
   width: 100%;
-  /* max-height: 28rem; */
-  
 }
 img.large{
   width: 50%;
-  /* height: 50rem; */
 }
 .product-details{
   display: flex;
@@ -216,8 +215,6 @@ img.logo{
   background-color: #f8f8f8;
   border-radius: 0.5rem;
   margin: 1rem;
-  /* width: 25rem;
-  height: 44rem; */
 }
 .card-body{
   padding: 1rem;
@@ -272,7 +269,6 @@ img.logo{
 }
 .form label {
   margin: 1rem 0;
-  /* display: block; */
 }
 /* Review */
 .review{
@@ -338,6 +334,9 @@ img.logo{
 }
 
 /* Search */
+.search{
+  min-width: 470px;
+}
 .search button{
   border-radius: 0 0.5rem 0.5rem 0;
   border-left: none;
@@ -483,3 +482,15 @@ a.active{
   width: 15rem;
 }
 
+@media only screen and (max-width: 768px){
+  header.row{
+    height: 9rem;
+  }
+  .searchBox{
+    order: 1;
+    align-self: flex-end;
+  }
+  main{
+    margin-top: 4rem;
+  }
+}

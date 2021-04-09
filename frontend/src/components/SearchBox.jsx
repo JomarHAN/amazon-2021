@@ -12,7 +12,6 @@ function SearchBox(props) {
       props.history.push("/");
     } else {
       props.history.push(`/search/fields/${fieldSelect}/name/${name}`);
-      // setFieldSelect("All");
     }
   };
 
