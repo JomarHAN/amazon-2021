@@ -24,7 +24,6 @@ userRouter.post('/signin', expressAsyncHandler(async (req, res) => {
                 isSeller: user.isSeller,
                 token: generateToken(user)
             }
-            console.log(user.password)
             res.send(userSignin)
         } else {
             return res.status(404).send({ message: "Invalid Email Or Password" })
