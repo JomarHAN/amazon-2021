@@ -6,7 +6,8 @@ import IncomeChart from "./IncomeChart";
 import ProductTrendChart from "./ProductTrendChart";
 import ProductPortionChart from "./ProductPortionChart";
 
-function WeekDashboardScreen() {
+function WeekDashboardScreen({ sellerMode }) {
+  const { userInfo } = useSelector((state) => state.userSignin);
   const getDay = (num) => {
     const day = moment().get("date") - moment().get("day") + num;
     const result = moment().set("date", day).format("MM-DD-YYYY");
@@ -43,7 +44,11 @@ function WeekDashboardScreen() {
       setClick(false);
     }
     if (!click) {
-      dispatch(getWeekBussiness(dayEnd, dayStart));
+      dispatch(
+        getWeekBussiness(dayEnd, dayStart, {
+          seller: sellerMode ? userInfo._id : "",
+        })
+      );
     }
     setMon(getDay(first + 1));
     setTue(getDay(first + 2));
@@ -52,7 +57,7 @@ function WeekDashboardScreen() {
     setFri(getDay(first + 5));
     setSat(getDay(first + 6));
     setSun(getDay(first));
-  }, [dispatch, dayStart, dayEnd, first, click]);
+  }, [dispatch, dayStart, dayEnd, first, click, userInfo, sellerMode]);
 
   const onPreviousWeek = (num) => {
     setFirst(first - num);

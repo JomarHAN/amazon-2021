@@ -18,11 +18,12 @@ export const getDashboardCardsInfo = (today) => async (dispatch, getState) => {
     }
 }
 
-export const getWeekBussiness = (dayEnd, dayStart) => async (dispatch, getState) => {
+export const getWeekBussiness = (dayEnd, dayStart, seller) => async (dispatch, getState) => {
+    console.log(seller)
     dispatch({ type: DASHBOARD_WEEKLY_REQUEST })
     const { userSignin: { userInfo } } = getState()
     try {
-        const { data } = await axios.get(`/api/orders?dayStart=${dayStart}&dayEnd=${dayEnd}`, {
+        const { data } = await axios.get(`/api/orders?dayStart=${dayStart}&dayEnd=${dayEnd}&seller=${seller.seller}`, {
             headers: {
                 Authorization: `Bearer ${userInfo.token}`
             }

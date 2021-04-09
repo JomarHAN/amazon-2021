@@ -99,7 +99,7 @@ function App() {
                 </Link>
                 <ul className="dropdown-content">
                   <li>
-                    <Link to="/private/dashboard">Dashboard</Link>
+                    <Link to="/dashboard">Dashboard</Link>
                   </li>
                   <li>
                     <Link to="/productlist">Products</Link>
@@ -122,6 +122,9 @@ function App() {
                   Seller <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
+                  <li>
+                    <Link to="/dashboard/seller">Dashboard</Link>
+                  </li>
                   <li>
                     <Link to="/productlist/seller">Products</Link>
                   </li>
@@ -175,6 +178,7 @@ function App() {
           />
           <SellerRoute path="/draft/:id" component={DraftEditScreen} exact />
           <SellerRoute path="/preview/:id" component={DraftPreviewScreen} />
+          <SellerRoute path="/dashboard/seller" component={DashboardScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} exact />
           <PrivateRoute path="/map" component={MapScreen} />
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
@@ -182,7 +186,7 @@ function App() {
           <AdminRoute path="/orderlist" component={OrderListScreen} exact />
           <AdminRoute path="/userlist" component={UserListScreen} />
           <AdminRoute path="/draftslist" component={DraftListScreen} exact />
-          <AdminRoute path="/private/dashboard" component={DashboardScreen} />
+          <AdminRoute path="/dashboard" component={DashboardScreen} exact />
           <Route path="/" component={HomeScreen} exact />
         </main>
         <footer className="row center">All right reserved</footer>

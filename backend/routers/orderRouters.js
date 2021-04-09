@@ -20,18 +20,6 @@ orderRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, re
     }
 }))
 
-// orderRouter.get('/dashboard', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
-//     const seller = req.query.seller
-//     const sellerFilter = seller ? { seller } : {}
-
-//     const orders = await Order.find({ ...sellerFilter, ...weekFilter }).populate('user', 'name')
-//     if (orders) {
-//         res.send(orders)
-//     } else {
-//         res.status(404).send({ message: "No Order Found" })
-//     }
-// }))
-
 orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
     if (req.body.cartItems.length === 0) {
         res.status(400).send({ message: "Cart Empty" })
