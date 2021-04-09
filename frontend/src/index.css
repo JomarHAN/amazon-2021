@@ -496,7 +496,6 @@ a.active{
 }
 
 @media only screen and (max-width: 425px){
-  
   .searchBox{
     margin-top: 1rem;
     order: 1;
