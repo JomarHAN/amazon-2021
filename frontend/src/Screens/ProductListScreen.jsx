@@ -13,6 +13,7 @@ function ProductListScreen(props) {
   const { loading, error, products } = useSelector(
     (state) => state.productsList
   );
+  console.log(products);
   const {
     loading: loadingDraft,
     error: errorDraft,
@@ -86,6 +87,7 @@ function ProductListScreen(props) {
               <th>#</th>
               <th>ID</th>
               <th>NAME</th>
+              <th>STOCK</th>
               <th>PRICE</th>
               <th>CATEGORY</th>
               <th>BRAND</th>
@@ -98,6 +100,11 @@ function ProductListScreen(props) {
                 <td>{i + 1}</td>
                 <td>{product._id}</td>
                 <td>{product.name}</td>
+                <td className={product.countInStock > 5 ? "success" : "danger"}>
+                  {product.countInStock > 5
+                    ? product.countInStock
+                    : `${product.countInStock} left`}
+                </td>
                 <td>${numeral(product.price).format("0,0.00")}</td>
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
