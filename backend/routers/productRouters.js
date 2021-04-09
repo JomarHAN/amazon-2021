@@ -17,6 +17,14 @@ productRouter.get('/seed', async (req, res) => {
     res.send({ createSample })
 })
 
+productRouter.put('/recount', expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.body.productId)
+    if (product) {
+        product.countInStock = product.countInStock - Number(req.body.qty)
+        const updateProduct = await product.save()
+        res.send(updateProduct)
+    }
+}))
 
 productRouter.get('/', expressAsyncHandler(async (req, res) => {
     const seller = req.query.seller

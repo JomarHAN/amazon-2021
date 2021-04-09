@@ -31,6 +31,7 @@ import MapScreen from "./Screens/MapScreen";
 import DraftEditScreen from "./Screens/DraftEditScreen";
 import DraftPreviewScreen from "./Screens/DraftPreviewScreen";
 import DraftListScreen from "./Screens/DraftListScreen";
+import DashboardScreen from "./Screens/DashboardScreen";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -59,7 +60,7 @@ function App() {
               />
             </Link>
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="searchBox" style={{ flex: 1 }}>
             <Route render={(props) => <SearchBox {...props} />} />
           </div>
           <div>
@@ -97,9 +98,9 @@ function App() {
                   Admin <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
-                  {/* <li>
+                  <li>
                     <Link to="/dashboard">Dashboard</Link>
-                  </li> */}
+                  </li>
                   <li>
                     <Link to="/productlist">Products</Link>
                   </li>
@@ -121,6 +122,9 @@ function App() {
                   Seller <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
+                  <li>
+                    <Link to="/dashboard/seller">Dashboard</Link>
+                  </li>
                   <li>
                     <Link to="/productlist/seller">Products</Link>
                   </li>
@@ -174,6 +178,7 @@ function App() {
           />
           <SellerRoute path="/draft/:id" component={DraftEditScreen} exact />
           <SellerRoute path="/preview/:id" component={DraftPreviewScreen} />
+          <SellerRoute path="/dashboard/seller" component={DashboardScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} exact />
           <PrivateRoute path="/map" component={MapScreen} />
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
@@ -181,6 +186,7 @@ function App() {
           <AdminRoute path="/orderlist" component={OrderListScreen} exact />
           <AdminRoute path="/userlist" component={UserListScreen} />
           <AdminRoute path="/draftslist" component={DraftListScreen} exact />
+          <AdminRoute path="/dashboard" component={DashboardScreen} exact />
           <Route path="/" component={HomeScreen} exact />
         </main>
         <footer className="row center">All right reserved</footer>

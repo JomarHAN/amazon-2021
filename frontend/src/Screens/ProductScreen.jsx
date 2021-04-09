@@ -6,6 +6,7 @@ import Rating from "../components/Rating";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { PRODUCT_REVIEW_RESET } from "../constanst/productConstants";
+import numeral from "numeral";
 
 function ProductScreen(props) {
   const productId = props.match.params.id;
@@ -121,7 +122,7 @@ function ProductScreen(props) {
                     numReviews={product.numReviews}
                   />
                 </li>
-                <li>Price: ${product.price.toFixed(2)}</li>
+                <li>Price: ${numeral(product.price).format("0,0.00")}</li>
                 <li>Description: {product.description}</li>
               </ul>
             </div>
@@ -143,15 +144,22 @@ function ProductScreen(props) {
                   <li>
                     <div className="row">
                       <div>Price</div>
-                      <div className="price">${product.price.toFixed(2)}</div>
+                      <div className="price">
+                        ${numeral(product.price).format("0,0.00")}
+                      </div>
                     </div>
                   </li>
                   <li>
                     <div className="row">
                       <div>Status</div>
                       <div>
-                        {product.countInStock > 0 ? (
+                        {product.countInStock > 5 ? (
                           <span className="success">In Stock</span>
+                        ) : product.countInStock > 0 &&
+                          product.countInStock <= 5 ? (
+                          <span className="danger">
+                            {product.countInStock} items left
+                          </span>
                         ) : (
                           <span className="danger">Unavailable</span>
                         )}

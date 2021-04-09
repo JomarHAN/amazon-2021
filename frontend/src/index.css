@@ -148,6 +148,8 @@ a.brand img{
 .p-1{
   padding: 1rem;
 }
+
+
 /* Image */
 img{
   border-radius: 0.5rem;
@@ -159,12 +161,9 @@ img.small{
 img.medium{
   max-width: 25rem;
   width: 100%;
-  /* max-height: 28rem; */
-  
 }
 img.large{
   width: 50%;
-  /* height: 50rem; */
 }
 .product-details{
   display: flex;
@@ -216,8 +215,6 @@ img.logo{
   background-color: #f8f8f8;
   border-radius: 0.5rem;
   margin: 1rem;
-  /* width: 25rem;
-  height: 44rem; */
 }
 .card-body{
   padding: 1rem;
@@ -272,7 +269,6 @@ img.logo{
 }
 .form label {
   margin: 1rem 0;
-  /* display: block; */
 }
 /* Review */
 .review{
@@ -338,6 +334,9 @@ img.logo{
 }
 
 /* Search */
+.search{
+  min-width: 470px;
+}
 .search button{
   border-radius: 0 0.5rem 0.5rem 0;
   border-left: none;
@@ -391,4 +390,118 @@ a.active{
   background-color: #203040;
   color: #ffffff;
   margin-right: 0.5rem;
+}
+
+/* Dashboard */
+.dashboard{
+  padding: 0;
+}
+.card-dashboard{
+  border: 0.1rem solid #c0c0c0;
+  background-color: #f8f8f8;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  flex: 1;
+  height: 16rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 20rem;
+}
+.card-dashboard .chartjs-render-monitor{
+  height: 125px !important;
+  max-width: 265px !important;
+  margin: 0 auto;
+}
+.title-card{
+  margin: 0;
+  font-size: 2rem;
+}
+.today-card{
+  font-size: 3rem;
+}
+.total-card{
+  font-size: 2rem;
+  color: rgb(136, 136, 136);
+}
+.row.income, .row.orders{
+  flex: 1;
+}
+.subOrder{
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.tableChart-dashboard{
+  border: 0.1rem solid #c0c0c0;
+  background-color: #f8f8f8;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  flex: 1;
+  padding: 2rem;
+  min-width: 30rem;
+}
+
+.tableChart-dashboard h1{
+  margin: 0;
+}
+.tableChart-dashboard canvas{
+  height: 90% !important;
+  width: 100% !important;
+}
+
+.change-week{
+  width: 30rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+.change-week button{
+  border: none;
+  outline-width: 0;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgb(198, 230, 250);
+}
+.change-week button:hover{
+  background-color: rgb(159, 217, 253);
+}
+
+.lineChart-select{
+  display: flex;
+  justify-content: space-between;
+}
+.lineChart-select select{
+  padding: 0;
+  font-size: 1.4rem;
+  width: 15rem;
+}
+
+@media only screen and (max-width: 768px){
+  header.row{
+    height: 9rem;
+  }
+  .searchBox{
+    order: 1;
+    align-self: flex-end;
+  }
+  main{
+    margin-top: 4rem;
+  }
+}
+
+@media only screen and (max-width: 425px){
+  .searchBox{
+    margin-top: 1rem;
+    order: 1;
+    align-self: flex-end;
+  }
+  main{
+    margin-top: 7rem;
+  }
 }

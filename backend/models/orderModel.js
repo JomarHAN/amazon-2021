@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import moment from 'moment'
 
 const orderSchema = new mongoose.Schema({
     orderItems: [
@@ -36,6 +37,7 @@ const orderSchema = new mongoose.Schema({
     isDelivered: { type: Boolean, default: false },
     paidAt: { type: Date },
     deliveredAt: { type: Date },
+    orderDate: { type: String, required: true }
 }, {
     timestamps: true
 })

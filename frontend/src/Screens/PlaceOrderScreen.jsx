@@ -1,7 +1,9 @@
+import numeral from "numeral";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createOrder } from "../actions/orderActions";
+import { recountProductStock } from "../actions/productActions";
 import CheckoutStep from "../components/CheckoutStep";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -9,6 +11,7 @@ import { ORDER_CREATE_RESET } from "../constanst/orderConstants";
 
 function PlaceOrderScreen(props) {
   const cart = useSelector((state) => state.cart);
+
   if (!cart.paymentMethod) {
     props.history.push("/payment");
   }
@@ -33,9 +36,10 @@ function PlaceOrderScreen(props) {
   useEffect(() => {
     if (success) {
       dispatch({ type: ORDER_CREATE_RESET });
+      dispatch(recountProductStock(cart.cartItems));
       props.history.push(`/order/${order._id}`);
     }
-  }, [dispatch, props, order, success]);
+  }, [dispatch, props, order, success, cart]);
 
   return (
     <div>
@@ -85,8 +89,8 @@ function PlaceOrderScreen(props) {
                           </Link>
                         </div>
                         <div>
-                          {item.qty} x ${item.price.toFixed(2)} = $
-                          {item.qty * item.price.toFixed(2)}
+                          {item.qty} x ${numeral(item.price).format("0,0.00")} =
+                          ${numeral(item.qty * item.price).format("0,0.00")}
                         </div>
                       </div>
                     </li>
@@ -105,15 +109,15 @@ function PlaceOrderScreen(props) {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>${cart.itemsPrice.toFixed(2)}</div>
+                  <div>${numeral(cart.itemsPrice).format("0,0.00")}</div>
                 </div>
                 <div className="row">
                   <div>Shipping Fee</div>
-                  <div>${cart.shippingPrice.toFixed(2)}</div>
+                  <div>${numeral(cart.shippingPrice).format("0,0.00")}</div>
                 </div>
                 <div className="row">
                   <div>Taxes (15%)</div>
-                  <div>${cart.taxPrice.toFixed(2)}</div>
+                  <div>${numeral(cart.taxPrice).format("0,0.00")}</div>
                 </div>
                 <hr />
                 <div className="row">
@@ -121,7 +125,9 @@ function PlaceOrderScreen(props) {
                     <strong>Total</strong>
                   </div>
                   <div>
-                    <strong>${cart.totalPrice.toFixed(2)}</strong>
+                    <strong>
+                      ${numeral(cart.totalPrice).format("0,0.00")}
+                    </strong>
                   </div>
                 </div>
               </li>

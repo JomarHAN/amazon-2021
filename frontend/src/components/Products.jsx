@@ -1,3 +1,4 @@
+import numeral from "numeral";
 import React from "react";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
@@ -15,7 +16,9 @@ function Products(props) {
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
         <div className="row">
-          <div className="price">${product.price.toFixed(2)}</div>
+          <div className="price">
+            ${numeral(product.price).format("0,0.00")}
+          </div>
           <div>
             <Link to={`/seller/${product.seller._id}`}>
               <strong>{product.seller.seller?.business}</strong>

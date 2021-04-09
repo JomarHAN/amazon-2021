@@ -114,3 +114,9 @@ export const commentProduct = (review) => async (dispatch, getState) => {
         dispatch({ type: PRODUCT_REVIEW_FAIL, payload: message })
     }
 }
+
+export const recountProductStock = (products) => async () => {
+    products.map(async (p) => {
+        await Axios.put('/api/products/recount', p)
+    })
+}
