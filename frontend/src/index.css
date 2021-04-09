@@ -494,3 +494,15 @@ a.active{
     margin-top: 4rem;
   }
 }
+
+@media only screen and (max-width: 425px){
+  
+  .searchBox{
+    margin-top: 1rem;
+    order: 1;
+    align-self: flex-end;
+  }
+  main{
+    margin-top: 7rem;
+  }
+}
