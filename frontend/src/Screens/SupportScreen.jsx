@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import MessageBox from "../components/MessageBox";
+import socketIOClient from "socket.io-client";
 
 const ENDPOINT =
   window.location.host.indexOf("localhost") >= 0
@@ -17,8 +18,82 @@ export default function SupportScreen() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState("");
+  const messageRef = useRef();
+  const [socket, setSocket] = useState(null);
 
-  const pickUser = (user) => {};
+  useEffect(() => {
+    if (messageRef.current) {
+      messageRef.current.scrollBy({
+        top: messageRef.current.clientHeight,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+
+    if (!socket) {
+      const sk = socketIOClient(ENDPOINT);
+      setSocket(sk);
+
+      sk.emit("onLogin", {
+        _id: userInfo._id,
+        name: userInfo.name,
+        isAdmin: userInfo.isAdmin,
+      });
+
+      sk.on("user-status", (userStatus) => {
+        const existUser = users.find((x) => x._id === userStatus._id);
+        if (existUser) {
+          listUsers.map((user) =>
+            user._id === existUser._id ? userStatus : user
+          );
+          setUsers(listUsers);
+        } else {
+          listUsers = [...listUsers, userStatus];
+          setUsers(listUsers);
+        }
+      });
+
+      sk.on("receive-message", (message) => {
+        if (userSelected._id === message._id) {
+          listMessages = [...listMessages, message];
+        } else {
+          const existUser = listUsers.find((user) => user._id === message._id);
+          if (existUser) {
+            listUsers.map((user) =>
+              user._id === existUser._id ? { ...user, unread: false } : user
+            );
+            setUsers(listUsers);
+          }
+        }
+        setMessages(listMessages);
+      });
+
+      sk.on("list-users", (users) => {
+        listUsers = users;
+        setUsers(listUsers);
+      });
+
+      sk.on("select-user", (user) => {
+        listMessages = user.messages;
+        setMessages(listMessages);
+      });
+    }
+  }, [socket, userInfo, users]);
+
+  console.log(users);
+
+  const pickUser = (user) => {
+    userSelected = user;
+    setSelectedUser(userSelected);
+    const existUser = listUsers.find((x) => x._id === user._id);
+    if (existUser) {
+      listUsers.map((user) =>
+        user._id === existUser._id ? { ...user, unread: false } : user
+      );
+      setUsers(listUsers);
+    }
+    socket.emit("select-user", user);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,7 +135,7 @@ export default function SupportScreen() {
             <div className="row">
               <strong>Chat With {selectedUser.name}</strong>
             </div>
-            <ul>
+            <ul ref={messageRef}>
               {messages.map((msg, idx) => (
                 <li key={idx}>{msg.body}</li>
               ))}

@@ -62,7 +62,7 @@ io.on('connection', (socket) => {
             console.log(`${user.name} was offline`)
             const admin = users.find(user => user.isAdmin && user.online)
             if (admin) {
-                socket.to(admin.socketId).emit('user-status', user)
+                io.to(admin.socketId).emit('user-status', user)
             }
         }
     })
@@ -84,10 +84,10 @@ io.on('connection', (socket) => {
         console.log(`${userStatus.name} is online`)
         const admin = users.find(x => x.isAdmin && x.online)
         if (admin) {
-            socket.to(admin.socketId).emit('user-status', userStatus)
+            io.to(admin.socketId).emit('user-status', userStatus)
         }
         if (userStatus.isAdmin) {
-            socket.to(userStatus.socketId).emit('list-users', users)
+            io.to(userStatus.socketId).emit('list-users', users)
         }
     })
 
@@ -95,7 +95,7 @@ io.on('connection', (socket) => {
         const admin = users.find(x => x.isAdmin && x.online)
         if (admin) {
             const existUser = users.find(x => x._id === user._id)
-            socket.to(admin.socketId).emit('user-status', existUser)
+            io.to(admin.socketId).emit('user-status', existUser)
         }
     })
 
@@ -103,17 +103,17 @@ io.on('connection', (socket) => {
         if (message.isAdmin) {
             const user = users.find(x => x._id === message._id && x.online)
             if (user) {
-                socket.to(user.socketId).emit('receive-message', message)
+                io.to(user.socketId).emit('receive-message', message)
                 user.messages.push(message)
             }
         } else {
             const admin = users.find(x => x.isAdmin && x.online)
             if (admin) {
-                socket.to(admin.socketId).emit('receive-message', message)
+                io.to(admin.socketId).emit('receive-message', message)
                 const user = users.find(x => x._id === message._id && x.online)
                 user.messages.push(message)
             } else {
-                socket.to(socket.id).emit({
+                io.to(socket.id).emit({
                     body: "Sorry, I'm offline now!",
                     name: "Admin"
                 })
