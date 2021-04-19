@@ -62,7 +62,7 @@ io.on('connection', (socket) => {
             console.log(`${user.name} was offline`)
             const admin = users.find(user => user.isAdmin && user.online)
             if (admin) {
-                socket.to(admin.socketId).emit('userStatus', user)
+                socket.to(admin.socketId).emit('user-status', user)
             }
         }
     })
@@ -84,10 +84,40 @@ io.on('connection', (socket) => {
         console.log(`${userStatus.name} is online`)
         const admin = users.find(x => x.isAdmin && x.online)
         if (admin) {
-            socket.to(admin.socketId).emit('userStatus', userStatus)
+            socket.to(admin.socketId).emit('user-status', userStatus)
         }
         if (userStatus.isAdmin) {
             socket.to(userStatus.socketId).emit('list-users', users)
+        }
+    })
+
+    socket.on('select-user', (user) => {
+        const admin = users.find(x => x.isAdmin && x.online)
+        if (admin) {
+            const existUser = users.find(x => x._id === user._id)
+            socket.to(admin.socketId).emit('user-status', existUser)
+        }
+    })
+
+    socket.on('onMessage', (message) => {
+        if (message.isAdmin) {
+            const user = users.find(x => x._id === message.recipient_id && x.online)
+            if (user) {
+                socket.to(user.socketId).emit('message', message)
+                user.messages.push(message)
+            }
+        } else {
+            const admin = users.find(x => x.isAdmin && x.online)
+            if (admin) {
+                socket.to(admin.socketId).emit('message', message)
+                const user = users.find(x => x._id === message.recipient_id && x.online)
+                user.messages.push(message)
+            } else {
+                socket.to(socket.id).emit({
+                    body: "Sorry, I'm offline now!",
+                    name: "Admin"
+                })
+            }
         }
     })
 })
