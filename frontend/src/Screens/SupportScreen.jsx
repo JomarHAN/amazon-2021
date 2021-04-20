@@ -10,7 +10,7 @@ const ENDPOINT =
 
 let listUsers = [];
 let listMessages = [];
-let userSelected = {};
+let allUserSelected = {};
 
 export default function SupportScreen() {
   const { userInfo } = useSelector((state) => state.userSignin);
@@ -41,9 +41,9 @@ export default function SupportScreen() {
       });
 
       sk.on("user-status", (userStatus) => {
-        const existUser = users.find((x) => x._id === userStatus._id);
+        const existUser = listUsers.find((x) => x._id === userStatus._id);
         if (existUser) {
-          listUsers.map((user) =>
+          listUsers = listUsers.map((user) =>
             user._id === existUser._id ? userStatus : user
           );
           setUsers(listUsers);
@@ -54,12 +54,12 @@ export default function SupportScreen() {
       });
 
       sk.on("receive-message", (message) => {
-        if (userSelected._id === message._id) {
+        if (allUserSelected._id === message._id) {
           listMessages = [...listMessages, message];
         } else {
           const existUser = listUsers.find((user) => user._id === message._id);
           if (existUser) {
-            listUsers.map((user) =>
+            listUsers = listUsers.map((user) =>
               user._id === existUser._id ? { ...user, unread: false } : user
             );
             setUsers(listUsers);
@@ -73,18 +73,16 @@ export default function SupportScreen() {
         setUsers(listUsers);
       });
 
-      sk.on("select-user", (user) => {
+      sk.on("user-select", (user) => {
         listMessages = user.messages;
         setMessages(listMessages);
       });
     }
-  }, [socket, userInfo, users]);
-
-  console.log(users);
+  }, [socket, userInfo, users, messages]);
 
   const pickUser = (user) => {
-    userSelected = user;
-    setSelectedUser(userSelected);
+    allUserSelected = user;
+    setSelectedUser(allUserSelected);
     const existUser = listUsers.find((x) => x._id === user._id);
     if (existUser) {
       listUsers.map((user) =>
@@ -92,13 +90,26 @@ export default function SupportScreen() {
       );
       setUsers(listUsers);
     }
-    socket.emit("select-user", user);
+    socket.emit("onUserSelect", user);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    listMessages = [
+      ...listMessages,
+      { body: messageInput, name: userInfo.name, isAdmin: userInfo.isAdmin },
+    ];
+    setMessages(listMessages);
+    setMessageInput("");
+    // setTimeout(() => {
+    socket.emit("send-message", {
+      body: messageInput,
+      name: userInfo.name,
+      isAdmin: userInfo.isAdmin,
+      _id: selectedUser._id,
+    });
+    // }, 500);
   };
-
   return (
     <div className="row top full-container">
       <div className="col-1 support-users">
@@ -109,7 +120,7 @@ export default function SupportScreen() {
             .map((user, idx) => (
               <li
                 key={idx}
-                className={user._id === userSelected._id ? "selected" : ""}
+                className={user._id === allUserSelected._id ? "selected" : ""}
               >
                 <button
                   type="button"
@@ -137,7 +148,9 @@ export default function SupportScreen() {
             </div>
             <ul ref={messageRef}>
               {messages.map((msg, idx) => (
-                <li key={idx}>{msg.body}</li>
+                <li key={idx} className={msg.isAdmin ? "admin" : "user"}>
+                  <div className="chat-bubble">{msg.body}</div>
+                </li>
               ))}
             </ul>
             <div>

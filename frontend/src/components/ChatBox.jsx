@@ -29,7 +29,11 @@ export default function ChatBox({ userInfo }) {
       });
 
       socket.on("receive-message", (message) => {
-        setMessages([...messages, { body: message.body, name: message.name }]);
+        console.log(message);
+        setMessages([
+          ...messages,
+          { body: message.body, name: message.name, isAdmin: message.isAdmin },
+        ]);
       });
     }
   }, [userInfo, socket, messages]);
