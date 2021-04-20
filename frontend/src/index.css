@@ -555,10 +555,7 @@ a.active{
   padding: 1rem;
   border-radius: 5px;
 }
-/* .support-messages li.admin,
-.chatbox li.admin{
-  justify-content: flex-end;
-} */
+
 .support-messages li.admin,
 .chatbox li.user{
   justify-content: flex-end;

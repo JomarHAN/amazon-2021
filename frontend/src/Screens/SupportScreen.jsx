@@ -101,14 +101,12 @@ export default function SupportScreen() {
     ];
     setMessages(listMessages);
     setMessageInput("");
-    // setTimeout(() => {
     socket.emit("send-message", {
       body: messageInput,
       name: userInfo.name,
       isAdmin: userInfo.isAdmin,
       _id: selectedUser._id,
     });
-    // }, 500);
   };
   return (
     <div className="row top full-container">
