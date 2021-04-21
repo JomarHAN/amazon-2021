@@ -14,6 +14,9 @@ const libs = ["places"];
 
 function MapScreen(props) {
   const [googleApiKey, setGoogleApiKey] = useState("");
+  const { mapShippingAddress } = useSelector(
+    (state) => state.userShippingAddress
+  );
   const [center, setCenter] = useState({ lat: 33.74, lng: -84.38 });
   const [location, setLocation] = useState(center);
 
@@ -28,7 +31,13 @@ function MapScreen(props) {
       getUserCurrentLocation();
     };
     fetchData();
-  }, []);
+    if (mapShippingAddress) {
+      setCenter({
+        lat: mapShippingAddress.lat,
+        lng: mapShippingAddress.lng,
+      });
+    }
+  }, [mapShippingAddress]);
 
   const onMarkerLoad = (marker) => {
     markerRef.current = marker;

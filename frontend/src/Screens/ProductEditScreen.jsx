@@ -243,7 +243,8 @@ function ProductEditScreen(props) {
             </div>
             <div>
               <label htmlFor="Description">Description</label>
-              <input
+              <textarea
+                rows="3"
                 type="text"
                 id="Description"
                 placeholder="Enter Description"

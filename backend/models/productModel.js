@@ -26,7 +26,9 @@ const productSchema = new mongoose.Schema({
     brand: { type: String, required: true },
     seller: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     fields: { type: String, required: true },
-    reviews: [review]
+    reviews: [review],
+    isDisount: { type: Boolean, default: false, required: true },
+    discountPrice: { type: Number }
 })
 const Product = mongoose.model("Product", productSchema)
 export default Product;

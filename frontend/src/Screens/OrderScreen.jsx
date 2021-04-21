@@ -14,6 +14,7 @@ import {
   ORDER_DELIVERY_RESET,
   ORDER_PAY_RESET,
 } from "../constanst/orderConstants";
+import numeral from "numeral";
 
 function OrderScreen(props) {
   const orderId = props.match.params.id;
@@ -157,15 +158,15 @@ function OrderScreen(props) {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>${order.itemsPrice.toFixed(2)}</div>
+                  <div>${numeral(order.itemsPrice).format("0,0.00")}</div>
                 </div>
                 <div className="row">
                   <div>Shipping Fee</div>
-                  <div>${order.shippingPrice.toFixed(2)}</div>
+                  <div>${numeral(order.shippingPrice).format("0,0.00")}</div>
                 </div>
                 <div className="row">
                   <div>Taxes (15%)</div>
-                  <div>${order.taxPrice.toFixed(2)}</div>
+                  <div>${numeral(order.taxPrice).format("0,0.00")}</div>
                 </div>
                 <hr />
                 <div className="row">
@@ -173,7 +174,9 @@ function OrderScreen(props) {
                     <strong>Total</strong>
                   </div>
                   <div>
-                    <strong>{order.totalPrice.toFixed(2)}</strong>
+                    <strong>
+                      ${numeral(order.totalPrice).format("0,0.00")}
+                    </strong>
                   </div>
                 </div>
               </li>

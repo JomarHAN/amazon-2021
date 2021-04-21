@@ -9,9 +9,6 @@ import {
     PRODUCT_DETAIL_FAIL,
     PRODUCT_DETAIL_REQUEST,
     PRODUCT_DETAIL_SUCCESS,
-    PRODUCT_CREATE_FAIL,
-    PRODUCT_CREATE_REQUEST,
-    PRODUCT_CREATE_SUCCESS,
     PRODUCT_UPDATE_FAIL,
     PRODUCT_UPDATE_REQUEST,
     PRODUCT_UPDATE_SUCCESS,
@@ -62,23 +59,6 @@ export const getProductDetail = (productId) => async (dispatch) => {
     }
 }
 
-export const createProduct = () => async (dispatch, getState) => {
-    dispatch({ type: PRODUCT_CREATE_REQUEST })
-    const { userSignin: { userInfo } } = getState()
-    try {
-        const { data } = await Axios.post('/api/products', {}, {
-            headers: {
-                Authorization: `Bearer ${userInfo.token}`
-            }
-        })
-        dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: data.product })
-    } catch (error) {
-        const message = error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        dispatch({ type: PRODUCT_CREATE_FAIL, payload: message })
-    }
-}
 
 export const updateProduct = (product) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_UPDATE_REQUEST })
@@ -133,4 +113,10 @@ export const commentProduct = (review) => async (dispatch, getState) => {
             : error.message
         dispatch({ type: PRODUCT_REVIEW_FAIL, payload: message })
     }
+}
+
+export const recountProductStock = (products) => async () => {
+    products.map(async (p) => {
+        await Axios.put('/api/products/recount', p)
+    })
 }

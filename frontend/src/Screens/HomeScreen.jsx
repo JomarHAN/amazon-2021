@@ -22,7 +22,6 @@ function HomeScreen() {
     dispatch(getListProducts({}));
     dispatch(getTopProduct());
   }, [dispatch]);
-
   return (
     <div>
       {loadingTopSell ? (
@@ -34,7 +33,11 @@ function HomeScreen() {
           {productsTopSell.map((x) => (
             <div key={x._id}>
               <Link to={`/product/${x._id}`}>
-                <img src={x.imageAlbum.image1} alt={x.name} />
+                <img
+                  src={x.imageAlbum.image1}
+                  alt={x.name}
+                  className="carousel-img"
+                />
                 <p className="legend">{x.name}</p>
               </Link>
             </div>

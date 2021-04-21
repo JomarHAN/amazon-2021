@@ -27,6 +27,13 @@ function SigninScreen(props) {
       <form className="form" onSubmit={handleSubmit}>
         <div>
           <h1>Sign In</h1>
+          <p>To test admin mode, use admin's count below:</p>
+          <p>
+            Email: <strong>test1234@hotmail.com</strong>{" "}
+          </p>
+          <p>
+            Password: <strong>test1234</strong>
+          </p>
         </div>
         {loading && <LoadingBox />}
         {error && <MessageBox variant="danger">{error}</MessageBox>}

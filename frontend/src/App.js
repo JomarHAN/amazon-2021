@@ -28,6 +28,12 @@ import { useEffect } from "react";
 import axios from "axios";
 import { PRODUCT_FIELDS_LIST } from "./constanst/productConstants";
 import MapScreen from "./Screens/MapScreen";
+import DraftEditScreen from "./Screens/DraftEditScreen";
+import DraftPreviewScreen from "./Screens/DraftPreviewScreen";
+import DraftListScreen from "./Screens/DraftListScreen";
+import DashboardScreen from "./Screens/DashboardScreen";
+import ChatBox from "./components/ChatBox";
+import SupportScreen from "./Screens/SupportScreen";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -50,10 +56,13 @@ function App() {
         <header className="row">
           <div>
             <Link to="/" className="brand">
-              Amazon
+              <img
+                src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
+                alt=""
+              />
             </Link>
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="searchBox" style={{ flex: 1 }}>
             <Route render={(props) => <SearchBox {...props} />} />
           </div>
           <div>
@@ -76,7 +85,7 @@ function App() {
                     <Link to="/orderhistory">Order History</Link>
                   </li>
                   <li>
-                    <Link to="#signout" onClick={handleSignout}>
+                    <Link to="/" onClick={handleSignout}>
                       Sign Out
                     </Link>
                   </li>
@@ -103,6 +112,12 @@ function App() {
                   <li>
                     <Link to="/userlist">Users</Link>
                   </li>
+                  <li>
+                    <Link to="/draftslist">Drafts</Link>
+                  </li>
+                  <li>
+                    <Link to="/support">Support</Link>
+                  </li>
                 </ul>
               </div>
             )}
@@ -113,10 +128,16 @@ function App() {
                 </Link>
                 <ul className="dropdown-content">
                   <li>
+                    <Link to="/dashboard/seller">Dashboard</Link>
+                  </li>
+                  <li>
                     <Link to="/productlist/seller">Products</Link>
                   </li>
                   <li>
                     <Link to="/orderlist/seller">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/draftslist/seller">Drafts</Link>
                   </li>
                 </ul>
               </div>
@@ -154,20 +175,30 @@ function App() {
             component={ProductListScreen}
           />
           <SellerRoute path="/orderlist/seller" component={OrderListScreen} />
+          <SellerRoute path="/draftslist/seller" component={DraftListScreen} />
           <SellerRoute
             path="/product/:id/edit"
             component={ProductEditScreen}
             exact
           />
+          <SellerRoute path="/draft/:id" component={DraftEditScreen} exact />
+          <SellerRoute path="/preview/:id" component={DraftPreviewScreen} />
+          <SellerRoute path="/dashboard/seller" component={DashboardScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} exact />
           <PrivateRoute path="/map" component={MapScreen} />
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
           <AdminRoute path="/productlist" component={ProductListScreen} exact />
           <AdminRoute path="/orderlist" component={OrderListScreen} exact />
           <AdminRoute path="/userlist" component={UserListScreen} />
+          <AdminRoute path="/draftslist" component={DraftListScreen} exact />
+          <AdminRoute path="/dashboard" component={DashboardScreen} exact />
+          <AdminRoute path="/support" component={SupportScreen} exact />
           <Route path="/" component={HomeScreen} exact />
         </main>
-        <footer className="row center">All right reserved</footer>
+        <footer className="row center">
+          {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+          <div>All right reserved</div>
+        </footer>
       </div>
     </Router>
   );
