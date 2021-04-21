@@ -113,9 +113,10 @@ io.on('connection', (socket) => {
                 const user = users.find(x => x._id === message._id && x.online)
                 user.messages.push(message)
             } else {
-                io.to(socket.id).emit({
+                io.to(socket.id).emit('receive-message', {
                     body: "Sorry, I'm offline now!",
-                    name: "Admin"
+                    name: "Admin",
+                    isAdmin: true
                 })
             }
         }
