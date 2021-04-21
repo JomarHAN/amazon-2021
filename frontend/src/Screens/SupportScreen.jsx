@@ -4,10 +4,8 @@ import MessageBox from "../components/MessageBox";
 import socketIOClient from "socket.io-client";
 
 const ENDPOINT =
-  window.location.host.indexOf("localhost") >= 0
-    ? "http://127.0.0.1:5000"
-    : window.location.host;
-console.log(window.location);
+  window.location.host.indexOf("localhost") >= 0 ? "/" : window.location.host;
+
 let listUsers = [];
 let listMessages = [];
 let allUserSelected = {};

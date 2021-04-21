@@ -2,9 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
 const ENDPOINT =
-  window.location.host.indexOf("localhost") >= 0
-    ? "http://127.0.0.1:5000"
-    : window.location.host;
+  window.location.host.indexOf("localhost") >= 0 ? "/" : window.location.host;
 
 export default function ChatBox({ userInfo }) {
   const [isOpen, setIsOpen] = useState(false);
