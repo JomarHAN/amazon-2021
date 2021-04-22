@@ -8,6 +8,8 @@ import productRouter from './routers/productRouters.js'
 import path from 'path'
 import uploadRouter from './routers/uploadRouter.js'
 import draftRouter from './routers/draftRouter.js'
+import { Server } from 'socket.io'
+import http from 'http'
 
 const app = express()
 app.use(express.json())
@@ -41,12 +43,21 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
 })
 
-app.get('/', (req, res) => {
-    res.send('Server is ready')
-})
+// app.get('/', (req, res) => {
+//     res.send('Server is ready')
+// })
 app.use((err, req, res, next) => {
     res.status(500).send({ message: err.message })
 })
 
+const serverHTTP = http.Server(app)
+const io = new Server(serverHTTP, { cors: { origin: '*' } })
+const users = []
+
+// io.on('connection', (socket) => {
+
+// })
+
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server is running on localhost:${port}`))
+serverHTTP.listen(port, () => console.log(`Server IO is running on localhost:${port}`))
+// app.listen(port, () => console.log(`Server is running on localhost:${port}`))
