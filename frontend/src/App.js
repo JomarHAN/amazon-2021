@@ -32,6 +32,8 @@ import DraftEditScreen from "./Screens/DraftEditScreen";
 import DraftPreviewScreen from "./Screens/DraftPreviewScreen";
 import DraftListScreen from "./Screens/DraftListScreen";
 import DashboardScreen from "./Screens/DashboardScreen";
+import ChatBox from "./components/ChatBox";
+import SupportScreen from "./Screens/SupportScreen";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -113,6 +115,9 @@ function App() {
                   <li>
                     <Link to="/draftslist">Drafts</Link>
                   </li>
+                  <li>
+                    <Link to="/support">Support</Link>
+                  </li>
                 </ul>
               </div>
             )}
@@ -187,9 +192,13 @@ function App() {
           <AdminRoute path="/userlist" component={UserListScreen} />
           <AdminRoute path="/draftslist" component={DraftListScreen} exact />
           <AdminRoute path="/dashboard" component={DashboardScreen} exact />
+          <AdminRoute path="/support" component={SupportScreen} exact />
           <Route path="/" component={HomeScreen} exact />
         </main>
-        <footer className="row center">All right reserved</footer>
+        <footer className="row center">
+          {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+          <div>All right reserved</div>
+        </footer>
       </div>
     </Router>
   );
